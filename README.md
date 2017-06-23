@@ -132,3 +132,76 @@ evt.on('eventName',eventHandler);
 //触发eventName
 evt.emit('eventName');
 ```
+
+# Node.js 模块
+> 为了让Node.js的文件可以相互调用，Node.js提供了一个简单的模块系统。<br>
+模块是Node.js 应用程序的基本组成部分，文件和模块是一一对应的。换言之，一个 Node.js 文件就是一个模块，这个文件可能是JavaScript 代码、JSON 或者编译过的C/C++ 扩展。
+
+## 自定义模块
+在demo.js同级目录下创建show.js，编写模块代码
+``` Javascript
+// 自定义show模块
+// 定义show类
+function show() {
+	this.name = 'user';
+	this.say = function(){
+		console.log('my name is ' + this.name);
+	}
+}
+module.exports = new show();
+```
+在demo.js文件中调用我们自定义的show模块
+``` JavaScript
+//调用自定义模块
+const show = require('./show');
+show.say();
+```
+
+# Node.js 函数
+## 常用函数
+``` Javascript
+function show(){
+	console.log('show');
+}
+```
+## 匿名函数
+``` Javascript
+show = function(){
+	console.log('show');
+}
+```
+
+# Node.js 路由
+自己写个路由，一般实际应用大多是直接用框架
+``` JavaScript
+const http = require('http');
+const url = require('url');
+cs = function(request,res){
+	urlStr = request.url; //获取访问url路径字符串
+	urlPath = url.parse(urlStr).pathname; //转换url路径
+	res.writeHead('200',{'content-type':'text/html;charset=utf-8'});
+	switch (urlPath) { //选择页面
+		case '/index':
+			res.write('index page');
+			break;
+		case '/add':
+			res.write('add page');
+			break;
+		case '/delete':
+			res.write('delete page');
+			break;
+		case '/update':
+			res.write('update page');
+			break;
+		case '/sreach':
+			res.write('sreach');
+			break;
+		default:
+			res.write('undefined page');
+	}	
+	console.log("访问的url路径:"+urlPath);
+	res.end();
+}
+http.createServer(cs).listen(666);
+console.log('Server Is Running Successfully!');
+```
