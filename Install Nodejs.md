@@ -1,5 +1,3 @@
-# Node.js-Notes
-Node.js Study Notes
 # Install Node.js
 1. 下载node.js
 	
