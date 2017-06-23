@@ -45,21 +45,21 @@ NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署�
     允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。
     允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。 
 ## NPM常用命令
-1. npm list
+1. **npm list**
 	查看本地模块
-2. npm install mysql
+2. **npm install mysql**
 	安装mysql模块
-3. npm uninstall mysql
+3. **npm uninstall mysql**
 	卸载mysql模块
-4. npm root
+4. **npm root**
 	本地模块根目录
-5. npm root -g
+5. **npm root -g**
 	本服务器所有模块根目录
-6. npm update mysql
+6. **npm update mysql**
 	升级mysql模块
-7. npm search mysql
+7. **npm search mysql**
 	搜索mysql模块
-8. npm -help <command>
+8. **npm -help <command>**
 	查看帮助
 
 # 开始第一个 node.js web 实例
@@ -75,3 +75,19 @@ NPM是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署�
 	//监听端口
 	http.createServer(cs).listen(666);
 	console.log('http is ok');
+
+![第一个web应用](http://i.imgur.com/uqEFm2H.png)
+# node.js 回调函数
+## 1. 同步操作文件(阻塞I/O)
+	 //加载fs file 模块
+	 const fs = require('fs');
+	 file = "test.txt";
+	 //开始读取文件
+	 console.log('file start');
+	 //正在读取文件
+	 data = fs.readFileSync(file);
+	 console.log(data.toString());
+	 //读取文件结束
+	 console.log('file end！');
+![同步操作文件](http://i.imgur.com/PuaItru.png)
+## 2. 异步操作文件(非阻塞I/O)
