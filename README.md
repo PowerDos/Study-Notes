@@ -36,7 +36,7 @@
 	- [删除文件](#删除文件)
 	- [创建目录](#创建目录)
 	- [删除目录](#删除目录)
-11. [Get和Post请求](#get和post请求)
+11. [GET和POST请求](#get和post请求)
 	- [GET请求](#get请求)
 	- [POST请求](#post请求)
 
@@ -430,7 +430,7 @@ console.log('file write end！');
 ```
 > 因为之前没有file1.txt所以就创建了一个新的文件夹
 
-![](http://i.imgur.com/cEqt4Iu.png)
+![](http://i.imgur.com/cEqt4Iu.png)<br>
 ![写入文件内容](http://i.imgur.com/lcoO6Ym.png)
 ## 删除文件
 > unlink();
@@ -461,7 +461,7 @@ file = 'testdir';
 fs.rmdir(file);
 ```
 
-# Get和Post请求
+# GET和POST请求
 ## GET请求
 ``` JavaScript
 //加载web模块
@@ -539,7 +539,7 @@ console.log('Http Is Running Successfully!');
 </body>
 </html>
 ```
-![](http://i.imgur.com/cajISzH.png)
+![](http://i.imgur.com/cajISzH.png)<br>
 ![](http://i.imgur.com/yiDU9tI.png)
 ![](http://i.imgur.com/T8vinq3.png)
 
