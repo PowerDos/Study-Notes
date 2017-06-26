@@ -367,6 +367,89 @@ console.log(util.isRegExp(/^\d{11}$/ig));
 ```
 >输出：true
 
+# 文件系统
+> 这里写个测试的文件`test.txt`内容如下
+11111
+22222
+33333
+44444
+55555
+66666
+
+## 读文件内容
+### 1. 异步非堵塞读取
+> readFile();
+
+```JavaScript
+ //加载文件模块
+const fs = require('fs');
+file = 'test.txt';
+//异步读取
+fs.readFile(file,function(err,data){
+	str = data.toString();
+	console.log(str);
+});
+console.log('file read end！');
+```
+![异步](http://i.imgur.com/DmcVEga.png)
+### 2. 同步堵塞读取
+> readFileSync();
+
+```JavaScript
+//加载文件模块
+const fs = require('fs');
+file = 'test.txt';
+//同步读取
+data = fs.readFileSync(file);
+str = data.toString();
+console.log(str);
+```
+![同步读取](http://i.imgur.com/koKPCZT.png)
+
+## 写文件内容
+> writeFile();
+
+``` JavaScript
+const fs = require('fs');
+file = 'test1.txt';
+str  = "1111\n2222\n3333";
+// 文件异步写入
+fs.writeFile(file,str);
+console.log('file write end！');
+```
+> 因为之前没有file1.txt所以就创建了一个新的文件夹
+
+![](http://i.imgur.com/cEqt4Iu.png)
+![写入文件内容](http://i.imgur.com/lcoO6Ym.png)
+## 删除文件
+> unlink();
+
+``` JavaScript
+//加载文件模块
+const fs = require('fs');
+file = 'test1.txt';
+fs.unlink(file);
+```
+## 创建目录
+> mkdir();
+
+``` JavaScript
+//加载文件模块
+const fs = require('fs');
+file = 'testdir';
+fs.mkdir(file);
+```
+
+## 删除目录
+> rmdir();
+
+``` JavaScript
+//加载文件模块
+const fs = require('fs');
+file = 'testdir';
+fs.rmdir(file);
+```
+
 
 ``` JavaScript
 
