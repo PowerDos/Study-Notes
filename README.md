@@ -6,7 +6,28 @@
 	- [NPM简介](#npm简介)
 	- [NPM常用命令](#npm常用命令)
 3. [开始第一个 node.js web 实例](#开始第一个-nodejs-web-实例)
-
+4. [node.js 回调函数](#nodejs-回调函数)
+	- [1. 同步操作文件(阻塞I/O)](1-同步操作文件阻塞io) 	
+	- [2. 异步操作文件(非阻塞I/O)](#2-异步操作文件非阻塞io)
+5. [Node.js 事件循环](#nodejs-事件循环)
+	- [自定义模块](#自定义模块)
+6. [Node.js 函数](#nodejs-函数)
+	- [常用函数](#常用函数)
+	- [匿名函数](#匿名函数)
+7. [Node.js 路由](#nodejs-路由)
+8. [Node.js 全局对象](#nodejs-全局对象)
+	- [__filename](#__filename)
+	- [__dirname](#__dirname)
+	- [console](#console)
+	- [process](#process)
+9. [Node.js 常用工具](#nodejs-常用工具)
+	- [util.inspect 将任意对象转换 为字符串](#utilinspect-将任意对象转换-为字符串)
+	- [util.isArray() 判断是否是数组](#utilisarray-判断是否是数组)
+	- [util.isBoolean() 判断是否是boolean类型的](#utilisboolean-判断是否是boolean类型的)
+	- [util.isDate() 判断是否是日期](#utilisdate-判断是否是日期)
+	- [util.isFunction() 判断是否是函数](#utilisfunction-判断是否是函数)
+	- [util.isObject() 判断是否是对象](#utilisobject-判断是否是对象)
+	- [util.isRegExp() 是否是正则对象](#utilisregexp-是否是正则对象)
 
 # Install Node.js
 1. 下载node.js
@@ -299,7 +320,7 @@ v6.11.0
 D:\NodeWorkSpace
 
 # Node.js 常用工具
-1. ### `util.inspect` 将任意对象转换 为字符串
+1. ### `util.inspect()` 将任意对象转换 为字符串
 ``` JavaScript
 // 加载模块
 const util = require('util');
@@ -312,7 +333,7 @@ console.log(typeof(util.inspect(obj)));
 object
 { name: 'Gavin', sex: 'male', age: '16' }
 string
-2. ### `util.isArray();` 判断是否是数组
+2. ### `util.isArray()` 判断是否是数组
 ```JavaScript
 // 加载模块
 const util = require('util');
@@ -320,7 +341,7 @@ arr = ['a','b','c'];
 console.log(util.isArray(arr));
 ```
 >输出：true
-3. ### `util.isBoolean();` 判断是否是boolean类型的
+3. ### `util.isBoolean()` 判断是否是boolean类型的
 ``` JavaScript
 // 加载模块
 const util = require('util');
@@ -328,7 +349,7 @@ obj = {'name':'Gavin','sex':'male','age':'16'}
 console.log(util.isBoolean(obj));
 ```
 >输出：false
-4. ### `util.isDate();` 判断是否是日期
+4. ### `util.isDate()` 判断是否是日期
 ``` JavaScript
 // 加载模块
 const util = require('util');
@@ -336,9 +357,9 @@ tobj = new Date();
 console.log(util.isDate(tobj))
 ```
 >输出：true
-5. ### `util.isFunction();` 判断是否是函数
-6. ### `util.isObject();` 判断是否是对象
-7. ### `util.isRegExp();` 是否是正则对象
+5. ### `util.isFunction()` 判断是否是函数
+6. ### `util.isObject()` 判断是否是对象
+7. ### `util.isRegExp()` 是否是正则对象
 ``` JavaScript
 // 加载模块
 const util = require('util');
