@@ -28,6 +28,17 @@
 	- [util.isFunction() 判断是否是函数](#utilisfunction-判断是否是函数)
 	- [util.isObject() 判断是否是对象](#utilisobject-判断是否是对象)
 	- [util.isRegExp() 是否是正则对象](#utilisregexp-是否是正则对象)
+10. [文件系统](#文件系统)
+	- [读文件内容](#读文件内容)
+		- [1. 异步非堵塞读取](#1-异步非堵塞读取)
+		- [2. 同步堵塞读取](#2-同步堵塞读取)
+	- [写文件内容](#写文件内容)
+	- [删除文件](#删除文件)
+	- [创建目录](#创建目录)
+	- [删除目录](#删除目录)
+11. [Get和Post请求](#get和post请求)
+	- [GET请求](#get请求)
+	- [POST请求](#post请求)
 
 # Install Node.js
 1. 下载node.js
@@ -450,6 +461,87 @@ file = 'testdir';
 fs.rmdir(file);
 ```
 
+# Get和Post请求
+## GET请求
+``` JavaScript
+//加载web模块
+const http = require('http');
+//加载url模块
+const url = require('url');
+//加载querystring模块
+const querystring = require('querystring');
+
+cs = function(req, res){
+	uri = req.url;
+	if (uri !== '/favicon.ico') {
+		console.log(uri);
+		// 获取get参数字符串
+		str = url.parse(uri).query;
+		console.log(str);
+		// 将参数字符串转换为json对象
+		json = querystring.parse(str);
+		console.log(json);
+		res.write('Gavin\' Web server !');
+		res.end();
+	}
+}
+http.createServer(cs).listen(666);
+console.log('Http Is Running Successfully!');
+```
+> 在浏览器输入url地址 http://localhost:666/index?id=1&name=Gavin
+
+![](http://i.imgur.com/Pi0Ciw2.png)
+![](http://i.imgur.com/47kM23w.png)
+
+## POST请求
+> POST请求代码
+
+``` JavaScript
+// 加载web模块
+const http = require('http');
+// 加载querystring模块
+const querystring = require('querystring');
+// 加载工具模块
+const util = require('util');
+// 服务器回调函数
+cs = function(req, res){
+	// 定义了一个post变量，用于暂存请求体的信息
+    var post = '';     
+    // 通过req的data事件监听函数，每当接受到请求体的数据，就累加到post变量中
+    req.on('data', function(chunk){ 
+    	console.log("chunk:"+chunk);   
+        post += chunk;
+    });
+    // 在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回。
+    req.on('end', function(){    
+        post = querystring.parse(post);
+        res.end(util.inspect(post));
+    });
+}
+http.createServer(cs).listen(666);
+console.log('Http Is Running Successfully!');
+```
+> POST请求测试页面
+
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Post请求测试页面</title>
+</head>
+<body>
+	<form action="http://localhost:666/" method="post">
+		<p>姓名：<input type="text" name="Name"></p>
+		<p>年龄：<input type="text" name="Age"></p>
+		<input type="submit">
+	</form>
+</body>
+</html>
+```
+![](http://i.imgur.com/cajISzH.png)
+![](http://i.imgur.com/yiDU9tI.png)
+![](http://i.imgur.com/T8vinq3.png)
 
 ``` JavaScript
 
