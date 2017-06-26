@@ -1,5 +1,5 @@
 # Node.js-Notes
-Node.js Study Notes
+个人的 Node.js 学习笔记，有兴趣的小伙伴可以了解下，希望能帮到你们
 
 # Install Node.js
 1. 下载node.js
@@ -290,3 +290,51 @@ console.log(cwd);
 输出：
 v6.11.0
 D:\NodeWorkSpace
+
+# Node.js 常用工具
+1. ### `util.inspect` 将任意对象转换 为字符串
+``` JavaScript
+// 加载模块
+const util = require('util');
+obj = {'name':'Gavin','sex':'male','age':'16'}
+console.log(typeof(obj));
+console.log(util.inspect(obj));
+console.log(typeof(util.inspect(obj)));
+```
+> 输出：
+object
+{ name: 'Gavin', sex: 'male', age: '16' }
+string
+2. ### `util.isArray();` 判断是否是数组
+```JavaScript
+// 加载模块
+const util = require('util');
+arr = ['a','b','c'];
+console.log(util.isArray(arr));
+```
+>输出：true
+3. ### `util.isBoolean();` 判断是否是boolean类型的
+``` JavaScript
+// 加载模块
+const util = require('util');
+obj = {'name':'Gavin','sex':'male','age':'16'}
+console.log(util.isBoolean(obj));
+```
+>输出：false
+4. ### `util.isDate();` 判断是否是日期
+``` JavaScript
+// 加载模块
+const util = require('util');
+tobj = new Date();
+console.log(util.isDate(tobj))
+```
+>输出：true
+5. ### `util.isFunction();` 判断是否是函数
+6. ### `util.isObject();` 判断是否是对象
+7. ### `util.isRegExp();` 是否是正则对象
+``` JavaScript
+// 加载模块
+const util = require('util');
+console.log(util.isRegExp(/^\d{11}$/ig));
+```
+>输出：true
