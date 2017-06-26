@@ -1,6 +1,8 @@
 # Node.js-Notes
 个人的 Node.js 学习笔记，有兴趣的小伙伴可以了解下，希望能帮到你们
-
+### 目录
+1. [安装Node.js](#install-nodejs)
+2. [NPM node.js 模块管理](#NPM node.js 模块管理)
 # Install Node.js
 1. 下载node.js
 	
@@ -338,3 +340,8 @@ const util = require('util');
 console.log(util.isRegExp(/^\d{11}$/ig));
 ```
 >输出：true
+
+
+``` JavaScript
+
+```
