@@ -2,10 +2,10 @@
 个人的 Node.js 学习笔记，有兴趣的小伙伴可以了解下，希望能帮到你们
 ### 目录
 1. [安装Node.js](#install-nodejs)
-2. [NPM node.js 模块管理](#NPM-node.js-模块管理)	
-	- [NPM简介](#NPM简介)
-	- [NPM常用命令](#NPM常用命令)
-3. [开始第一个 node.js web 实例](#开始第一个-node.js-web-实例)
+2. [NPM node.js 模块管理](#npm-nodejs-模块管理)	
+	- [NPM简介](#npm简介)
+	- [NPM常用命令](#npm常用命令)
+3. [开始第一个 node.js web 实例](#开始第一个-nodejs-web-实例)
 
 
 # Install Node.js
