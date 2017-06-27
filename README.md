@@ -45,6 +45,11 @@
 	- [Net模块](#net模块)
 	- [DNS模块](#dns模块)
 	- [Domain模块](#domain模块)
+13. [MySql](#mysql)
+	- [查询数据](#查询数据)
+	- [插入数据](#插入数据)
+	- [更新数据](#更新数据)
+	- [删除数据](#删除数据)
 
 # Install Node.js
 1. 下载node.js
@@ -757,9 +762,150 @@ dns.lookup(domain,function(err,ip,family){
 #### `domain.members` 已加入domain对象的域定时器和事件发射器的数组。
 
 
+# MySql
+> 首先安装mysql模块
+> 通过命令：npm install mysql
+> 创建数据库node_mysql
+> 创建user表,表字典如下
 
+|字段名|属性|备注|
+|:--:|:--:|:--:|
+|id|int|主键|
+|name|varchar|非空|
+|age|int|非空|
 
+> 数据库插入数据后的表
 
+![](http://i.imgur.com/zfZFrxW.png)
+
+## 查询数据
 ``` JavaScript
-
+//查询数据
+const mysql = require('mysql');
+conn = mysql.createConnection({
+	host:'localhost',
+	user:'root',
+	password:'abcdef123',
+	port:'3306',
+	database:'node_mysql',
+});
+//建立连接
+conn.connect();
+//准备sql语句
+sql = "select * from user";
+//查询数据库
+conn.query(sql,function(err,result){
+	if (err) {
+		console.log('error:',err.message);
+	}else {
+		for(i = 0; i < result.length; i++){
+			console.log("id  :" + result[i]['id']);
+			console.log("name:" + result[i]['name']);
+			console.log("age :" + result[i]['age']);
+			console.log("-----------------");
+		}
+	}
+});
+//关闭数据库连接
+conn.end();
 ```
+> 输出结果：
+id  :1
+name:Gavin
+age :16
+\-----------------
+id  :2
+name:Gavin
+age :18
+\-----------------
+
+## 插入数据
+``` JavaScript
+//插入数据
+const mysql = require('mysql');
+conn = mysql.createConnection({
+	host:'localhost', 
+	user:'root',
+	password:'abcdef123',
+	port:'3306',
+	database:'node_mysql',
+});
+//建立连接
+conn.connect();
+//准备sql语句
+sql = "insert into user(name,age) values(?,?)";
+data = ['Gavin','22'];
+//查询数据库
+conn.query(sql,data,function(err,result){
+	if (err) {
+		console.log('error:',err.message);
+	}else {
+		console.log('AffectedRows :',result['affectedRows']);
+	}
+});
+//关闭数据库连接
+conn.end();
+```
+> 输出：AffectedRows : 1 
+![](http://i.imgur.com/Bs7FpEK.png)
+
+## 更新数据
+``` JavaScript
+//更新数据
+const mysql = require('mysql');
+conn = mysql.createConnection({
+	host:'localhost', 
+	user:'root',
+	password:'abcdef123',
+	port:'3306',
+	database:'node_mysql',
+});
+//建立连接
+conn.connect();
+//准备sql语句
+sql = "update user set age=? where id=?";
+data = ['15','1'];
+//查询数据库
+conn.query(sql,data,function(err,result){
+	if (err) {
+		console.log('error:',err.message);
+	}else {
+		console.log('AffectedRows :',result['affectedRows']);
+	}
+});
+//关闭数据库连接
+conn.end();
+```
+> 输出：AffectedRows : 1
+
+![](http://i.imgur.com/CnZsCyo.png)
+
+## 删除数据
+``` JavaScript
+//删除数据
+const mysql = require('mysql');
+conn = mysql.createConnection({
+	host:'localhost', 
+	user:'root',
+	password:'abcdef123',
+	port:'3306',
+	database:'node_mysql',
+});
+//建立连接
+conn.connect();
+//准备sql语句
+sql = "delete from user where id=1";
+//查询数据库
+conn.query(sql,function(err,result){
+	if (err) {
+		console.log('error:',err.message);
+	}else {
+		console.log('AffectedRows :',result['affectedRows']);
+	}
+});
+//关闭数据库连接
+conn.end();
+```
+> 输出：AffectedRows : 1
+
+![删除数据](http://i.imgur.com/44bkwD6.png)
