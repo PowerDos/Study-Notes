@@ -847,6 +847,7 @@ conn.query(sql,data,function(err,result){
 conn.end();
 ```
 > 输出：AffectedRows : 1 
+
 ![](http://i.imgur.com/Bs7FpEK.png)
 
 ## 更新数据
