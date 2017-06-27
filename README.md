@@ -1,5 +1,5 @@
 # Node.js-Notes
-个人的 Node.js 学习笔记，有兴趣的小伙伴可以了解下，希望能帮到你们
+个人的 Node.js 学习笔记，有兴趣的小伙伴可以了解下，希望能帮到你们。
 ### 目录
 1. [安装Node.js](#install-nodejs)
 2. [NPM node.js 模块管理](#npm-nodejs-模块管理)	
