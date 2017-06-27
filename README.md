@@ -810,13 +810,13 @@ conn.query(sql,function(err,result){
 conn.end();
 ```
 > 输出结果：
-id  :1
-name:Gavin
-age :16
-\-----------------
-id  :2
-name:Gavin
-age :18
+> id  :1<br>
+name:Gavin<br>
+age :16<br>
+\-----------------<br>
+id  :2<br>
+name:Gavin<br>
+age :18<br>
 \-----------------
 
 ## 插入数据
