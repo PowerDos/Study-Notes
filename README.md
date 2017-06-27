@@ -809,7 +809,7 @@ conn.query(sql,function(err,result){
 //关闭数据库连接
 conn.end();
 ```
-> 输出结果：
+> 输出结果：<br>
 > id  :1<br>
 name:Gavin<br>
 age :16<br>
