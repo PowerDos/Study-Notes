@@ -16,10 +16,10 @@
 
 # GET和POST请求
 ## GET
-> 获取url的参数
-> 假设url为：`http://localhost/index?id=1&name=Gavin`
-> 获取参数 `req.query.name`
-> 获取全部参数并转换为json `JSON.stringify(req.query)`
+> 获取url的参数<br>
+> 假设url为：`http://localhost/index?id=1&name=Gavin`<br>
+> 获取参数 `req.query.name`<br>
+> 获取全部参数并转换为json `JSON.stringify(req.query)`<br>
 > 还有一种获取方法，但在4.x版本中废除了 `req.param('name')`
 
 ```javascript
@@ -36,8 +36,8 @@ module.exports = router;
 ```
 
 ## POST
-> 假设POST过来的数据是 id=1&name=Gavin
-> 获取参数： `req.body.name`
+> 假设POST过来的数据是 id=1&name=Gavin<br>
+> 获取参数： `req.body.name`<br>
 > 获取全部参数并转换为json： `JSON.stringify(req.body)`
 
 ```javascript
