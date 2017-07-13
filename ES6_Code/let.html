@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>let</title>
+</head>
+<body>
+</body>
+<script>
+/*
+	// 与var的区别
+	{
+		var a = 100;
+		let b = 200;
+	}
+	console.log(a);
+	console.log(b);
+*/
+
+/* 
+	// 不存在变量提升
+	console.log("ES5:");
+	var a = [];
+	for (var i = 0; i < 10; i++){
+		var c = i;
+		a[i] = function () {
+			console.log(c);
+		}
+	}
+	a[5](); //会输出9，因为var c 最后循环过后，c为9
+
+	console.log("ES6:");
+	var b = [];
+	for (var i = 0; i < 10; i++){
+		let d = i;
+		a[i] = function(){
+			console.log(d);
+		}
+	}
+	a[5]();	 //会打印出5，因为let只会在区域内起作用
+*/
+
+/*	
+	// 暂时性死区
+	var a = 200;
+	// ***********不受外界影响开始***********
+	{	
+		// **********暂时性死区开始**********
+		console.log(a); //打印undefined
+		// **********暂时性死区结束**********
+		let a = 100;
+		console.log(a);  //打印100
+	}
+	// ***********不受外界影响结束***********
+*/
+
+	// 不允许重复声明
+	{
+		var a = 100;
+		var a = 200;
+	}
+	{
+		var b = 100;
+		let b = 200;
+	}
+	{
+		let c = 100;
+		var c = 200;
+	}
+	{
+		let d = 100;
+		let d = 200;
+	}
+</script>
+</html>
