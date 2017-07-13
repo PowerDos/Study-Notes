@@ -59,6 +59,7 @@
 		var a = 100;
 		var a = 200;
 	}
+	// 下面三个会报错
 	{
 		var b = 100;
 		let b = 200;
@@ -70,6 +71,22 @@
 	{
 		let d = 100;
 		let d = 200;
+	}
+
+	// 模块之间不影响，可以重复声明
+	{
+		var a = 100;
+		var a = 200;
+		console.log(a);
+	}
+	{
+		let a = 300;
+		console.log(a);
+	}
+	// 模块内部不允许用let命令重复声明
+	{
+		var a = 1;
+		let a = 2;
 	}
 </script>
 </html>
