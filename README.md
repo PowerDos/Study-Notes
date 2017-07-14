@@ -55,6 +55,8 @@
 	- [插入数据](#插入数据)
 	- [更新数据](#更新数据)
 	- [删除数据](#删除数据)
+15. [HTTP模块](#HTTP模块)
+16. [静态文件夹](#静态文件夹)
 
 # Introduction
 ## 简介 
@@ -958,8 +960,154 @@ conn.end();
 ![删除数据](http://i.imgur.com/44bkwD6.png)
 
 # HTTP模块
+``` JavaScript
+//引用模块
+var http = require("http");
 
+//创建一个服务器，回调函数表示接收到请求之后做的事情
+var server = http.createServer(function(req,res){
+	//req参数表示请求，res表示响应
+	console.log("服务器接收到了请求" + req.url);
+	//设置头部
+	res.writeHead(200,{"Content-Type":"text/html;charset=UTF8"});
+	res.write("<h1>我是主标题</h1>");
+	res.write("<h2>我是2标题</h2>");
+	res.write("<h3>我是3标题</h3>");
+	res.end((1+2+3).toString());
+});
 
+//监听端口
+server.listen(3000,"127.0.0.1");
+```
+## Request
+### url 模块
+``` JavaScript
+var http = require("http");
+
+var server = http.createServer(function(req,res){
+	console.log(req.url);
+	res.end();
+});
+
+server.listen(3000,"127.0.0.1");
+```
+``` JavaScript
+var http = require("http");
+var url = require("url");
+
+var server = http.createServer(function(req,res){
+	//url.parse()可以将一个完整的URL地址，分为很多部分：
+	//host、port、pathname、path、query
+	var pathname = url.parse(req.url).pathname;
+	//url.parse()如果第二个参数是true，那么就可以将所有的查询变为对象
+	//就可以直接打点得到这个参数
+	var query = url.parse(req.url,true).query;
+	//直接打点得到这个参数
+	var age = query.age;
+	
+	console.log("pathname:" + pathname);
+	console.log(query);
+	console.log("age:" + age);
+	
+	res.end();
+});
+
+server.listen(3000,"127.0.0.1");
+```
+> 输入网址：http://localhost:3000/?age=18<br>
+> 输出：<br>
+> pathname:/<br>
+> { age: '18' } <br>
+> age:18 <br>
+
+# 静态文件夹
+> 访问静态文件夹<br>
+> 文件目录<br>
+>  - static
+>    - index.html
+>    - 404.html
+>  - app.js
+
+--------------------- 
+
+> app.js
+
+```JavaScript
+var http = require("http");
+var url = require("url");
+var fs = require("fs"); 
+var path = require("path");
+
+var server = http.createServer(function(req,res){
+    // 获取用户的路径
+    var pathname = url.parse(req.url).pathname;
+    // 获取拓展名
+	var extname = path.extname(pathname);
+    // 读取这个文件
+    fs.readFile("./static/" + pathname, function(err, data){
+        if(err){
+            // 如果此文件不存在， 就返回404返回
+            fs.readFile("./static/404.html", function(err, data){
+                res.writeHead(404, {"Content-type": "text/html;charset = UTF8"});
+                res.end(data);
+            });
+            return;
+        };
+        var mime = getMime(extname);
+		res.writeHead(200,{"Content-type":mime});
+        res.end(data);
+    })
+});
+function getMime(extname){
+    switch(extname){
+        case ".html":
+            return "text/html";
+            break;
+        case ".jpg":
+            return "image/jpg";
+            break;
+        case ".css":
+            return "text/css";
+            break;
+        case ".js":
+            return "text/javascript";
+            break;
+    }
+}
+server.listen(3000,"127.0.0.1");
+```
+> static/index.html
+
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>这是一个静态的HTML页面</h1>
+</body>
+</html>
+```
+> static/404.html
+
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>这是一个404页面</h1>
+</body>
+</html>
+```
 
 
 ``` JavaScript
