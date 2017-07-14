@@ -23,6 +23,22 @@
 > 4. 安装依赖包： `npm install`
 > 5. 启动应用： `DEBUG=firstapp npm start`
 
+# 路由
+> 用get请求访问一个网址
+
+``` Javascript
+app.get("/", function(req, res){
+
+});
+```
+> 用post请求一个网址
+
+``` Javascript
+app.post("/", function(req, res){
+
+});
+```
+
 # 中间件
 > 中间件（Middleware） 是一个函数，它可以访问请求对象（request object (req)）, 响应对象（response object (res)）, 和 web 应用中处于请求-响应循环流程中的中间件，一般被命名为 next 的变量。<br>每个中间件可以从App实例，接收三个参数，依次为request对象（代表HTTP请求）、response对象（代表HTTP回应），next回调函数（代表下一个中间件）。每个中间件都可以对HTTP请求（request对象）进行加工，并且决定是否调用next方法，将request对象再传给下一个中间件。
 
@@ -113,6 +129,21 @@ module.exports = router;
 > req.protocol:  http<br>
 > req.xhr:  false<br>
 
+# Response
+## render()
+> 大多数情况下，渲染内容用res.render()，将会根据views中的模板文件进行渲染。如果不想使用views文件夹，想自己设置文件夹名字，那么app.set("views","aaaa");
+
+## send()
+> 如果想写一个快速测试页，当然可以使用res.send()。这个函数将根据内容，自动帮我们设置了Content-Type头部和200状态码。send()只能用一次，和end一样。和end不一样在哪里？能够自动设置MIME类型。
+
+## status()
+> 如果想使用不同的状态码，可以：res.status(404).send('Sorry, we cannot find that!');
+
+## set()
+> 如果想使用不同的Content-Type，可以：res.set('Content-Type', 'text/html');
+
+
+
 # GET和POST请求
 ## GET
 > 获取url的参数<br>
@@ -137,11 +168,22 @@ module.exports = router;
 ## POST
 > 假设POST过来的数据是 id=1&name=Gavin<br>
 > 获取参数： `req.body.name`<br>
-> 获取全部参数并转换为json： `JSON.stringify(req.body)`
+> 获取全部参数并转换为json： `JSON.stringify(req.body)`<br>
+> `注意要引入body-parser`
+
+``` javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+//加载中间件
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+```
 
 ```javascript
 const express = require('express');
 const router = express.Router();
+
 //post方式访问
 router.post('/', function(req, res, next){
 	//获取所有post数据
