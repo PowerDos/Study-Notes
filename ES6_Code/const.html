@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>const</title>
+</head>
+<body>
+</body>
+<script>
+/*
+	const PI = 3.14159;
+	console.log(PI);
+	console.log(5*PI);
+	PI = 5; //错误
+*/
+/*
+    //const 对象
+    const person = {};
+    person.name = "Gavin";  //后面重复赋值
+    person.age = 20;  //后面重复赋值
+    console.log(person.name);
+    console.log(person.age);
+    console.log(person);
+*/
+	// const 对象冻结
+	const person = Object.freeze({
+		name: "Gavin",
+		age : 20
+	});
+
+	console.log(person.name);	//Gavin
+	console.log(person.age);	//20
+	console.log(person);		//Object
+
+	person.name = "Gavin 1";  //不能改变
+	console.log(person.name); //Gavin
+</script>
+</html>

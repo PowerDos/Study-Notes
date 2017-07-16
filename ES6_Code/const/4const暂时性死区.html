@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>const暂时性死区</title>
+<script src="../../../vendor/traceur.js"></script>
+<script src="../../../vendor/bootstrap.js"></script>
+<script type="text/traceur">
+	if (true) {
+		console.log(Pi);	//undefined
+		const Pi = 3.14159265;
+	};
+</script>
+</head>
+<body>
+
+</body>
+</html>

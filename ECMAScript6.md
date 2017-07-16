@@ -200,3 +200,152 @@
 </script>
 </html>
 ```
+# 块级作用域
+## ES5出现的问题
+> 场景一: 内层变量可能会覆盖外层变量
+
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>块级作用域</title>
+</head>
+<body>
+</body>
+<script>
+	var time = new Date();
+
+	function fun() {
+		console.log(time);
+		if (false){
+			var time = "Hello World!";  //会提前加载,将time赋值
+		}
+	}
+
+	fun(); //输出undefined
+</script>
+</html>
+```
+![](http://i.imgur.com/tJgF4Pn.png)
+
+> 场景二： 用来计数的循环变量泄露为全局变量
+
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>块级作用域</title>
+</head>
+<body>
+</body>
+<script>
+	var string = "Hello World!";
+	for (var i = 0; i < string.length; i++){
+		console.log(string[i]);
+	};
+	console.log("循环结束");
+	console.log(i); // 输出12
+</script>
+</html>
+```
+![](http://i.imgur.com/9CugGml.png)
+
+## 块级作用域
+> ES6 解决场景一
+
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>块级作用域</title>
+</head>
+<body>
+</body>
+<script>
+    let time = new Date();
+
+	function fun() {
+		console.log(time);
+		if (false){
+			let time = "Hello World!";  //会提前加载,将time赋值
+		}
+	}
+
+	fun(); //输出undefined
+</script>
+</html>
+```
+# const
+> const也用来声明变量，但是声明的是常量。一旦声明，常量的值就不能改变。
+
+## const 常量
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>const</title>
+</head>
+<body>
+</body>
+<script>
+	const PI = 3.14159;
+	console.log(PI);
+	console.log(5*PI);
+	PI = 5; //错误
+</script>
+</html>
+```
+![](http://i.imgur.com/IdJIjjR.png)
+
+## const 对象
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>const</title>
+</head>
+<body>
+</body>
+<script>
+    const person = {};
+    person.name = "Gavin"; //后面重复赋值
+    person.age = 20;  //后面重复赋值
+    console.log(person.name); 
+    console.log(person.age);
+    console.log(person);
+</script>
+</html>
+```
+![](http://i.imgur.com/7VZUzIx.png)
+
+## const 冻结对象
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>const</title>
+</head>
+<body>
+</body>
+<script>
+	const person = Object.freeze({
+		name: "Gavin",
+		age : 20
+	});
+
+	console.log(person.name);	//Gavin
+	console.log(person.age);	//20
+	console.log(person);		//Object
+
+	person.name = "Gavin 1";  //不能改变
+	console.log(person.name); //Gavin
+</script>
+</html>
+```
+![](http://i.imgur.com/Al5QO2L.png)

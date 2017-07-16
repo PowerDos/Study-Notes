@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>使用const对象冻结</title>
+<script src="../../../vendor/traceur.js"></script>
+<script src="../../../vendor/bootstrap.js"></script>
+<script type="text/traceur">
+	const person = Object.freeze({
+		name: "Zhangsan",
+		age : 30
+	});
+
+	console.log(person.name);	//Zhangsan
+	console.log(person.age);	//30
+	console.log(person);		//Object
+</script>
+</head>
+<body>
+
+</body>
+</html>

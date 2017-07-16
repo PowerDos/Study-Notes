@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>const命令</title>
+<script src="../../../vendor/traceur.js"></script>
+<script src="../../../vendor/bootstrap.js"></script>
+<script type="text/traceur">
+	const Pi = 3.1415926535;
+	console.log(Pi);
+	Pi = 3; // Pi is read-only -- Error
+	console.log(Pi);
+</script>
+</head>
+<body>
+
+</body>
+</html>

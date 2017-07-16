@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>const对象错误方法</title>
+<script src="../../../vendor/traceur.js"></script>
+<script src="../../../vendor/bootstrap.js"></script>
+<script type="text/traceur">
+	const person = {};
+	person.name  = "Zhangsan";
+	person.age   = 30;
+
+	console.log(person.name);
+	console.log(person.age);
+	console.log(person);
+
+	person = {};	//person is read-only
+</script>
+</head>
+<body>
+
+</body>
+</html>
