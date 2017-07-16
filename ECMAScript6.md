@@ -279,7 +279,7 @@
 </html>
 ```
 # const
-> const也用来声明变量，但是声明的是常量。一旦声明，常量的值就不能改变。
+> const也用来声明变量，但是声明的是常量。一旦声明，常量的值就不能改变。`const常量只在当前模块有效。`
 
 ## const 常量
 ``` HTML
@@ -349,3 +349,51 @@
 </html>
 ```
 ![](http://i.imgur.com/Al5QO2L.png)
+
+## const 跨模块常量
+> module.js
+
+``` javascript
+export const intVariantName = 100;
+export const FloatVariantName = 3.14159165;
+export const charVariantName = "variantValue";
+```
+> use.js
+
+``` javascript
+import * as variant from './module';
+console.log(variant.intVariantName);	//100
+console.log(variant.FloatVariantName);	//3.14159165
+console.log(variant.charVariantName);	//variantValue
+```
+> otherUse.js
+
+``` javascript
+import { FloatVariantName, charVariantName } as variant from './module';
+	console.log(variant.FloatVariantName);	//3.14159165
+	console.log(variant.charVariantName);	//variantValue
+```
+> OnlyInt.js
+
+``` javascript
+import intVariantName as variant from './module';
+console.log(variant.intVariantName);	//100
+```
+# 全局变量属性
+> 全局对象是最顶层的对象，在浏览器环境指的是window对象，在Node.js指的是global对象。在JavaScript语言中，所有全局变量都是全局对象的属性。（Node的情况比较特殊，这一条只对REPL环境适用，模块环境必须显式声明成global的属性。）<br>
+> ES6规定，var命令和function命令声明的全局变量，属于全局对象的属性；let命令、const命令、class命令声明的全局变量，不属于全局对象的属性。
+
+``` javascript
+var varName = "varValue";
+//	浏览器环境下
+console.log(window.varName);	//varValue
+//	Node.js环境下
+console.log(global.varName);	//varValue
+//	通用环境
+console.log(this.varName);		//varValue
+
+
+let letName = "letValue";
+console.log(window.letName);	//undefined -- use strict
+console.log(this.letName);		//undefined -- use strict
+```
