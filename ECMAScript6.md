@@ -397,3 +397,154 @@ let letName = "letValue";
 console.log(window.letName);	//undefined -- use strict
 console.log(this.letName);		//undefined -- use strict
 ```
+# 数组解构
+> ES6允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring） 。
+
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数组解构</title>
+</head>
+<body>
+</body>
+<script>
+	console.log("ES5:");
+	var a = 1;
+	var b = 2;
+	var c = 3;
+
+	console.log(a);	//1
+	console.log(b);	//2
+	console.log(c);	//3
+
+	// ES6
+	console.log("ES6:")
+	var [d, e, f] = [4, 5, 6];
+
+	console.log(d);	//4
+	console.log(e);	//5
+	console.log(f);	//6
+</script>
+</script>
+</html>
+```
+![](http://i.imgur.com/2xWPqsB.png)
+
+## 对应位置解构
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数组解构</title>
+</head>
+<body>
+</body>
+<script>
+	let [foo, [[bar], base]] = [1, [[2], 3]];
+	console.log(foo);	//1
+	console.log(bar);	//2
+	console.log(base);	//3
+
+	let [, , third] = ["first", "second", "third"];
+	console.log(third);	//third
+
+	let [one, , three] = ["One", "Two", "Three"];
+	console.log(one);	//One
+	console.log(three);	//Three
+
+	let [head, ...tail] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+	console.log(head);	//0
+	console.log(tail);	//[1, 2, 3, 4, 5, 6, 7, 8, 9]
+</script>
+</script>
+</html>
+```
+![](http://i.imgur.com/wzhkAoi.png)
+
+## 解构失败
+
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数组解构</title>
+</head>
+<body>
+</body>
+<script>
+	var [temp] = [];
+	console.log(temp);	//undefined
+	var [first, second] = [100];
+	console.log(first);	//100
+	console.log(second);//undefined
+</script>
+</script>
+</html>
+```
+![](http://i.imgur.com/VrEE8ZY.png)
+
+## 不完全解构
+> 不会出现内存溢出等情况
+
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数组解构</title>
+</head>
+<body>
+</body>
+<script>
+	let [x, y] = [1, 2, 3];
+	console.log(x);	//1
+	console.log(y);	//2
+
+	let [a, [b], c] = [1, [2, 3], 4];
+	console.log(a);	//1
+	console.log(b);	//2
+	console.log(c);	//4
+</script>
+</script>
+</html>
+```
+![](http://i.imgur.com/udre3Ea.png)
+
+## 指定默认值
+> 注意：ES6内部使用严格相等运算符（===）判断一个位置是否有值。所以，如果一个数组成员不严格等于undefined，默认值是不会生效的。
+
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数组解构</title>
+</head>
+<body>
+</body>
+<script>
+	var [temp = "string"] = [];
+	console.log(temp);	//string
+
+	var [temp = "string"] = ["tempString"];
+	console.log(temp);	//tempString
+
+	var [x = "aaa", y] = ["bbb"];
+	console.log(x);	//bbb
+	console.log(y);	//undefined
+
+	var [m, n = "aaa"] = ["bbb"];
+	console.log(m);	//bbb
+	console.log(n);	//aaa
+
+	var [p, q = "aaa"] = ["bbb", undefined];
+	console.log(p);	//bbb
+	console.log(q);	//aaa
+</script>
+</html>
+```
+![](http://i.imgur.com/YVLyyMu.png)

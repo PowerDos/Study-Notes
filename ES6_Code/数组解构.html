@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数组解构</title>
+</head>
+<body>
+</body>
+<script>
+/*
+	console.log("ES5:");
+	var a = 1;
+	var b = 2;
+	var c = 3;
+
+	console.log(a);	//1
+	console.log(b);	//2
+	console.log(c);	//3
+
+	// ES6
+	console.log("ES6:")
+	var [d, e, f] = [4, 5, 6];
+
+	console.log(d);	//4
+	console.log(e);	//5
+	console.log(f);	//6
+*/
+
+/*
+	let [foo, [[bar], base]] = [1, [[2], 3]];
+	console.log(foo);	//1
+	console.log(bar);	//2
+	console.log(base);	//3
+
+	let [, , third] = ["first", "second", "third"];
+	console.log(third);	//third
+
+	let [one, , three] = ["One", "Two", "Three"];
+	console.log(one);	//One
+	console.log(three);	//Three
+
+	let [head, ...tail] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+	console.log(head);	//0
+	console.log(tail);	//[1, 2, 3, 4, 5, 6, 7, 8, 9]
+*/
+/*
+	var [temp] = [];
+	console.log(temp);	//undefined
+	var [first, second] = [100];
+	console.log(first);	//100
+	console.log(second);//undefined
+*/
+
+/*
+	let [x, y] = [1, 2, 3];
+	console.log(x);	//1
+	console.log(y);	//2
+
+	let [a, [b], c] = [1, [2, 3], 4];
+	console.log(a);	//1
+	console.log(b);	//2
+	console.log(c);	//4
+*/
+/*
+	var [temp = "string"] = [];
+	console.log(temp);	//string
+
+	var [temp = "string"] = ["tempString"];
+	console.log(temp);	//tempString
+
+	var [x = "aaa", y] = ["bbb"];
+	console.log(x);	//bbb
+	console.log(y);	//undefined
+
+	var [m, n = "aaa"] = ["bbb"];
+	console.log(m);	//bbb
+	console.log(n);	//aaa
+
+	var [p, q = "aaa"] = ["bbb", undefined];
+	console.log(p);	//bbb
+	console.log(q);	//aaa
+*/
+</script>
+</html>
