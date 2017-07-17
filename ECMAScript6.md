@@ -568,3 +568,73 @@ console.log(this.letName);		//undefined -- use strict
 </html>
 ```
 ![](http://i.imgur.com/YVLyyMu.png)
+
+# 对象解构
+> 对象的属性没有次序，变量必须与属性同名，才能取到正确的值
+
+## 解构无顺序之分
+### 顺序解构
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象解构</title>
+</head>
+<body>
+</body>
+<script>
+	var { name, age, id } = { name: "Gavin", age: 20, id: '006'};
+	console.log(name);
+	console.log(age);
+	console.log(id);
+</script>
+</html>
+```
+![](http://i.imgur.com/Glb7HR0.png)
+
+### 非顺序解构
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象解构</title>
+</head>
+<body>
+</body>
+<script>
+	var { name, age, id } = { id: '006', name: "Gavin", age: 20 };
+	console.log(name);
+	console.log(age);
+	console.log(id);
+</script>
+</html>
+```
+![](http://i.imgur.com/tEWZAQp.png)
+> 结果一样
+
+## 变量名和属性名不一致
+``` HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象解构</title>
+</head>
+<body>
+</body>
+<script>
+	var { name: person_name, age: person_age, id: person_id } = { id: "006", name: "Gavin", age: 21 };
+	console.log(person_name);	//Gavin	
+	console.log(person_age);	//21
+	console.log(person_id);		//006
+
+	let object = { first: "Hello", last: "World" };
+	let { first: firstName, last: lastName} = object;
+	console.log(firstName);	//Hello
+	console.log(lastName);	//World
+</script>
+</html>
+```
+![](http://i.imgur.com/F2ZrlZ0.png)

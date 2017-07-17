@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象解构</title>
+</head>
+<body>
+</body>
+<script>
+/*
+	var { name, age, id } = { name: "Gavin", age: 20, id: '006'};
+	console.log(name);
+	console.log(age);
+	console.log(id);
+*/
+/*
+	var { name, age, id } = { id: '006', name: "Gavin", age: 20 };
+	console.log(name);
+	console.log(age);
+	console.log(id);
+*/
+	var { name: person_name, age: person_age, id: person_id } = { id: "006", name: "Gavin", age: 21 };
+	console.log(person_name);	//Gavin	
+	console.log(person_age);	//21
+	console.log(person_id);		//006
+
+	let object = { first: "Hello", last: "World" };
+	let { first: firstName, last: lastName} = object;
+	console.log(firstName);	//Hello
+	console.log(lastName);	//World
+</script>
+</html>
