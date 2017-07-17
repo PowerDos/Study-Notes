@@ -194,3 +194,15 @@ router.post('/', function(req, res, next){
 
 module.exports = router;
 ```
+
+# ejs
+## 转义输出
+``` HTML
+<?= data ?>
+```
+> 转义输出到模板，比如<会被转换为&lt
+
+## 原样输出
+``` HTML
+<?- data ?>
+> 原样输出，json数据是什么，就输出什么。
