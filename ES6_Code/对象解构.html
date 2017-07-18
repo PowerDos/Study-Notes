@@ -30,3 +30,10 @@
 	console.log(lastName);	//World
 </script>
 </html>
+
+等于|	{<key>:<value>}	|db.student.find({"name":"Gavin"})
+小于|	{<key>:{$lt:<value>}}|	db.student.find({"likes":{$lt:50}})
+小于或等于|	{<key>:{$lte:<value>}}|	db.student.find({"likes":{$lte:50}})
+大于|	{<key>:{$gt:<value>}}|	db.student.find({"likes":{$gt:50}})
+大于或等于|	{<key>:{$gte:<value>}}|	db.student.find({"likes":{$gte:50}})
+不等于|	{<key>:{$ne:<value>}}|	db.student.find({"likes":{$ne:50}})

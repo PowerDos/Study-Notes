@@ -79,6 +79,9 @@ NoSQL数据库在以下的这几种情况下比较适用：
 
 ![](http://i.imgur.com/f4OH8B2.png)
 
+## 官方手册
+> [https://docs.mongodb.com/manual/](https://docs.mongodb.com/manual/)
+
 # 数据库操作
 ## 使用数据库或者创建数据库
 ```SQL
@@ -110,3 +113,68 @@ mongoimport --db School --collection student --drop --file D:/mongo.json
 > --file D:/mongo.json  哪个文件
 
 ![](http://i.imgur.com/TGU7v2r.png)
+
+## 查询数据
+### 查询所有数据
+```SQL
+db.student.find()
+```
+![](http://i.imgur.com/cKtqkD4.png)
+### 条件查询
+```SQL
+db.student.find({"name":"Gavin"})
+```
+![](http://i.imgur.com/GLRHbYH.png)
+
+
+### 查询嵌套数据
+> 先插入数据
+
+```SQL
+db.student.insert({"name":"Gavin", "age": "20", "score":{"math": 90, "Chinese":90}})
+```
+> 查询数据
+
+```SQL
+ db.student.find({"score.math":90})
+```
+![](http://i.imgur.com/rliFma7.png)
+
+### 多条件查询
+```SQL
+db.student.find({"name": "Gavin", "score.math":90})
+```
+![](http://i.imgur.com/VhQLV6S.png)
+
+### 查询条件
+> 比较语句
+
+操作|格式|范例
+--|--|---
+等于|	{<key>:<value>}	| db.student.find({"name":"Gavin"})
+小于|	{<key>:{$lt:<value>}}|	db.student.find({"age":{$lt:20}})
+小于或等于|	{<key>:{$lte:<value>}}|	db.student.find({"age":{$lte:20}})
+大于|	{<key>:{$gt:<value>}}|	db.student.find({"age":{$gt:20}})
+大于或等于|	{<key>:{$gte:<value>}}|	db.student.find({"age":{$gte:20}})
+不等于|	{<key>:{$ne:<value>}}|	db.student.find({"age":{$ne:20}})
+
+> 逻辑语句
+
+#### AND
+```SQL
+ db.student.find({"score.math":90})
+```
+> 官方手册
+
+![](http://i.imgur.com/lZYrTdg.png)
+
+#### OR
+> 寻找所有年龄是9岁，或者11岁的学生 
+
+```SQL
+db.student.find({$or:[{"age":9},{"age":11}]});
+```
+![](http://i.imgur.com/ichTi8t.png)
+
+#### AND 和 OR 混合使用
+![](http://i.imgur.com/alNqaic.png)
