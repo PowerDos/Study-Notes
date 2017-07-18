@@ -71,3 +71,42 @@ NoSQL数据库在以下的这几种情况下比较适用：
 > 新开窗口，输出 `mongo` 连接数据库
 
 ![](http://i.imgur.com/GArOujF.png)
+
+## MongoDB 可视化工具
+> MongoVUE<br>
+> 下载地址：[http://www.mongovue.com/](http://www.mongovue.com/)<br>
+> 需要翻墙
+
+![](http://i.imgur.com/f4OH8B2.png)
+
+# 数据库操作
+## 使用数据库或者创建数据库
+```SQL
+use School
+``` 
+> 如果真的想把这个数据库创建成功，那么必须插入一个数据。
+
+## 删除数据库
+> 删除数据库，删除当前所在的数据库
+
+``` SQL
+db.dropDatabase();
+```
+
+## 添加数据
+### 命令行单条插入
+``` SQL
+db.student.insert({"name":"Gavin",age:"20",sex:"male"})
+```
+![](http://i.imgur.com/VD0jka8.png)
+
+### 通过文件导入
+```
+mongoimport --db School --collection student --drop --file D:/mongo.json
+```
+> --db School  想往哪个数据库里面导入<br>
+> --collection student  想往哪个集合中导入<br>
+> --drop 把集合清空<br>
+> --file D:/mongo.json  哪个文件
+
+![](http://i.imgur.com/TGU7v2r.png)
