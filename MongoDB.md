@@ -112,7 +112,8 @@ mongoimport --db School --collection student --drop --file D:/mongo.json
 > --drop 把集合清空<br>
 > --file D:/mongo.json  哪个文件
 
-![](http://i.imgur.com/TGU7v2r.png)
+![](http://i.imgur.com/TGU7v2r.png)<br>
+![](http://i.imgur.com/ky17LV0.png)
 
 ## 查询数据
 ### 查询所有数据
@@ -178,3 +179,100 @@ db.student.find({$or:[{"age":9},{"age":11}]});
 
 #### AND 和 OR 混合使用
 ![](http://i.imgur.com/alNqaic.png)
+
+## 更新数据
+> 更新格式
+
+```SQL
+db.collection.updateOne(<filter>, <update>, <options>)
+db.collection.updateMany(<filter>, <update>, <options>)
+db.collection.replaceOne(<filter>, <replacement>, <options>)
+db.collection.update(<filter>, <replacement>, <options>)
+```
+> 实例
+
+```SQL
+db.student.update({"name": "Gavin"},{$set:{"age":"21"}});
+```
+> DOS 记录
+
+```SHELL
+> db.student.find()
+{ "_id" : ObjectId("596da94b7d8c9bcb984713fa"), "name" : "Gavin", "age" : "20",
+"sex" : "male" }
+> db.student.update({"name": "Gavin"},{$set:{"age": "21"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("596da94b7d8c9bcb984713fa"), "name" : "Gavin", "age" : "21",
+"sex" : "male" }
+>
+```
+![](http://i.imgur.com/wX0idcv.png)
+> 详细解释
+
+```SQL
+db.student.update(
+	{
+		"name": "Gavin" //定位到要更改的地方
+	},
+	{
+		$set:{
+				"age":"21" //更改字段的内容
+			}
+	}
+);
+```
+![](http://i.imgur.com/R0z1WWa.png)
+
+### 更改所以匹配项
+> 加入 multi: true 可以更改所有匹配项
+
+```SQL
+db.student.update({"sex":"male"},{$set:{"age":33}},{multi: true});
+```
+
+### 完整替换
+> 但没有给$set的时候，会将后面的json数据完整替换掉前面匹配到的数据
+
+```SQL
+db.student.update({"name": "Gavin"},{$set:{"age":"21"}});
+```
+> DOS 记录
+
+```SQL
+> db.student.find()
+
+{ "_id" : ObjectId("596ef8b427b1e053b47adf48"), "name" : "Gavin1", "age" : 21, "sex" : "male", "score" : { "math" : 90, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf49"), "name" : "Gavin3", "age" : 23, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4a"), "name" : "Gavin5", "age" : 25, "sex" : "male", "score" : { "math" : 90, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4b"), "name" : "Gavin6", "age" : 26, "sex" : "male", "score" : { "math" : 80, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4c"), "name" : "Gavin2", "age" : 22, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4d"), "name" : "Gavin7", "age" : 27, "sex" : "male", "score" : { "math" : 90, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4e"), "name" : "Gavin8", "age" : 28, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4f"), "name" : "Gavin9", "age" : 29, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf50"), "name" : "Gavin4", "age" : 24, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf51"), "name" : "Gavin10", "age" : 30,"sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+
+> db.student.update({"name": "Gavin1"},{"modify":"all json"})
+
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.student.find()
+
+{ "_id" : ObjectId("596ef8b427b1e053b47adf48"), "modify" : "all json" }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf49"), "name" : "Gavin3", "age" : 23, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4a"), "name" : "Gavin5", "age" : 25, "sex" : "male", "score" : { "math" : 90, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4b"), "name" : "Gavin6", "age" : 26, "sex" : "male", "score" : { "math" : 80, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4c"), "name" : "Gavin2", "age" : 22, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4d"), "name" : "Gavin7", "age" : 27, "sex" : "male", "score" : { "math" : 90, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4e"), "name" : "Gavin8", "age" : 28, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4f"), "name" : "Gavin9", "age" : 29, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf50"), "name" : "Gavin4", "age" : 24, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf51"), "name" : "Gavin10", "age" : 30,"sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+
+>
+```
+
+### 其他
+> 见文档 [https://docs.mongodb.com/manual/tutorial/update-documents/](https://docs.mongodb.com/manual/tutorial/update-documents/)
+
