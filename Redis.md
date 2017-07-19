@@ -1,8 +1,20 @@
 # Redis
+### 简介
+> Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.<br>
+redis是开源,BSD许可,高级的key-value存储系统. 可以用来存储字符串,哈希结构,链表,集合,因此,常用来提供数据结构服务.
+
+### redis 和 memcached的比较
+1. redis可以用来做存储(storge), 而memcached是用来做缓存(cache)这个特点主要因为其有”持久化”的功能.
+2. 存储的数据有"结构",对于memcached来说,存储的数据,只有1种类型--”字符串”,而redis则可以存储字符串,链表,哈希结构,集合,有序集合.
+
+### 特点
 > Redis 与其他 key - value 缓存产品有以下三个特点：
 - Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。
 - Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。
 - Redis支持数据的备份，即master-slave模式的数据备份。 
+
+### 官网
+> [https://redis.io/](https://redis.io/)
 
 # 安装Redis
 > 环境:windows 7 64位
