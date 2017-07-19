@@ -276,3 +276,149 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 ### 其他
 > 见文档 [https://docs.mongodb.com/manual/tutorial/update-documents/](https://docs.mongodb.com/manual/tutorial/update-documents/)
 
+## 删除数据
+### 删除一条数据
+```SHELL
+db.student.deleteOne({"name": "Gavin2"})
+```
+> DOS 记录
+
+```Shell
+> db.student.find()
+
+{ "_id" : ObjectId("596ef8b427b1e053b47adf48"), "modify" : "all json" }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf49"), "name" : "Gavin3", "age" : 23, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4a"), "name" : "Gavin5", "age" : 25, "sex" : "male", "score" : { "math" : 90, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4b"), "name" : "Gavin6", "age" : 26, "sex" : "male", "score" : { "math" : 80, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4c"), "name" : "Gavin2", "age" : 22, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4d"), "name" : "Gavin7", "age" : 27, "sex" : "male", "score" : { "math" : 90, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4e"), "name" : "Gavin8", "age" : 28, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4f"), "name" : "Gavin9", "age" : 29, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf50"), "name" : "Gavin4", "age" : 24, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf51"), "name" : "Gavin10", "age" : 30, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+
+> db.student.deleteOne({"name":"Gavin2"})
+
+{ "acknowledged" : true, "deletedCount" : 1 }
+
+> db.student.find()
+
+{ "_id" : ObjectId("596ef8b427b1e053b47adf48"), "modify" : "all json" }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf49"), "name" : "Gavin3", "age" : 23, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4a"), "name" : "Gavin5", "age" : 25, "sex" : "male", "score" : { "math" : 90, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4b"), "name" : "Gavin6", "age" : 26, "sex" : "male", "score" : { "math" : 80, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4d"), "name" : "Gavin7", "age" : 27, "sex" : "male", "score" : { "math" : 90, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4e"), "name" : "Gavin8", "age" : 28, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4f"), "name" : "Gavin9", "age" : 29, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf50"), "name" : "Gavin4", "age" : 24, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf51"), "name" : "Gavin10", "age" : 30, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+```
+
+### 删除全部数据
+```SQL
+db.student.deleteMany({})
+```
+
+### 删除多条数据
+> 删除匹配到的所以数据
+
+```SQL
+db.student.deleteMany({"score.math":90})
+```
+> DOS 记录
+
+``` SHELL
+> db.student.find()
+
+{ "_id" : ObjectId("596ef8b427b1e053b47adf48"), "modify" : "all json" }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf49"), "name" : "Gavin3", "age" : 23, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4a"), "name" : "Gavin5", "age" : 25, "sex" : "male", "score" : { "math" : 90, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4b"), "name" : "Gavin6", "age" : 26, "sex" : "male", "score" : { "math" : 80, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4d"), "name" : "Gavin7", "age" : 27, "sex" : "male", "score" : { "math" : 90, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4e"), "name" : "Gavin8", "age" : 28, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4f"), "name" : "Gavin9", "age" : 29, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf50"), "name" : "Gavin4", "age" : 24, "sex" : "male", "score" : { "math" : 90, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf51"), "name" : "Gavin10", "age" : 30, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+
+> db.student.deleteMany({"score.math":90})
+
+{ "acknowledged" : true, "deletedCount" : 4 }
+
+> db.student.find()
+
+{ "_id" : ObjectId("596ef8b427b1e053b47adf48"), "modify" : "all json" }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf49"), "name" : "Gavin3", "age" : 23, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4b"), "name" : "Gavin6", "age" : 26, "sex" : "male", "score" : { "math" : 80, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4e"), "name" : "Gavin8", "age" : 28, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf51"), "name" : "Gavin10", "age" : 30, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+
+>
+```
+
+### 即可删除单条又可删除多条
+```SQL
+db.collection.remove(
+   <query>,
+   {
+     justOne: <boolean>,
+     writeConcern: <document>,
+     collation: <document>
+   }
+)
+```
+#### remove 删除匹配到的单条数据
+> `{justOne:true}` 加上这个表示只删除一个
+
+```SQL
+db.student.remove({"score.Chinese":89},{justOne:true})
+```
+> DOS 记录
+
+```SHELL
+> db.student.find()
+
+{ "_id" : ObjectId("596ef8b427b1e053b47adf48"), "modify" : "all json" }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf49"), "name" : "Gavin3", "age" : 23, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4b"), "name" : "Gavin6", "age" : 26, "sex" : "male", "score" : { "math" : 80, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4e"), "name" : "Gavin8", "age" : 28, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf51"), "name" : "Gavin10", "age" : 30, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+
+> db.student.remove({"score.Chinese":89},{justOne:true})
+
+WriteResult({ "nRemoved" : 1 })
+
+> db.student.find()
+
+{ "_id" : ObjectId("596ef8b427b1e053b47adf48"), "modify" : "all json" }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4b"), "name" : "Gavin6", "age" : 26, "sex" : "male", "score" : { "math" : 80, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4e"), "name" : "Gavin8", "age" : 28, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf51"), "name" : "Gavin10", "age" : 30, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+
+>
+```
+#### remove 删除匹配到的所有数据
+> SQL语句
+
+```SQL
+db.student.remove({"score.math":80})
+```
+> DOS 记录
+
+```SHELL
+> db.student.find()
+
+{ "_id" : ObjectId("596ef8b427b1e053b47adf48"), "modify" : "all json" }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4b"), "name" : "Gavin6", "age" : 26, "sex" : "male", "score" : { "math" : 80, "Chinese" : 88 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf4e"), "name" : "Gavin8", "age" : 28, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+{ "_id" : ObjectId("596ef8b427b1e053b47adf51"), "name" : "Gavin10", "age" : 30, "sex" : "male", "score" : { "math" : 80, "Chinese" : 89 } }
+
+> db.student.remove({"score.math":80})
+
+WriteResult({ "nRemoved" : 3 })
+
+> db.student.find()
+
+{ "_id" : ObjectId("596ef8b427b1e053b47adf48"), "modify" : "all json" }
+
+>
+```
