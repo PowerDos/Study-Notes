@@ -1223,3 +1223,6 @@ app.use(Session({
   }
 }));
 ```
+![](http://i.imgur.com/m2pp1ui.png)
+![](http://i.imgur.com/uuNM5kZ.png)
+![](http://i.imgur.com/pufqOgH.png)
