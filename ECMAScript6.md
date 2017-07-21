@@ -638,3 +638,72 @@ console.log(this.letName);		//undefined -- use strict
 </html>
 ```
 ![](http://i.imgur.com/F2ZrlZ0.png)
+
+# class, extends, super
+> ES6提供了更接近传统语言的写法，引入了Class（类）这个概念。新的class写法让对象原型的写法更加清晰、更像面向对象编程的语法，也更加通俗易懂。
+
+```JavaScript
+class Animal {
+    constructor(){
+        this.type = 'animal'
+    }
+    says(say){
+        console.log(this.type + ' says ' + say)
+    }
+}
+
+let animal = new Animal()
+animal.says('hello') //animal says hello
+
+class Cat extends Animal {
+    constructor(){
+        super()
+        this.type = 'cat'
+    }
+}
+
+let cat = new Cat()
+cat.says('hello') //cat says hello
+```
+
+# arrow function
+> ES6最最常用的一个新特性了，用它来写function比原来的写法要简洁清晰很多
+
+```Javascript
+function(i){ 
+	return i + 1;
+} //ES5
+(i) => i + 1 //ES6
+```
+> 如果方程比较复杂，则需要用{}把代码包起来：
+
+```javascript
+function(x, y) { 
+    x++;
+    y--;
+    return x + y;
+}
+(x, y) => {x++; y--; return x+y}
+```
+
+# template string
+> 当我们要插入大段的html内容到文档中时，传统写法
+
+```javascript
+$("#result").append(
+  "There are <b>" + basket.count + "</b> " +
+  "items in your basket, " +
+  "<em>" + basket.onSale +
+  "</em> are on sale!"
+);
+```
+> 新写法，引入模板工具库
+
+```javascript
+$("#result").append(`
+  There are <b>${basket.count}</b> items
+   in your basket, <em>${basket.onSale}</em>
+  are on sale!
+`);
+```
+> 用反引号（`）来标识起始，用${}来引用变量，而且所有的空格和缩进都会被保留在输出之中
