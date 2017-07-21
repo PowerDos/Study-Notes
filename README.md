@@ -57,7 +57,8 @@
 	- [删除数据](#删除数据)
 15. [HTTP模块](#http模块)
 16. [静态文件夹](#静态文件夹)
-
+17. [Cookie](#cookie)
+18. [Session](#session)
 # Introduction
 ## 简介 
 > Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。<br> 
@@ -1107,4 +1108,118 @@ server.listen(3000,"127.0.0.1");
     <h1>这是一个404页面</h1>
 </body>
 </html>
+```
+# Cookie
+> 加载中间件
+
+```javascript
+var cookieParser = require('cookie-parser');
+var app = express();
+app.use(cookieParser());
+```
+> 页面(Express 路由)
+
+```javascript
+var express = require('express');
+var router = express.Router();
+
+router.get('/', function(req, res, next) {
+  res.cookie("name","Gavin",{maxAge: 900000, httpOnly:true });
+  res.send(req.cookies.name);
+});
+
+module.exports = router;
+```
+![](http://i.imgur.com/FAvTYJn.png)
+![](http://i.imgur.com/WG4haqb.png)
+
+# Session
+> 安装express-session模块（基于express）
+
+```SHELL
+npm install express-session --save
+```
+> 中间件
+
+``` Javascript
+app.use(session({
+    name: "sid",
+    store: new RedisStore({
+        client: Redis(666),
+        ttl: 60
+    }),
+    resave: true,
+    rolling: true,
+    saveUninitialized: true,
+    cookie: { 
+    	secure: true,
+    	maxAge: 60000
+  	},                                               
+    secret: '123456'
+}));
+```
+> 参数说明
+
+### 属性
+- **secret:** 一个String类型的字符串，作为服务器端生成session的签名。
+- **name:** 返回客户端的key的名称，默认为connect.sid,也可以自己设置。
+- **resave:** (是否允许)当客户端并行发送多个请求时，其中一个请求在另一个请求结束时对session进行修改覆盖并保存。默认为true。但是(后续版本)有可能默认失效，所以最好手动添加。
+- **saveUninitialized:** 初始化session时是否保存到存储。默认为true， 但是(后续版本)有可能默认失效，所以最好手动添加。
+- **cookie:** 设置返回到前端key的属性，默认值为{ path: ‘/', httpOnly: true, secure: false, maxAge: null } 。cookie.secure 选项使用注意事项，将此设置为true时，如果浏览器没有使用HTTPS连接，客户端将不会将cookie发送回服务器。
+- **rolling:** 强制在每一个response中都发送session标识符的cookie。如果把expiration设置为一个过去的时间那么 那么过期时间设置为默认的值。roling默认是false。如果把这个值设置为true但是saveUnitialized设置为false,那么cookie不会被包含在响应中(没有初始化的session)
+- **store:** 用于保存session的地方，默认是一个MemoryStore，但是在生产环境下不建议使用MemoryStore,同时store有很多自定义的方法，如这里就为他添加了generate,connect,disconnect，当然也包含destroy方法
+- **unset:** 对没有设置的req.session进行控制，通过delete或者设置为null。默认是keep,destory表示当回应结束后会销毁session，keep表示session会被保存。但是在请求中对session的修改会被忽略，也不会保存
+
+### 方法
+- **Session.destroy():** 删除session，当检测到客户端关闭时调用。
+
+- **Session.reload():** 当session有修改时，刷新session。
+
+- **Session.regenerate()：** 将已有session初始化。
+
+- **Session.save()：** 保存session。
+
+> demo
+
+### router.js
+```javascript
+var express = require('express');
+var router = express.Router();
+
+/* GET home page. */
+router.get('/', function(req, res) {
+    console.log(req.session.login + " , " + req.session.username);
+    if(req.session.login){
+        res.send("欢迎" + req.session.username);
+    }else{
+        res.send("请先登录");
+    }
+});
+
+router.get('/login', function(req, res){
+    req.session.login = true;
+    req.session.username = "Gavin";
+    console.log("login:" + req.session.login);
+    res.send("登录成功！");
+
+});
+module.exports = router;
+```
+### app.js
+> 只写出关键语句
+
+```javascript
+var express = require('express');
+var cookieParser = require('cookie-parser');
+var Session = require('express-session');
+var app = express();
+app.use(cookieParser());
+app.use(Session({
+  secret: 'abcdef',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { 
+    maxAge: 60000
+  }
+}));
 ```
