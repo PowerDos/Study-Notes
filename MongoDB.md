@@ -15,6 +15,7 @@
 	- [开启数据库](#开启数据库)
 	- [MongoDB 可视化工具](#mongodb-可视化工具)
 	- [官方手册](#官方手册)
+	- [Linux 下安装 MongoDB](#linux-下安装-mongodb)
 2. [数据库操作](#数据库操作)
 	- [使用数据库或者创建数据库](#使用数据库或者创建数据库)
 	- [删除数据库](#删除数据库)
@@ -132,20 +133,20 @@ nohttpinterface = true
 ```
 ### 重新绑定mongodb的配置文件地址和访问IP并启动
 > 启动命令常用选项说明：
-    --dbpath 指定数据库的目录。
-    --port 指定数据库端口，模式是27017。
-    --bind_ip 绑定IP。
-    --derectoryperdb为每个db创建一个独立子目录。
-    --logpath 指定日志存放目录。
-    --logappend 指定日志生成方式（追加/覆盖）。
-    --pidfilepath 指定进程文件路径，如果不指定，将不产生进程文件。
-    --keyFile 集群模式的关键标识
-    --journal 启用日志
-    --nssize 指定.ns文件的大小，单位MB，默认是16M，最大2GB。
-    --maxConns 最大的并发连接数。
-    --notablescan 不允许进行表扫描
-    --noprealloc 关闭数据文件的预分配功能
-    --fork 以后台Daemon形式运行服务
+- --dbpath 指定数据库的目录。
+- --port 指定数据库端口，模式是27017。
+- --bind_ip 绑定IP。
+- --derectoryperdb为每个db创建一个独立子目录。
+- --logpath 指定日志存放目录。
+- --logappend 指定日志生成方式（追加/覆盖）。
+- --pidfilepath 指定进程文件路径，如果不指定，将不产生进程文件。
+- --keyFile 集群模式的关键标识
+- --journal 启用日志
+- --nssize 指定.ns文件的大小，单位MB，默认是16M，最大2GB。
+- --maxConns 最大的并发连接数。
+- --notablescan 不允许进行表扫描
+- --noprealloc 关闭数据文件的预分配功能
+- --fork 以后台Daemon形式运行服务
 
 ```
 /usr/local/mongodb/bin/mongod --bind_ip 127.0.0.1 -f /usr/local/mongodb/bin/mongodb.conf
