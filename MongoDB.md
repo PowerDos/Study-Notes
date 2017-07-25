@@ -103,6 +103,69 @@ NoSQL数据库在以下的这几种情况下比较适用：
 ## 官方手册
 > [https://docs.mongodb.com/manual/](https://docs.mongodb.com/manual/)
 
+## Linux 下安装 MongoDB
+### 下载MongoDB
+```
+wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-3.4.6.tgz
+```
+### 安装MongoDB
+```
+tar zxvf mongodb-linux-x86_64-rhel70-3.4.6.tgz 
+mv mongodb-linux-x86_64-rhel70-3.4.6 /usr/local/mongodb
+cd /usr/local/mongodb/
+mkdir db
+mkdir logs
+```
+### 创建配置文件 
+```
+cd bin/
+vim mongodb.conf
+```
+> 在mongodb.conf 写入下面文件并保存
+
+```SHELL
+dbpath = /usr/local/mongodb/db # 数据文件存放目录
+logpath = /usr/local/mongodb/logs/mongodb.log # 日志文件存放目录
+port = 27017  # 端口
+fork = true  # 以守护程序的方式启用，即在后台运行
+nohttpinterface = true
+```
+### 重新绑定mongodb的配置文件地址和访问IP并启动
+> 启动命令常用选项说明：
+    --dbpath 指定数据库的目录。
+    --port 指定数据库端口，模式是27017。
+    --bind_ip 绑定IP。
+    --derectoryperdb为每个db创建一个独立子目录。
+    --logpath 指定日志存放目录。
+    --logappend 指定日志生成方式（追加/覆盖）。
+    --pidfilepath 指定进程文件路径，如果不指定，将不产生进程文件。
+    --keyFile 集群模式的关键标识
+    --journal 启用日志
+    --nssize 指定.ns文件的大小，单位MB，默认是16M，最大2GB。
+    --maxConns 最大的并发连接数。
+    --notablescan 不允许进行表扫描
+    --noprealloc 关闭数据文件的预分配功能
+    --fork 以后台Daemon形式运行服务
+
+```
+/usr/local/mongodb/bin/mongod --bind_ip 127.0.0.1 -f /usr/local/mongodb/bin/mongodb.conf
+```
+### 建立软连接
+```
+ln -s /usr/local/mongodb/bin/mongo /usr/local/bin/mongo   
+ln -s /usr/local/mongodb/bin/mongod /usr/local/bin/mongod
+ln -s /usr/local/mongodb/bin/mongostat /usr/local/bin/mongostat
+```
+### 设置开机自启
+```
+vim /etc/rc.d/rc.local
+```
+> 添加
+
+```
+/usr/local/mongodb/bin/mongod --bind_ip 127.0.0.1 -f /usr/local/mongodb/bin/mongodb.conf
+```
+
 # 数据库操作
 ## 使用数据库或者创建数据库
 ```SQL
