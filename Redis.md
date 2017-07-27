@@ -32,6 +32,58 @@ redis是开源,BSD许可,高级的key-value存储系统. 可以用来存储字�
 
 > 安装成功
 
+## Liunx 下安装redis
+### 安装redis
+> 下载redis
+
+```shell
+wget http://download.redis.io/releases/redis-4.0.1.tar.gz
+```
+
+> 解压
+
+```shell
+tar -zxvf redis-4.0.1.tar.gz
+```
+
+> 进入目录，编译
+
+```
+cd redis-4.0.1
+make
+```
+### 配置
+> 进入目录并创建软连接
+
+```shell
+cd src
+ln -s /usr/local/redis-4.0.1/src/redis-server /usr/local/bin/redis-server
+ln -s /usr/local/redis-4.0.1/src/redis-cli /usr/local/bin/redis-cli
+```
+
+> 复制配置文件到/etc下
+
+```
+cp reids.conf /etc/
+```
+> 让redis后台运行
+
+```
+vi /etc/redis.conf
+
+# 修改daemonize配置项为yes，使Redis进程在后台运行：
+daemonize yes
+```
+> 设置开机自启
+
+```shell
+vim /etc/rc.d/rc.local
+
+# 添加
+redis-server /etc/redis.conf
+```
+
+
 # Redis持久化
 >redis提供了两种持久化的方式，分别是RDB（Redis DataBase）和AOF（Append Only File）。RDB，简而言之，就是在不同的时间点，将redis存储的数据生成快照并存储到磁盘等介质上；AOF，则是换了一个角度来实现持久化，那就是将redis执行过的所有写指令记录下来，在下次redis重新启动时，只要把这些写指令从前到后再重复执行一遍，就可以实现数据恢复了。其实RDB和AOF两种方式也可以同时使用，在这种情况下，如果redis重启的话，则会优先采用AOF方式来进行数据恢复，这是因为AOF方式的数据恢复完整度更高。如果你没有数据持久化的需求，也完全可以关闭RDB和AOF方式，这样的话，redis将变成一个纯内存数据库，就像memcache一样。
 
