@@ -509,3 +509,105 @@ WriteResult({ "nRemoved" : 3 })
 ```
 # Mongoose
 > 是一个将JavaScript对象与数据库产生关系的一个框架，object related model。操作对象，就是操作数据库了；对象产生了，同时也持久化了。这个思路是Java三大框架SSH中Hibernate框架的思路。彻底改变了人们使用数据库的方式。
+
+### demo
+```
+//链接数据库,animal是数据库名字
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/animal');
+
+//创建了一个模型。猫的模型。所有的猫，都有名字，是字符串。“类”。
+var Cat = mongoose.model('Cat', { name: String });
+//实例化一只猫
+var kitty = new Cat({ name: 'Tom' });
+//调用这只猫的save方法，保存这只猫
+kitty.save(function (err) {
+    console.log('喵喵喵');
+});
+
+var tom = new Cat({"name":"汤姆"});
+tom.save(function(){
+    console.log('喵喵喵');
+});
+```
+![](http://i.imgur.com/cpaWsGh.png)
+
+### 连接数据库
+> demo
+
+```javascript
+mongoose.connect('mongodb://localhost/myapp');
+// myapp 为数据库名
+
+// 也可以这样
+mongoose.connect('mongodb://username:password@host:port/database?options...');
+
+//或者这样
+mongoose.connect(uri, options);
+```
+> options
+
+- db             - passed to the [underlying driver's db instance](http://mongodb.github.io/node-mongodb-native/2.1/api/Db.html)
+- server         - passed to the [underlying driver's server instance(s)](http://mongodb.github.io/node-mongodb-native/2.1/api/Server.html)
+-  replset        - passed to the [underlying driver's ReplSet instance](http://mongodb.github.io/node-mongodb-native/2.1/api/ReplSet.html)
+- user           - username for authentication (if not specified in uri)
+- pass           - password for authentication (if not specified in uri)
+- auth           - options for authentication
+- mongos         - passed to the [underlying driver's mongos options](http://mongodb.github.io/node-mongodb-native/2.1/api/Mongos.html)
+- promiseLibrary - sets the [underlying driver's promise library](http://mongodb.github.io/node-mongodb-native/2.1/api/MongoClient.html)
+
+> Example
+
+```javascript
+var options = {
+  db: { native_parser: true },
+  server: { poolSize: 5 },
+  replset: { rs_name: 'myReplicaSetName' },
+  user: 'myUserName',
+  pass: 'myPassword'
+}
+mongoose.connect(uri, options);
+```
+### Mongoose实例
+> ./models/conn_mongo.js
+
+```javascript
+const mongoose = require('mongoose');
+var db = mongoose.createConnection('mongodb://localhost/School');
+db.on('error', function(err){
+    console.log("connect error: " + err);
+});
+db.once('open', function(callback){
+    console.log('数据库连接成功');
+});
+module.exports = db;
+```
+> ./models/studentSchema.js
+
+```javascript
+const mongoose = require('mongoose');
+const db = require('./conn_mongo');
+var studentSchema = mongoose.Schema({
+    name: { type: String },
+    age: { type: Number },
+    sex: { type: String }
+});
+
+var studentModel = db.model('student', studentSchema);
+
+module.exports = studentModel;
+
+```
+> app.js
+
+```javascript
+var student = require('./models/studentSchema');
+var Gavin = new student({"name": "Gavin", "age": 20, "sex": "male"});
+Gavin.save(function(){
+    console.log('存储成功');
+})
+```
+> 运行结果
+
+![](http://i.imgur.com/mlL6QNV.png)<br>
+![](http://i.imgur.com/Yetd80U.png)

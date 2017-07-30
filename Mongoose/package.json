@@ -1,0 +1,17 @@
+{
+  "name": "mongoose-demo",
+  "version": "1.0.0",
+  "description": "Mongoose demo",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mongoose-demo"
+  ],
+  "author": "Gavin Lin",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^4.11.4"
+  }
+}
