@@ -593,21 +593,145 @@ var studentSchema = mongoose.Schema({
     sex: { type: String }
 });
 
+// 查询静态方法， 静态方法在Model层就能使用
+studentSchema.statics.findStudentByName = function(name, callback){
+    this.model('student').find( {name: name}, callback );
+}
+
+// 修改的静态方法
+studentSchema.statics.updateStudent = function(conditions, update, options, callback ){
+    this.model("student").update(conditions, update, options, callback);
+}
+
 var studentModel = db.model('student', studentSchema);
 
 module.exports = studentModel;
-
 ```
 > app.js
 
 ```javascript
 var student = require('./models/studentSchema');
-var Gavin = new student({"name": "Gavin", "age": 20, "sex": "male"});
+// 对象操作
+var Gavin = new student({"name": "Gavin2", "age": 20, "sex": "male"});
 Gavin.save(function(){
     console.log('存储成功');
 })
+
+// Model 操作
+// 查询
+student.findStudentByName("Gavin",function(err, result){
+    if(err){
+        console.log(err);
+    }else{
+        console.log(result);
+    }
+});
+
+// 更新
+student.updateStudent({name: "Gavin"}, { $set: {age: 21} }, {}, function(err){
+    if(err){
+        console.log(err);
+    }else{
+        console.log("修改成功");
+    }
+});
+
 ```
 > 运行结果
 
 ![](http://i.imgur.com/mlL6QNV.png)<br>
 ![](http://i.imgur.com/Yetd80U.png)
+
+### 添加数据
+> 基于entity
+
+```javascript
+// 增加记录 基于 entity 操作
+var doc = {username : 'emtity_demo_username', title : 'emtity_demo_title', content : 'emtity_demo_content'};
+var mongooseEntity = new mongooseModel(doc);
+mongooseEntity.save(function(error) {
+    if(error) {
+        console.log(error);
+    } else {
+        console.log('saved OK!');
+    }
+    // 关闭数据库链接
+    db.close();
+});
+```
+> 基于Model
+
+```javascript
+// 增加记录 基于model操作
+var doc = {username : 'model_demo_username', title : 'model_demo_title', content : 'model_demo_content'};
+mongooseModel.create(doc, function(error){
+    if(error) {
+        console.log(error);
+    } else {
+        console.log('save ok');
+    }
+    // 关闭数据库链接
+    db.close();
+});
+```
+### 删除数据
+```javascript
+// 删除记录
+var conditions = {username: 'emtity_demo_username'};
+mongooseModel.remove(conditions, function(error){
+    if(error) {
+        console.log(error);
+    } else {
+        console.log('delete ok!');
+    }
+
+    //关闭数据库链接
+    db.close();
+});
+```
+
+### 修改数据
+```javascript
+mongooseModel.update(conditions, update, options, function(error){
+    if(error) {
+        console.log(error);
+    } else {
+        console.log('update ok!');
+    }
+    //关闭数据库链接
+    db.close();
+});
+```
+
+### 查找数据
+> 基于model
+
+```javascript
+mongooseModel.find(criteria, fields, options, function(error, result){
+    if(error) {
+        console.log(error);
+    } else {
+        console.log(result);
+    }
+    //关闭数据库链接
+    db.close();
+});
+```
+> 基于entity
+
+```javascript
+// 查询静态方法， 静态方法在Model层就能使用
+studentSchema.statics.findStudentByName = function(name, callback){
+    this.model('student').find( {name: name}, callback );
+}
+```
+```javascript
+student.findStudentByName("Gavin",function(err, result){
+    if(err){
+        console.log(err);
+    }else{
+        console.log(result);
+    }
+});
+```
+
