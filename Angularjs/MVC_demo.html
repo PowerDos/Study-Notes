@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>简单小实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例</h1>
+		<form action="">
+			<div class="form-group">
+				<label for="">实时输入显示：</label>
+				<!-- Model -->
+				<input type="text" class="form-control" ng-model='msg'>
+			</div>
+		</form>
+		<!-- view -->
+		<!-- 写法一 -->
+		<!-- <div class="well"> Gavin: {{ msg }} </div> -->
+		<!-- 写法二 -->
+		<div class="well">Gavin: <span ng-bind="msg"></span></div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope) {
+		// 控制器代码逻辑范围
+		// 赋初值，因为Angular的双向绑定，所以其他地方也会同步显示
+		$scope.msg = "Study Note"; 
+	})
+</script>
+</html>
