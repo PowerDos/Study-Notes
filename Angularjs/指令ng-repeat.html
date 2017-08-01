@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+	<style>
+		th{
+			text-align: center;
+		}
+	</style>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<table class="table table-bordered table-hover">
+			<tr>
+				<th>序号</th>
+				<th>账号</th>
+				<th>用户名</th>
+				<th>密码</th>
+				<th>操作</th>
+			</tr>
+			<tr ng-repeat="user in users">
+				<th>{{ $index }}</th>
+				<th>{{ user.userid }}</th>
+				<th>{{ user.username }}</th>
+				<th>{{ user.password }}</th>
+				<th><a href="">删除</a></th>
+			</tr>
+		</table>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope) {
+		$scope.users = [
+			{'userid': "1001", "username": "Gavin1", "password": "123"},
+			{'userid': "1002", "username": "Gavin2", "password": "123"},
+			{'userid': "1003", "username": "Gavin3", "password": "123"},
+			{'userid': "1004", "username": "Gavin4", "password": "123"},
+			{'userid': "1005", "username": "Gavin5", "password": "123"},
+			{'userid': "1006", "username": "Gavin6", "password": "123"},
+			{'userid': "1007", "username": "Gavin7", "password": "123"},
+			{'userid': "1008", "username": "Gavin8", "password": "123"},
+			{'userid': "1009", "username": "Gavin9", "password": "123"},
+			{'userid': "1010", "username": "Gavin10", "password": "123"}
+		];
+	})
+</script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<form action="">
+			<div class="form-group">
+				<label for="">第一个数：</label>
+				<!-- Model -->
+				<input type="text" class="form-control" ng-model='num_1'>
+				<label for="">第二个数：</label>
+				<!-- Model -->
+				<input type="text" class="form-control" ng-model='num_2'>
+			</div>
+		</form>
+		<!-- view -->
+		<!-- 写法一 -->
+	<!--<div class="well">加: <span ng-bind="tot()"></span></div>
+		<div class="well">字符串连接: <span ng-bind="num_1 + num_2"></span></div> -->
+		<!-- 写法二 -->
+		<div class="well">加: {{ tot() }}</span></div>
+		<div class="well">字符串连接: {{ num_1 + num_2 }}</span></div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope) {
+		$scope.tot = function(){
+			var total = parseInt($scope.num_1) + parseInt($scope.num_2);
+			return total ? total : 0;
+		}
+	})
+</script>
+</html>

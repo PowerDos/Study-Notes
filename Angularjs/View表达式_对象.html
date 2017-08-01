@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<!-- <body ng-app="myapp" ng-controller='myctl' ng-init="person={firstName:'Gavin',lastName:'Lin'}"> -->
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<div class="well">姓名: {{ person.firstName + " " + person.lastName }}</span></div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope) {
+		// 可以用ng-init初始化数据，也可以用下面的直接初始化数据
+		$scope.person = {
+			firstName: "Gavin",
+			lastName: "Lin"
+		};
+	})
+</script>
+</html>
