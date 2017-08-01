@@ -75,7 +75,7 @@
 ![](http://i.imgur.com/Fut3UJk.png)
 
 # 表达式
-### 减乘除余等
+## 减乘除余等
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -121,7 +121,7 @@
 </html>
 ```
 ![](http://i.imgur.com/oRmxVM1.png)
-### 加和字符串连接
+## 加法和字符串连接
 > 因为JavaScript ` + ` 号默认优先是字符串连接，所以单独提取出来做个小实例
 
 ```html
@@ -169,7 +169,7 @@
 ```
 ![](http://i.imgur.com/K8VbKdL.png)
 
-### 对象
+## 对象
 >可以用两种方式，一种是ng-init，一种是直接在controller初始化
 
 ```html
@@ -203,7 +203,7 @@
 ```
 ![](http://i.imgur.com/4VQ4NGj.png)
 
-### 数组
+## 数组
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -230,6 +230,8 @@
 </script>
 </html>
 ```
+![](http://i.imgur.com/pbJIGCB.png)
+
 # 指令
 ### ng-app
 > ng-app 指令定义了 AngularJS 应用程序的 根元素。ng-app 指令在网页加载完毕时会自动引导（自动初始化）应用程序。
