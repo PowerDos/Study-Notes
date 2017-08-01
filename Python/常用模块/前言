@@ -1,0 +1,60 @@
+1.定义
+-------------------------------------
+模块：用来从逻辑上阻止python代码(变量，函数，内，逻辑：实现一个功能)，
+      本质就是.py结尾的python文件(文件名:test.py，对应的模块就是test)
+包：用来从逻辑上阻止模块的，本质就是一个目录（必须带有一个__init__.py文件）
+
+
+2.导入方法
+--------------------------------------
+
+import module_name
+import module_name1,module_name2
+
+# 不建议使用
+# 导入模块module_test中的所以东西
+# 表示把模块的所以代码导入，所以不能用module_test调用方法
+form module_test import *
+
+# 可以用别名
+form module_test import demotest as module_demo
+
+导包
+import package
+
+
+总结：import 导入时，调用时需要用module.方法
+     form module import func 导入时，是直接把代码导入，用方法是可以直接使用
+
+
+3.import本质（路径搜索和搜索路径）
+-------------------------------------
+导入模块的本质就是把python文件解释一遍
+导入包的本质就是执行该包下的__init__.py文件
+import module -->module.py -->module.py的路径
+
+
+4.导入优化
+-------------------------------------
+直接导入方法，用的时候会更快
+from module_test import test
+
+
+5.模块的分类
+-------------------------------------
+1)标准库
+2)开源模块
+3)自定义模块
+
+
+
+
+
+
+
+
+
+
+
+
+
