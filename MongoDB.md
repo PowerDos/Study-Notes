@@ -671,8 +671,8 @@ student.updateStudent({name: "Gavin"}, { $set: {age: 21} }, {}, function(err){
     trim:true //去除数据前后的空格
     capped:1024 //限定大小最大为1024字节
     validate：function，为此属性添加一个验证器函数，如demo1所示
-    get：function，//为这个属性定义一个定制的getter Object.defineProperty()。如demo2所示
-    set：function，//定义此属性的自定义设置Object.defineProperty()。如demo2所示
+    get：function，//为这个属性定义一个定制的getter Object.defineProperty()。
+    set：function，//定义此属性的自定义设置Object.defineProperty()。
   }
 }
 ```
