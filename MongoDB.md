@@ -653,7 +653,7 @@ student.updateStudent({name: "Gavin"}, { $set: {age: 21} }, {}, function(err){
 
 ### schema 字段属性
 
-```json
+```
 {
   test: {
     type: String,
