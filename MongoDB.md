@@ -27,6 +27,7 @@
 	- [demo](#demo)
 	- [连接数据库](#连接数据库)
 	- [Mongoose实例](#mongoose实例)
+	- [schema 字段属性](#schema-字段属性)
 	- [添加数据](#添加数据)
 	- [删除数据](#删除数据)
 	- [修改数据](#修改数据)
@@ -649,6 +650,32 @@ student.updateStudent({name: "Gavin"}, { $set: {age: 21} }, {}, function(err){
 
 ![](http://i.imgur.com/mlL6QNV.png)<br>
 ![](http://i.imgur.com/Yetd80U.png)
+
+### schema 字段属性
+
+```json
+{
+  test: {
+    type: String,
+    lowercase: true, // 总是将test的值转化为小写
+    uppercase: true, // 总是将test的值转化为大写
+    required:true, //设定是否必填
+    default:'star', //设定默认值
+    index：true, //设定索引值
+    unique：true, //索引值唯一
+    sparse：true, //是否启用稀疏索引
+    match：RegExp, //判断是否通过正则验证
+    enum：Array， //判断test值是否包含于enmu对应的数组中
+    min：Number， //判断对应值是否大于等于给定值
+    max：Number， //判断对应值是否小于等于给定值
+    trim:true //去除数据前后的空格
+    capped:1024 //限定大小最大为1024字节
+    validate：function，为此属性添加一个验证器函数，如demo1所示
+    get：function，//为这个属性定义一个定制的getter Object.defineProperty()。如demo2所示
+    set：function，//定义此属性的自定义设置Object.defineProperty()。如demo2所示
+  }
+}
+```
 
 ### 添加数据
 > 基于entity
