@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body>
+	<div class="container" >
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<form action="" ng-app="" name="myForm">
+			<div class="form-group">
+				<label for="">Email:</label>
+				<input type="email" name="myAddress" class="form-control" ng-model="mail">
+				<label class="label label-danger" ng-show="myForm.myAddress.$error.email">不是一个合法的邮箱地址</label>
+			</div>
+			<div class="well">Valid: {{myForm.myAddress.$valid}} (如果输入的值是合法的则为 true)</div>
+			<div class="well">Dirty: {{myForm.myAddress.$dirty}} (如果值改变则为 true)</div>
+			<div class="well">Touched: {{myForm.myAddress.$touched}} (如果通过触屏点击则为 true)</div>
+		</form>
+	</div>
+</body>
+</html>

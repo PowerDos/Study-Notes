@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<form action="">
+			<div class="form-group">
+				<label for="">格式化字符串为大写：</label>
+				<!-- Model -->
+				<input type="text" class="form-control" ng-model='msg'>
+			</div>
+		</form>
+		<div class="well">大写: <span ng-bind="msg|uppercase"></span></div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope) {
+		// 控制器代码逻辑范围
+	})
+</script>
+</html>

@@ -323,3 +323,280 @@ ng-model 指令也可以：
 </html>
 ```
 ![](http://i.imgur.com/8lovPBt.png)
+# 模型
+> ng-model 指令可以将输入域的值与 AngularJS 创建的变量绑定。
+
+## 双向绑定
+> 双向绑定，在修改输入域的值时， AngularJS 属性的值也将修改,上面的例子也提及到，这里就不再重复
+
+## 验证用户输入
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<form ng-app="" name="myForm" action="">
+			<div class="form-group">
+				<label for="">Email:</label>
+				<input type="email" name="myAddress" class="form-control" ng-model="mail">
+				<label class="label label-danger" ng-show="myForm.myAddress.$error.email">不是一个合法的邮箱地址</label>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
+```
+![](http://i.imgur.com/8CUM3GC.png)
+![](http://i.imgur.com/MhHOLuE.png)
+## 应用状态
+> ng-model 指令可以为应用数据提供状态值(invalid, dirty, touched, error):
+
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body>
+	<div class="container" >
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<form action="" ng-app="" name="myForm">
+			<div class="form-group">
+				<label for="">Email:</label>
+				<input type="email" name="myAddress" class="form-control" ng-model="mail">
+				<label class="label label-danger" ng-show="myForm.myAddress.$error.email">不是一个合法的邮箱地址</label>
+			</div>
+			<div class="well">Valid: {{myForm.myAddress.$valid}} (如果输入的值是合法的则为 true)</div>
+			<div class="well">Dirty: {{myForm.myAddress.$dirty}} (如果值改变则为 true)</div>
+			<div class="well">Touched: {{myForm.myAddress.$touched}} (如果通过触屏点击则为 true)</div>
+		</form>
+	</div>
+</body>
+</html>
+```
+![](http://i.imgur.com/dbpLOlg.png)
+
+### ng-model 指令根据表单域的状态添加/移除以下类：
+- ng-empty
+- ng-not-empty
+- ng-touched:布尔值属性，表示用户是否和控件进行过交互
+- ng-untouched
+- ng-valid:布尔型属性，它指示表单是否通过验证。如果表单当前通过验证，他将为true
+- ng-invalid:未通过验证的表单
+- ng-dirty:布尔值属性，表示用户是否修改了表单。如果为 ture，表示有修改过；false 表示修没有修改过
+- ng-pending
+- ng-pristine:布尔值属性，表示用户是否修改了表单。如果为ture，表示没有修改过；false表示修改过
+
+# Scope(作用域)
+> Scope(作用域) 是应用在 HTML (视图) 和 JavaScript (控制器)之间的纽带。Scope 是一个对象，有可用的方法和属性。Scope 可应用在视图和控制器上。由于上面很多例子都用了scope就不在这单独演示
+
+# Controller(控制器)
+> AngularJS 应用程序被控制器控制。ng-controller 指令定义了应用程序控制器。控制器是 JavaScript 对象，由标准的 JavaScript 对象的构造函数 创建。由于上面很多例子都用了ng-controller就不在这单独演示
+
+# 过滤器
+## currency
+> 格式化数字为货币格式。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<form action="">
+			<div class="form-group">
+				<label for="">格式化数字为货币格式：</label>
+				<!-- Model -->
+				<input type="text" class="form-control" ng-model='msg'>
+			</div>
+		</form>
+		<div class="well">货币格式: <span ng-bind="msg|currency"></span></div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope) {
+		// 控制器代码逻辑范围
+	})
+</script>
+</html>
+```
+![](http://i.imgur.com/1ZonO5W.png)
+
+## lowercase
+> 格式化字符串为小写。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<form action="">
+			<div class="form-group">
+				<label for="">格式化字符串为小写：</label>
+				<!-- Model -->
+				<input type="text" class="form-control" ng-model='msg'>
+			</div>
+		</form>
+		<div class="well">小写: <span ng-bind="msg|lowercase"></span></div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope) {
+		// 控制器代码逻辑范围
+	})
+</script>
+</html>
+```
+![](http://i.imgur.com/R4HYt4w.png)
+
+## uppercase
+> 格式化字符串为大写。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<form action="">
+			<div class="form-group">
+				<label for="">格式化字符串为大写：</label>
+				<!-- Model -->
+				<input type="text" class="form-control" ng-model='msg'>
+			</div>
+		</form>
+		<div class="well">大写: <span ng-bind="msg|uppercase"></span></div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope) {
+		// 控制器代码逻辑范围
+	})
+</script>
+</html>
+```
+![](http://i.imgur.com/iarln7G.png)
+
+## filter
+> 从数组项中选择一个子集。
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<form action="">
+			<div class="form-group">
+				<label for="">查找：</label>
+				<!-- Model -->
+				<input type="text" class="form-control" ng-model='msg'>
+			</div>
+		</form>
+		<div class="list-group">
+			<a href="" class="list-group-item" ng-repeat=" row in rows|filter:msg "> {{ row }}</a>
+		</div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope) {
+		// 控制器代码逻辑范围
+		$scope.rows=["Banana", "Grape", "plum", "watermelon", "orange"];
+	})
+</script>
+</html>
+```
+![](http://i.imgur.com/w8RxtP9.png)
+![](http://i.imgur.com/BFUJ1W3.png)
+
+## orderBy
+> 根据某个表达式排列数组
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<form action="">
+			<div class="form-group">
+				<label for="">查找：</label>
+				<!-- Model -->
+				<input type="text" class="form-control" ng-model='msg'>
+			</div>
+		</form>
+		<div class="list-group">
+			<a href="" class="list-group-item" ng-repeat=" user in rows|filter:msg|orderBy:'age' "> {{ user.name }} 年龄为: {{ user.age }}</a>
+		</div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope) {
+		// 控制器代码逻辑范围
+		$scope.rows=[
+			{ name: "Gavin1", age: 28, sex: "male" },
+			{ name: "Gavin2", age: 27, sex: "male" },
+			{ name: "Gavin3", age: 26, sex: "male" },
+			{ name: "Gavin4", age: 25, sex: "male" },
+			{ name: "Gavin5", age: 23, sex: "male" },
+			{ name: "Gavin6", age: 20, sex: "male" },
+			{ name: "Gavin7", age: 30, sex: "male" },
+			{ name: "Gavin8", age: 22, sex: "male" }
+		];
+	})
+</script>
+</html>
+```
+![](http://i.imgur.com/rAwciTP.png)
+![](http://i.imgur.com/flUQwHS.png)

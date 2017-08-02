@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<form action="">
+			<div class="form-group">
+				<label for="">查找：</label>
+				<!-- Model -->
+				<input type="text" class="form-control" ng-model='msg'>
+			</div>
+		</form>
+		<div class="list-group">
+			<a href="" class="list-group-item" ng-repeat=" user in rows|filter:msg|orderBy:'age' "> {{ user.name }} 年龄为: {{ user.age }}</a>
+		</div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope) {
+		// 控制器代码逻辑范围
+		$scope.rows=[
+			{ name: "Gavin1", age: 28, sex: "male" },
+			{ name: "Gavin2", age: 27, sex: "male" },
+			{ name: "Gavin3", age: 26, sex: "male" },
+			{ name: "Gavin4", age: 25, sex: "male" },
+			{ name: "Gavin5", age: 23, sex: "male" },
+			{ name: "Gavin6", age: 20, sex: "male" },
+			{ name: "Gavin7", age: 30, sex: "male" },
+			{ name: "Gavin8", age: 22, sex: "male" }
+		];
+	})
+</script>
+</html>
