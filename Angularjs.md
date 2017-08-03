@@ -619,6 +619,8 @@ ng-model 指令也可以：
 ![](http://i.imgur.com/flUQwHS.png)
 
 # Service(服务)
+> 在 AngularJS 中，服务是一个函数或对象，可在你的 AngularJS 应用中使用。AngularJS 内建了30 多个服务。下面列举主要是4个。
+
 ## $location
 >  $location 服务，它可以返回当前页面的 URL 地址。
 
