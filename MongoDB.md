@@ -520,7 +520,7 @@ WriteResult({ "nRemoved" : 3 })
 > 是一个将JavaScript对象与数据库产生关系的一个框架，object related model。操作对象，就是操作数据库了；对象产生了，同时也持久化了。这个思路是Java三大框架SSH中Hibernate框架的思路。彻底改变了人们使用数据库的方式。
 
 ### demo
-```
+```javascript
 //链接数据库,animal是数据库名字
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/animal');
