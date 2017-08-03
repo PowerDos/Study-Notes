@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<div class="list-group">
+			<a href="" class="list-group-item"> GET: {{ getinfo }} </a>
+		</div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope, $http) {
+		// 控制器代码逻辑范围
+		$http.get("/get_demo.php?name=Gavin&age=20").then(function(res) {
+			$scope.getinfo = res.data;
+		});
+	})
+</script>
+</html>

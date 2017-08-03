@@ -15,6 +15,23 @@
 	- [ng-init](#ng-init)
 	- [ng-model](#ng-model)
 	- [ng-repeat](#ng-repeat)
+5. [模型](#模型)
+	- [双向绑定](#双向绑定)
+	- [验证用户输入](#验证用户输入)
+	- [应用状态](#应用状态)
+6. [Scope(作用域)](#scope作用域)
+7. [Controller(控制器)](#controller控制器)
+8. [过滤器](#过滤器)
+	- [currency](#currency)
+	- [lowercase](#lowercase)
+	- [uppercase](#uppercase)
+	- [filter](#filter)
+	- [orderBy](#orderby)
+9. [Service服务](#service服务)
+	- [$location](#$location)
+	- [$http](#$http)
+	- [$timeout](#$timeout)
+	- [$interval](#$interval)
 	
 ## 简介
 > AngularJS 是建立在轻量 jQuery 之上的一个结构化前端 MVVM 框架 , 它可通过`<script>`标签添加到 HTML 页面,通过 指令 扩展了 HTML，且通过 表达式 绑定数据到 HTML。相比较 Facebook 的 React，个人觉得 AngularJS 可能更适合企业用户，创建单页面的 CRUD 应用。例如对表格表单的处理，AngularJS 就能展现其强大快捷的一面。另外，AngularJS 非常结构化，大而全，坏处就是规定比较严格，好处是代码更一致，而且有一套很完善的测试流程支持。但是性能经常受人诟病。企业用户可能对性能没有那么敏感，反而喜欢这种写起来条理清晰，功能强大的框架。这有点像 Java，虽然臃肿，慢，但是成熟稳定，所以企业往往选择这样的框架
@@ -600,3 +617,149 @@ ng-model 指令也可以：
 ```
 ![](http://i.imgur.com/rAwciTP.png)
 ![](http://i.imgur.com/flUQwHS.png)
+
+# Service(服务)
+## $location
+>  $location 服务，它可以返回当前页面的 URL 地址。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<div class="list-group">
+			<a href="" class="list-group-item"> URL: {{ url }}</a>
+		</div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope, $location) {
+		// 控制器代码逻辑范围
+		$scope.url = $location.absUrl();
+	})
+</script>
+</html>
+```
+![](http://i.imgur.com/ZbcAJ4S.png)
+
+## $http
+> $http 是 AngularJS 应用中最常用的服务。 服务向服务器发送请求，应用响应服务器传送过来的数据。
+
+```html
+!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<div class="list-group">
+			<a href="" class="list-group-item"> GET: {{ getinfo }} </a>
+		</div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope, $http) {
+		// 控制器代码逻辑范围
+		$http.get("/get_demo.php?name=Gavin&age=20").then(function(res) {
+			$scope.getinfo = res.data;
+		});
+	})
+</script>
+</html>
+```
+> get_demo.php
+
+```php
+<?php 
+echo "获取到的Get数据：";
+var_dump($_GET);
+```
+> 注意: 本例子是放在server服务器测试的结果，php的代码在php的目录里
+
+![](http://i.imgur.com/QVRhcp9.png)
+
+## $timeout
+> 超时器，对应了 JS window.setTimeout 函数。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<div class="list-group">
+			<a href="" class="list-group-item"> Time Out Demo: {{ data }}</a>
+		</div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope, $timeout) {
+		$scope.data = "loading....";
+		// 控制器代码逻辑范围
+		$timeout(function () {
+			$scope.data = "Time Out!";
+		}, 3000);
+	})
+</script>
+</html>
+```
+![](http://i.imgur.com/Qroymxz.png)
+
+## $interval
+> 定时器， $interval 服务对应了 JS window.setInterval 函数。
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angularjs 学习实例</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+</head>
+<body ng-app="myapp" ng-controller='myctl'>
+	<div class="container">
+		<h1 class="page-header">Angularjs 学习实例 <small> Gavin</small></h1>
+		<div class="list-group">
+			<a href="" class="list-group-item"> Interval Demo: <label class="label label-danger" ng-bind="num"></label></a>
+		</div>
+	</div>
+</body>
+<script>
+	// controller
+	app = angular.module('myapp', []);
+	app.controller('myctl', function ($scope, $interval) {
+		$scope.num = 0;
+		// 控制器代码逻辑范围
+		$interval(function () {
+			$scope.num = $scope.num + 1;
+		}, 100);
+	})
+</script>
+</html>
+```
+![](http://i.imgur.com/CzMwpon.png)
