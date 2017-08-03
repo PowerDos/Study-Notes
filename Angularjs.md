@@ -28,10 +28,10 @@
 	- [filter](#filter)
 	- [orderBy](#orderby)
 9. [Service服务](#service服务)
-	- [$location](#$location)
-	- [$http](#$http)
-	- [$timeout](#$timeout)
-	- [$interval](#$interval)
+	- [$location](#location)
+	- [$http](#http)
+	- [$timeout](#timeout)
+	- [$interval](#interval)
 	
 ## 简介
 > AngularJS 是建立在轻量 jQuery 之上的一个结构化前端 MVVM 框架 , 它可通过`<script>`标签添加到 HTML 页面,通过 指令 扩展了 HTML，且通过 表达式 绑定数据到 HTML。相比较 Facebook 的 React，个人觉得 AngularJS 可能更适合企业用户，创建单页面的 CRUD 应用。例如对表格表单的处理，AngularJS 就能展现其强大快捷的一面。另外，AngularJS 非常结构化，大而全，坏处就是规定比较严格，好处是代码更一致，而且有一套很完善的测试流程支持。但是性能经常受人诟病。企业用户可能对性能没有那么敏感，反而喜欢这种写起来条理清晰，功能强大的框架。这有点像 Java，虽然臃肿，慢，但是成熟稳定，所以企业往往选择这样的框架
