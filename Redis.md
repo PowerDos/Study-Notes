@@ -32,6 +32,24 @@ redis是开源,BSD许可,高级的key-value存储系统. 可以用来存储字�
 
 > 安装成功
 
+## windows下redis开机自启
+1. 在Redis的目录下执行（执行后就作为windows服务了）
+```
+redis-server --service-install redis.windows.conf
+```
+2. 安装好后需要手动启动redis
+```
+redis-server --service-start
+```
+3. 停止服务
+```
+redis-server --service-stop
+```
+4. 卸载redis服务
+```
+redis-server --service-uninstall
+```
+
 ## Liunx 下安装redis
 ### 安装redis
 > 下载redis
