@@ -1,5 +1,5 @@
 # Angularjs
-### 目录
+### Angularjs 4.x目录
 1. [Angularjs](#angularjs)
 	- [简介](#简介)
 	- [Angular、Vue、React对比](##angularvuereact对比)
@@ -7,33 +7,43 @@
 	- [安装 Angular CLI 脚手架工具](#安装-angular-cli-脚手架工具)
 	- [利用 Angular CLI 创建项目](#利用-angular-cli-创建项目)
 	- [目录说明](#目录说明)
-	- [app.module.ts及组件分析](#app-module-ts及组件分析)
-2. [小实例](#小实例)
+	- [app.module.ts及组件分析](#appmodulets及组件分析)
+2. [基础操作](#基础操作)
+	- [绑定数据](#绑定数据)
+	- [for循环](#for循环)
+	- [if](#if)
+	- [事件](#事件)
+	- [表单](#表单)
+	- [双向绑定](#双向绑定)
+
+--------------
+### Angularjs 1.x目录
+1. [小实例](#小实例)
 	- [simple demo](#simple-demo)
 	- [MVC demo](#mvc-demo)
-3. [表达式](#表达式)
+2. [表达式](#表达式)
 	- [减乘除余等](#减乘除余等)
 	- [加法和字符串连接](#加法和字符串连接)
 	- [对象](#对象)
 	- [数组](#数组)
-4. [指令](#指令)
+3. [指令](#指令)
 	- [ng-app](#ng-app)
 	- [ng-init](#ng-init)
 	- [ng-model](#ng-model)
 	- [ng-repeat](#ng-repeat)
-5. [模型](#模型)
+4. [模型](#模型)
 	- [双向绑定](#双向绑定)
 	- [验证用户输入](#验证用户输入)
 	- [应用状态](#应用状态)
-6. [Scope(作用域)](#scope作用域)
-7. [Controller(控制器)](#controller控制器)
-8. [过滤器](#过滤器)
+5. [Scope(作用域)](#scope作用域)
+6. [Controller(控制器)](#controller控制器)
+7. [过滤器](#过滤器)
 	- [currency](#currency)
 	- [lowercase](#lowercase)
 	- [uppercase](#uppercase)
 	- [filter](#filter)
 	- [orderBy](#orderby)
-9. [Service服务](#service服务)
+8. [Service服务](#service服务)
 	- [$location](#location)
 	- [$http](#http)
 	- [$timeout](#timeout)
@@ -169,7 +179,7 @@ export class AppModule { }
 ```ng g component components/header```
 > 创建完如图所示
 
-![](https://i.imgur.com/1HUOvg2.png)
+![](https://i.imgur.com/6aCyfHO.png)
 > header.component.ts 说明
 
 ```typescript
@@ -189,6 +199,282 @@ export class HeaderComponent implements OnInit {
 
 }
 ```
+# 基础操作
+> angularDemo1中有完整可运行程序
+## 绑定数据
+
+> news.component.ts
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+    selector: 'app-news',
+    templateUrl: './news.component.html',
+    styleUrls: ['./news.component.css']
+})
+export class NewsComponent implements OnInit {
+    public title: string;
+    public content: string;
+    public id: string;
+    constructor() {
+        this.title = '这是新闻标题';
+        this.content = '<h3> 这是新闻内容 <h3>';
+        this.id = 'news';
+    }
+
+    ngOnInit() {
+    }
+
+}
+```
+
+> news.component.html
+
+```HTML
+<h1>{{title}}</h1>
+<div [innerHTML] = "content" [id] = "id"></div>
+```
+
+> 效果图
+
+![](https://i.imgur.com/CKA3J7J.png)
+
+## for循环
+> for.component.ts
+
+```TypeScript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+    selector: 'app-for',
+    templateUrl: './for.component.html',
+    styleUrls: ['./for.component.css']
+})
+export class ForComponent implements OnInit {
+    public list: any[];
+    constructor() {
+        this.list = ['苹果', '梨', '草莓', '西瓜'];
+    }
+
+    ngOnInit() {
+    }
+
+}
+```
+> for.component.html
+
+```html
+<p>方式1</p>
+<ul>
+    <li *ngFor="let item of list">
+        {{item}}
+    </li>
+</ul>
+
+<p>方式2</p>
+<ul>
+    <li template="ngFor let item of list">
+        {{item}}
+    </li>
+</ul>
+
+<p>方式3 索引</p>
+<ul>
+    <li *ngFor="let item of list; let key=index">
+        {{item}} ---- {{key}}
+    </li>
+</ul>
+```
+> 显示效果
+
+![](https://i.imgur.com/ml2IO17.png)
+
+## if
+> ts
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+    selector: 'app-if',
+    templateUrl: './if.component.html',
+    styleUrls: ['./if.component.css']
+})
+export class IfComponent implements OnInit {
+    public flag: boolean;
+    constructor() {
+        this.flag = true;
+    }
+
+    ngOnInit() {
+    }
+
+}
+```
+> html
+
+```html
+<h2>ngIf</h2>
+<p>flase时显示: <span *ngIf="!flag">此时为flase</span></p>
+<p>true 时显示: <span *ngIf="flag">此时为true</span></p>
+<p template="ngIf flag!=false">另一种写法</p>
+```
+> 效果
+
+![](https://i.imgur.com/PagjOb3.png)
+
+## 事件
+> ts
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+    selector: 'app-event',
+    templateUrl: './event.component.html',
+    styleUrls: ['./event.component.css']
+})
+export class EventComponent implements OnInit {
+    public name: string;
+    public age: number;
+    constructor() {
+        this.name = 'Gavin';
+        this.age = 18;
+    }
+
+    ngOnInit() {
+    }
+
+    getInfo() {
+        alert(`姓名: ${this.name}， 年龄: ${this.age}`);
+    }
+
+    changeAge() {
+        this.age = 20;
+    }
+}
+```
+
+> html
+
+```html
+<h2>事件</h2>
+<button (click)="getInfo()">获取用户信息</button>
+<button (click)="changeAge()">更改用户年龄</button>
+<p>年龄： {{age}}</p>
+```
+> 效果
+
+![](https://i.imgur.com/0jK28MX.png)
+
+## 表单
+> ts
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+    selector: 'app-form',
+    templateUrl: './form.component.html',
+    styleUrls: ['./form.component.css']
+})
+export class FormComponent implements OnInit {
+
+    constructor() { }
+
+    ngOnInit() {
+    }
+
+    keyUpFn(e) {
+        if (e.keyCode === 13) {
+            alert('按了回车');
+        }
+    }
+}
+```
+> html
+
+```html
+<h2>表单</h2>
+<input type="text" (keyup)="keyUpFn($event)">
+```
+> 效果
+
+![](https://i.imgur.com/rVaq4cT.png)
+
+## 双向绑定
+> 注意引入FormsModule
+
+> app.module.ts
+``` typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms'; // 导入FormsModule
+
+import { AppComponent } from './app.component';
+import { NewsComponent } from './componects/news/news.component';
+import { ForComponent } from './componects/for/for.component';
+import { IfComponent } from './componects/if/if.component';
+import { EventComponent } from './componects/event/event.component';
+import { FormComponent } from './componects/form/form.component';
+import { DataBindingComponent } from './componects/data-binding/data-binding.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    NewsComponent,
+    ForComponent,
+    IfComponent,
+    EventComponent,
+    FormComponent,
+    DataBindingComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule  // 导入FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+```
+
+> ts
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+    selector: 'app-data-binding',
+    templateUrl: './data-binding.component.html',
+    styleUrls: ['./data-binding.component.css']
+})
+export class DataBindingComponent implements OnInit {
+    public inputData: string;
+    constructor() { }
+
+    ngOnInit() {
+    }
+
+}
+
+```
+
+> html
+
+```html
+<h2>双向绑定</h2>
+<input type="text" [(ngModel)]="inputData">
+<p>输入的内容： {{ inputData }}</p>
+
+```
+> 效果图
+
+![](https://i.imgur.com/siOpBtz.png)
+
+-------------------------------
+> 下面是 Angular 1.x写的笔记
 
 
 # 小实例

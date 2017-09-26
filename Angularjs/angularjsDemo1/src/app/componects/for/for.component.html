@@ -1,0 +1,20 @@
+<p>方式1</p>
+<ul>
+    <li *ngFor="let item of list">
+        {{item}}
+    </li>
+</ul>
+
+<p>方式2</p>
+<ul>
+    <li template="ngFor let item of list">
+        {{item}}
+    </li>
+</ul>
+
+<p>方式3 索引</p>
+<ul>
+    <li *ngFor="let item of list; let key=index">
+        {{item}} ---- {{key}}
+    </li>
+</ul>
