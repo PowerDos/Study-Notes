@@ -2,10 +2,12 @@
 ### 目录
 1. [Angularjs](#angularjs)
 	- [简介](#简介)
-	- [Angular、Vue、React对比](#angular、vue、react对比)
+	- [Angular、Vue、React对比](##angularvuereact对比)
 	- [开发工具](#开发工具)
-	- [安装 Angular CLI 脚手架工具](#安装 angular cli 脚手架工具)
+	- [安装 Angular CLI 脚手架工具](#安装-angular-cli-脚手架工具)
+	- [利用 Angular CLI 创建项目](#利用-angular-cli-创建项目)
 	- [目录说明](#目录说明)
+	- [app.module.ts及组件分析](#app-module-ts及组件分析)
 2. [小实例](#小实例)
 	- [simple demo](#simple-demo)
 	- [MVC demo](#mvc-demo)
@@ -77,40 +79,40 @@ ng serve --open
 
 
 ## 目录说明
-- e2e ------------------------ 在e2e/下是端到端(End-to-End)测试
+- e2e ----------------------------- 在e2e/下是端到端(End-to-End)测试
 - node-modules --------------- 安装的第三方模块
-- src ------------------------ 项目的所有文件得放在src里
-	- app -------------------- 组件 以及app.module.ts 定义根模块
-	- assets ----------------- 静态资源
-	- environments ----------- 这个文件夹中包括为各个目标环境准备的文件
-	- favicon.ico ------------ 网站图标
-	- index.html ------------- 主页面
-	- main.ts ---------------- 应用主入口
-	- polyfills.ts ----------- 填充库(polyfill)能帮我们把这些不同点进行标准化
-	- style.css -------------- 这是全局样式
-	- test.ts ---------------- 单元测试的主要入口点
-	- tsconfig.app.json ------ TypeScript编译器的配置文件
-	- tsconfig.spec.json -----  TypeScript编译器的配置文件
+- src ----------------------------- 项目的所有文件得放在src里
+	- app ---------------------- 组件 以及app.module.ts 定义根模块
+	- assets ------------------- 静态资源
+	- environments ---------- 这个文件夹中包括为各个目标环境准备的文件
+	- favicon.ico -------------- 网站图标
+	- index.html --------------- 主页面
+	- main.ts ------------------- 应用主入口
+	- polyfills.ts --------------- 填充库(polyfill)能帮我们把这些不同点进行标准化
+	- style.css ---------------- 这是全局样式
+	- test.ts ------------------- 单元测试的主要入口点
+	- tsconfig.app.json ----- TypeScript编译器的配置文件
+	- tsconfig.spec.json ----  TypeScript编译器的配置文件
 	- typing.d.ts
-- .angular-cli.json ---------- Angular CLI的配置文件
-- .editorconfig -------------- 给编辑器看的一个简单配置文件
-- .gitignore ----------------- 一个git的配置文件
-- karma.conf.js -------------- 给karma的单元测试配置
-- package.json --------------- npm配置文件
-- protractor.conf.js --------- 给Protractor使用的端到端测试配置文件，当运行ng e2e的时候会用到它
-- README.md ------------------ 说明文档
-- tslint.json ---------------- 给TSLint和Codelyzer用的配置信息 Lint功能可以帮你保持代码风格的统一
+- .angular-cli.json ------------- Angular CLI的配置文件
+- .editorconfig ------------------ 给编辑器看的一个简单配置文件
+- .gitignore ---------------------- 一个git的配置文件
+- karma.conf.js ----------------- 给karma的单元测试配置
+- package.json ----------------- npm配置文件
+- protractor.conf.js ------------ 给Protractor使用的端到端测试配置文件，当运行ng e2e的时候会用到它
+- README.md ----------------- 说明文档
+- tslint.json --------------------- 给TSLint和Codelyzer用的配置信息 Lint功能可以帮你保持代码风格的统一
 
 ### 目录个别文件说明
 |文件 | 说明 |
-|:----|:----------|
+|:-----|:----------|
 |e2e/| 在e2e/下是端到端（End-to-End）测试。 它们不在src/下，是因为端到端测试实际上和应用是相互独立的，它只适用于测试你的应用而已。 这也就是为什么它会拥有自己的tsconfig.json。|
 |.angular-cli.json| Angular CLI的配置文件。 在这个文件中，我们可以设置一系列默认值，还可以配置项目编译时要包含的那些文件。 要了解更多，请参阅它的官方文档。|
 |.editorconfig| 给你的编辑器看的一个简单配置文件，它用来确保参与你项目的每个人都具有基本的编辑器配置。 大多数的编辑器都支持.editorconfig文件，详情参见 http://editorconfig.org 。|
 
 ### src 目录结构：
 |文件 | 说明 |
-|:----|:--------------|
+|:-----|:--------------|
 | app/app.component.{ts,html,css,spec.ts} | 组件 使用HTML模板、CSS样式和单元测试定义AppComponent组件。 它是根组件，随着应用的成长它会成为一棵组件树的根节点。|
 | app/app.module.ts | 定义AppModule，这个根模块会告诉Angular如何组装该应用。 新建项目时，它只声明了AppComponent。 稍后它还会声明更多组件。|
 |assets/*| 静态资源 这个文件夹下你可以放图片等任何东西，在构建应用时，它们全都会拷贝到发布包中。|
@@ -124,6 +126,69 @@ ng serve --open
 |test.ts| 这是单元测试的主要入口点。 它有一些你不熟悉的自定义配置，不过你并不需要编辑这里的任何东西。|
 |tsconfig.{app|spec}.json| TypeScript编译器的配置文件。tsconfig.app.json是为Angular应用准备的，而tsconfig.spec.json是为单元测试准备的。|
 
+## app.module.ts及组件分析
+> app.module.ts 文件说明
+
+``` typescript
+// Angular 模块类描述应用的部件是如何组合在一起的。 每个应用都至少有一个 Angular 模块，也就是根模块，
+// 用来引导并运行应用。 你可以为它取任何名字。常规名字是AppModule。 也就是 app.module.ts文件
+
+/*引入组件*/
+
+// BrowserModule，浏览器解析的模块
+import { BrowserModule } from '@angular/platform-browser'; 
+// angualrjs核心模块
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './components/header/header.component';  /*自定义的模块*/
+
+/*@NgModule装饰器将AppModule标记为 Angular 模块类（也叫NgModule类）。
+ @NgModule接受一个元数据对象，告诉 Angular 如何编译和启动应用。*/
+@NgModule({
+  // 引入当前项目运行的的组件
+  declarations: [
+    AppComponent, HeaderComponent
+  ],
+  // 引入当前模块运行依赖的其他模块
+  imports: [
+    BrowserModule
+  ],
+  // 定义的服务 回头放在这个里面
+  providers: [],
+  // 指定应用的主视图（称为根组件） 通过引导根AppModule来启动应用 ，这里一般写的是根组件
+  bootstrap: [AppComponent]
+})
+
+// 根模块不需要导出任何东西， 因为其它组件不需要导入根模块。 但是一定要写
+export class AppModule { }
+
+```
+> 创建自定义模块
+
+```ng g component components/header```
+> 创建完如图所示
+
+![](https://i.imgur.com/1HUOvg2.png)
+> header.component.ts 说明
+
+```typescript
+import { Component, OnInit } from '@angular/core'; /*引入angular核心*/
+
+@Component({
+  selector: 'app-header',  /* 使用这个组件的名称 */
+  templateUrl: './header.component.html',  /*html模板*/
+  styleUrls: ['./header.component.css']  /*css样式*/
+})
+export class HeaderComponent implements OnInit {
+  /*构造函数*/
+  constructor() { }
+  /*初始化加载的生命周期函数*/
+  ngOnInit() {
+  }
+
+}
+```
 
 
 # 小实例
