@@ -2,6 +2,10 @@
 ### 目录
 1. [Angularjs](#angularjs)
 	- [简介](#简介)
+	- [Angular、Vue、React对比](#angular、vue、react对比)
+	- [开发工具](#开发工具)
+	- [安装 Angular CLI 脚手架工具](#安装 angular cli 脚手架工具)
+	- [目录说明](#目录说明)
 2. [小实例](#小实例)
 	- [simple demo](#simple-demo)
 	- [MVC demo](#mvc-demo)
@@ -34,7 +38,93 @@
 	- [$interval](#interval)
 	
 ## 简介
+> Angualr是一款来自谷歌的开源的web前端框架，诞生于2009年，由Misko Hevery 等人创建，后为Google所收购。是一款优秀的前端JS框架，已经被用于Google的多款产品当中。<br>
+
+> 根据项目数统计angular（1.x 、2.x 、4.x）是现在网上使用量最大的框架。<br>
+
 > AngularJS 是建立在轻量 jQuery 之上的一个结构化前端 MVVM 框架 , 它可通过`<script>`标签添加到 HTML 页面,通过 指令 扩展了 HTML，且通过 表达式 绑定数据到 HTML。相比较 Facebook 的 React，个人觉得 AngularJS 可能更适合企业用户，创建单页面的 CRUD 应用。例如对表格表单的处理，AngularJS 就能展现其强大快捷的一面。另外，AngularJS 非常结构化，大而全，坏处就是规定比较严格，好处是代码更一致，而且有一套很完善的测试流程支持。但是性能经常受人诟病。企业用户可能对性能没有那么敏感，反而喜欢这种写起来条理清晰，功能强大的框架。这有点像 Java，虽然臃肿，慢，但是成熟稳定，所以企业往往选择这样的框架
+
+## Angular、Vue、React对比
+![对比图](https://i.imgur.com/H6STjP2.png)
+
+## 开发工具
+> vscode<br>
+> 并在vscode安装插件 Angular TypeScript Snippets
+
+## 安装 Angular CLI 脚手架工具
+> 使用npm命令安装
+
+```
+npm install -g @angular/cli
+```
+
+## 利用 Angular CLI 创建项目
+> 创建项目
+
+```ng new firstAngularjsDemo```
+> 进入目录并加载依赖
+
+```
+cd firstAngularjsDemo
+npm install
+```
+> 启动
+
+```
+ng serve --open
+```
+![启动页面](https://i.imgur.com/4JoPODW.png)
+
+
+## 目录说明
+- e2e ------------------------ 在e2e/下是端到端(End-to-End)测试
+- node-modules --------------- 安装的第三方模块
+- src ------------------------ 项目的所有文件得放在src里
+	- app -------------------- 组件 以及app.module.ts 定义根模块
+	- assets ----------------- 静态资源
+	- environments ----------- 这个文件夹中包括为各个目标环境准备的文件
+	- favicon.ico ------------ 网站图标
+	- index.html ------------- 主页面
+	- main.ts ---------------- 应用主入口
+	- polyfills.ts ----------- 填充库(polyfill)能帮我们把这些不同点进行标准化
+	- style.css -------------- 这是全局样式
+	- test.ts ---------------- 单元测试的主要入口点
+	- tsconfig.app.json ------ TypeScript编译器的配置文件
+	- tsconfig.spec.json -----  TypeScript编译器的配置文件
+	- typing.d.ts
+- .angular-cli.json ---------- Angular CLI的配置文件
+- .editorconfig -------------- 给编辑器看的一个简单配置文件
+- .gitignore ----------------- 一个git的配置文件
+- karma.conf.js -------------- 给karma的单元测试配置
+- package.json --------------- npm配置文件
+- protractor.conf.js --------- 给Protractor使用的端到端测试配置文件，当运行ng e2e的时候会用到它
+- README.md ------------------ 说明文档
+- tslint.json ---------------- 给TSLint和Codelyzer用的配置信息 Lint功能可以帮你保持代码风格的统一
+
+### 目录个别文件说明
+|文件 | 说明 |
+|:----|:----------|
+|e2e/| 在e2e/下是端到端（End-to-End）测试。 它们不在src/下，是因为端到端测试实际上和应用是相互独立的，它只适用于测试你的应用而已。 这也就是为什么它会拥有自己的tsconfig.json。|
+|.angular-cli.json| Angular CLI的配置文件。 在这个文件中，我们可以设置一系列默认值，还可以配置项目编译时要包含的那些文件。 要了解更多，请参阅它的官方文档。|
+|.editorconfig| 给你的编辑器看的一个简单配置文件，它用来确保参与你项目的每个人都具有基本的编辑器配置。 大多数的编辑器都支持.editorconfig文件，详情参见 http://editorconfig.org 。|
+
+### src 目录结构：
+|文件 | 说明 |
+|:----|:--------------|
+| app/app.component.{ts,html,css,spec.ts} | 组件 使用HTML模板、CSS样式和单元测试定义AppComponent组件。 它是根组件，随着应用的成长它会成为一棵组件树的根节点。|
+| app/app.module.ts | 定义AppModule，这个根模块会告诉Angular如何组装该应用。 新建项目时，它只声明了AppComponent。 稍后它还会声明更多组件。|
+|assets/*| 静态资源 这个文件夹下你可以放图片等任何东西，在构建应用时，它们全都会拷贝到发布包中。|
+|environments/*|这个文件夹中包括为各个目标环境准备的文件，它们导出了一些应用中要用到的配置变量。 这些文件会在构建应用时被替换。 比如你可能在产品环境中使用不同的API端点地址，或使用不同的统计Token参数。 甚至使用一些模拟服务。 所有这些，CLI都替你考虑到了。|
+|favicon.ico| 每个网站都希望自己在书签栏中能好看一点。 请把它换成你自己的图标。| 
+|index.html| 这是别人访问你的网站是看到的主页面的HTML文件。 大多数情况下你都不用编辑它。 在构建应用时，CLI会自动把所有js和css文件添加进去，所以你不必在这里手动添加任何 <script> 或 <link> 标签。|
+|main.ts| 这是应用的主要入口点。 使用JIT compiler编译器编译本应用，并启动应用的根模块AppModule，使其运行在浏览器中。 你还可以使用AOT compiler编译器，而不用修改任何代码 —— 只要给ng build 或 ng serve 传入 --aot 参数就可以了。|
+|polyfills.ts| 不同的浏览器对Web标准的支持程度也不同。 填充库（polyfill）能帮我们把这些不同点进行标准化。 你只要使用core-js 和 zone.js通常就够了，不过你
+也可以查看浏览器支持指南以了解更多信息。|
+|styles.css| 这里是你的全局样式。 大多数情况下，你会希望在组件中使用局部样式，以利于维护，不过那些会影响你整个应用的样式你还是需要集中存放在这里。|
+|test.ts| 这是单元测试的主要入口点。 它有一些你不熟悉的自定义配置，不过你并不需要编辑这里的任何东西。|
+|tsconfig.{app|spec}.json| TypeScript编译器的配置文件。tsconfig.app.json是为Angular应用准备的，而tsconfig.spec.json是为单元测试准备的。|
+
+
 
 # 小实例
 > Bootstrap + Angularjs
