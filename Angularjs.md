@@ -15,6 +15,7 @@
 	- [事件](#事件)
 	- [表单](#表单)
 	- [双向绑定](#双向绑定)
+	- [小实例 TO-DO-LIST](#小实例-to-do-list)
 
 --------------
 ### Angularjs 1.x目录
@@ -54,7 +55,13 @@
 
 > 根据项目数统计angular（1.x 、2.x 、4.x）是现在网上使用量最大的框架。<br>
 
-> AngularJS 是建立在轻量 jQuery 之上的一个结构化前端 MVVM 框架 , 它可通过`<script>`标签添加到 HTML 页面,通过 指令 扩展了 HTML，且通过 表达式 绑定数据到 HTML。相比较 Facebook 的 React，个人觉得 AngularJS 可能更适合企业用户，创建单页面的 CRUD 应用。例如对表格表单的处理，AngularJS 就能展现其强大快捷的一面。另外，AngularJS 非常结构化，大而全，坏处就是规定比较严格，好处是代码更一致，而且有一套很完善的测试流程支持。但是性能经常受人诟病。企业用户可能对性能没有那么敏感，反而喜欢这种写起来条理清晰，功能强大的框架。这有点像 Java，虽然臃肿，慢，但是成熟稳定，所以企业往往选择这样的框架
+> 2015之前Angular 1.x得到了广泛的应用，开发单页面应用无人能敌。2015年底Angular 2.0 发布了，彻底的颠覆了之前的版本，学习Angular 2.0相当于重新学习另一个框架。在质疑声中，angularjs的开发团队宣布1.X版本和2.x版本同时维护。
+
+> AngularJs1.x的时候被人们称为下一代web应用。由于Angular2.0以后是基于TypeScript，和以前angularjs1.x的开发方式完全不一样,让很多的新手朋友觉得入门门槛比较高。随着2015年后Vue和React的出现，很多新手朋友慢慢的开始使用Vue这样的轻量级框架。其实Angular2.0要比AngularJs1.x简单很多。要比React简单很多,只要入门开发起来比Vue也要简单
+
+> 几经沉淀和积累，angualr4.x的发布了， angualr4.x是完全基于angular2.x的。他具有更小的体积、更快的运行速度、更快的编译速度、以及AngularUniversal也就是在服务器端渲染Angular。
+
+>Angular团队计划每六个月发布一个主要版本，所以Angular 5将在2017年底到来，而Angular 6和Angular 7将分别在2018年3月和2018年9月发布。Angular未来的版本不会像Angular1.x和Angular2.x那样发生重大的变更。所以Angular5.x、Angular6.x、Angular7.x和我们现在的开发方式也是一样的。
 
 ## Angular、Vue、React对比
 ![对比图](https://i.imgur.com/H6STjP2.png)
@@ -472,6 +479,127 @@ export class DataBindingComponent implements OnInit {
 > 效果图
 
 ![](https://i.imgur.com/siOpBtz.png)
+
+## 小实例 TO-DO-LIST
+> 完成实例在 toDoListDemo 中
+
+> ts
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+    selector: 'app-to-do-list',
+    templateUrl: './to-do-list.component.html',
+    styleUrls: ['./to-do-list.component.css']
+})
+export class ToDoListComponent implements OnInit {
+    protected list: any[];
+    protected toDoThing: any;
+    constructor() {
+        this.list = [];
+        this.toDoThing = '';
+    }
+    // 键盘松开的事件
+    keyUpFunc(e) {
+        if (e.keyCode === 13) {
+            const obj = {
+                toDoThing: this.toDoThing,
+                status: 1
+            }
+            this.list.push(obj);
+            this.toDoThing = '';
+        }
+    }
+
+    changeStatus(index) {
+        this.list[index].status = 0;
+    }
+
+    deleteThing(index) {
+        this.list.splice(index, 1);
+    }
+    ngOnInit() {
+    }
+
+}
+```
+> html
+
+```html
+输入代办事项：<input type="text" [(ngModel)]='toDoThing' (keyup)="keyUpFunc($event)">
+<hr><br>
+<h3>待办列表</h3>
+<ul>
+    <li *ngFor="let item of list; let key = index;" [hidden] = "item.status!=1">
+        <input type="checkbox" (click)="changeStatus(key)">{{item.toDoThing}} ----- <button (click)="deleteThing(key)">删除</button>
+    </li>
+</ul>
+<br><hr><br>
+<h3>完成列表</h3>
+<ul>
+    <li *ngFor="let item of list; let key = index;" [hidden] = "item.status!=0">
+        <input type="checkbox" checked="checked" ><s>{{item.toDoThing}}</s>
+    </li>
+</ul>
+```
+> 效果图
+
+![](https://i.imgur.com/avl3GUF.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -------------------------------
 > 下面是 Angular 1.x写的笔记
