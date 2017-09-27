@@ -1,0 +1,15 @@
+<button (click)='getData()'>get获取数据</button>
+<p>get获取到的数据：</p>
+<ul>
+    <li *ngFor="let item of get_data">{{item.title}}</li>
+</ul>
+
+<br><hr><br>
+
+<button (click)='jsonpData()'>jsonp获取数据</button>
+<p>jsonp获取到的数据：</p>
+<ul>
+    <li *ngFor="let item of jsonp_data">{{item.title}}</li>
+</ul>
+
+<br><hr><br>
