@@ -1,0 +1,9 @@
+.child{
+    width: 100%;
+    height: 200px;
+    background-color: #ccc;
+    padding: 5px;
+}
+.child p{
+    font-size: 30px;
+}

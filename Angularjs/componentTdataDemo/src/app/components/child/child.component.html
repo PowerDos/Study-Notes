@@ -1,0 +1,8 @@
+<div class="child">
+    <p>这是子组件</p>
+    <span>接受到父组件的值： {{ revFatherData }}</span>
+    <br>
+    <button (click)='revFatherFun()'>执行父组件的方法</button>
+    <br>
+    <button (click)='childFun()'>通过Output执行父组件的方法并传值</button>
+</div>

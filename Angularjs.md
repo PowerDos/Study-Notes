@@ -20,7 +20,8 @@
 4. [http](#http)
 	- [不通过RxJs的http请求](#不通过rxjs的http请求)
 	- [通过RxJs的http请求](#通过rxjs的http请求)
-
+5. [组件通讯](#组件通讯)
+	- [父子组件通讯](#父子组件通讯)
 
 --------------
 
@@ -862,10 +863,104 @@ export class RxjsDemoComponent implements OnInit {
 }
 ```
 
+# 组件通讯
+## 父子组件通讯
+> 父组件给子组件传值 -@Input
+> 1. 父组件调用子组件的时候传入数据
+> 2. 子组件引入Input模块
+> 3. 子组件中 @Input接收父组件传过来的数据
+> 4. 子组件中使用父组件的数据
 
+> 父子组件传值的方式让子组件执行父组件的方法
+> 1. 父组件定义方法
+> 2. 调用子组件传入当前方法
+> 3. 子组件接收父组件传过来的方法
+> 4. 子组件使用父组件的方法。
 
+> 子组件通过@Output执行父组件的方法
+> 1. 子组件引入Output 和 EventEmitter
+> 2. 子组件中实例化 EventEmitter
+> 3. 子组件通过 EventEmitter 对象outer实例广播数据
+> 4. 父组件调用子组件的时候，定义接收事件 , sendMsgToFather就是子组件的EventEmitter 对象sendMsgToFather
+> 5. 父组件接收到数据会调用自己的runParent方法，这个时候就能拿到子组件的数据
 
+> 完整demo 在Angular/componentTdataDemo 中
 
+### child
+> ts
+
+```typescript
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+    selector: 'app-child',
+    templateUrl: './child.component.html',
+    styleUrls: ['./child.component.css']
+})
+export class ChildComponent implements OnInit {
+    @Input() revFatherData: string;
+    @Input() revFatherFun: any;
+    @Output() sendMsgToFather = new EventEmitter();
+    constructor() { }
+    ngOnInit() {
+    }
+    childFun() {
+        // 可传值可不传
+        this.sendMsgToFather.emit('这是子组件发来的值');
+    }
+}
+```
+> html
+
+```html
+<div class="child">
+    <p>这是子组件</p>
+    <span>接受到父组件的值： {{ revFatherData }}</span>
+    <br>
+    <button (click)='revFatherFun()'>执行父组件的方法</button>
+    <br>
+    <button (click)='childFun()'>通过Output执行父组件的方法并传值</button>
+</div>
+```
+
+### father
+> ts
+
+``` typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+    selector: 'app-father',
+    templateUrl: './father.component.html',
+    styleUrls: ['./father.component.css']
+})
+export class FatherComponent implements OnInit {
+    private sendChildData: string;
+    constructor() {
+        this.sendChildData = '这是父组件的值';
+    }
+    fatherFun() {
+        alert('这是父组件的方法');
+    }
+    revChildData(e) {
+        alert('这是父组件，接收到子组件的值为: ' + e);
+    }
+    ngOnInit() {
+    }
+
+}
+```
+> html
+
+``` html
+<app-child [revFatherData]="sendChildData" [revFatherFun]="fatherFun" (sendMsgToFather)="revChildData($event)"></app-child>
+<div class="father">
+    <p>这是父组件</p>
+</div>
+```
+> 效果图
+![](https://i.imgur.com/YUdHLZe.png)
+![](https://i.imgur.com/3bB8rBD.png)
 
 
 
