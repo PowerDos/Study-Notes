@@ -17,7 +17,11 @@
 	- [双向绑定](#双向绑定)
 	- [小实例 TO-DO-LIST](#小实例-to-do-list)
 3. [服务](#服务)
+4. [http](#http)
+	- [不通过RxJs的http请求](#不通过rxjs的http请求)
 
+
+<br>
 --------------
 ### Angularjs 1.x目录
 1. [小实例](#小实例)
@@ -548,7 +552,7 @@ export class ToDoListComponent implements OnInit {
 ![](https://i.imgur.com/avl3GUF.png)
 
 # 服务
-> 下面是一个存储服务小实例，完整的程序在 Angularjs/serviceDemo 中
+> 下面是一个存储服务小实例，可以把数据存储在本地，这样刷新界面之类的，数据还存在，完整的程序在 Angularjs/serviceDemo 中
 
 > Angualr CLI创建服务
 
@@ -660,6 +664,122 @@ export class StorageService {
 
 ![](https://i.imgur.com/5ZWRUQK.png)
 
+# http
+> 完整demo 在Angular/httpDemo中
+
+## 不通过RxJs的http请求
+> 引入HttpModule 、JsonpModule 并依赖注入
+
+> app.module.ts
+
+```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpModule, JsonpModule } from '@angular/http'; /* 注入HTTP和jsonp依赖 */
+import { AppComponent } from './app.component';
+import { HttpComponent } from './components/http/http.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HttpComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpModule,
+    JsonpModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+> http.component.ts
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { Http, Jsonp, Headers } from '@angular/http';
+
+@Component({
+    selector: 'app-http',
+    templateUrl: './http.component.html',
+    styleUrls: ['./http.component.css']
+})
+export class HttpComponent implements OnInit {
+    // 实例化Headers
+    private headers = new Headers({ 'Content-Type': 'application/json' });
+    protected get_data: any[];
+    protected jsonp_data: any[];
+    // 构造函数内申明
+    constructor(private http: Http, private jsonp: Jsonp) {
+        this.get_data = [];
+        this.jsonp_data = [];
+    }
+
+    ngOnInit() {
+    }
+
+    getData() {
+        let _this = this;
+        // 因为跨域问题，所以用第三方接口
+        this.http.get('http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1')
+            .subscribe(function (data) {
+                console.log(JSON.parse(data['_body']));
+                _this.get_data = JSON.parse(data['_body']).result;
+            }, function (err) {
+                console.log(err);
+            });
+    }
+
+    jsonpData() {
+        let _this = this;
+        this.jsonp
+            .get('http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1&callback=JSONP_CALLBACK')
+            .subscribe(function (data) {
+                console.log(data['_body']);
+                _this.jsonp_data = data['_body'].result;
+            }, function (err) {
+                console.log(err);
+            })
+    }
+
+    postData(){
+        // 1. 引入Headers 、Http模块
+        // 2. 实例化Headers
+        // 3. post提交数据
+        // 因为跨域问题无法做演示
+        this.http
+        .post('http://localhost:8008/api/test', JSON.stringify({username: 'admin'}), {headers:this.headers})
+        .subscribe(function(res){
+            console.log(res.json());
+        }, function(err){
+            console.log(err);
+        });
+    }
+}
+```
+> http.component.html
+
+```html
+<button (click)='getData()'>get获取数据</button>
+<p>get获取到的数据：</p>
+<ul>
+    <li *ngFor="let item of get_data">{{item.title}}</li>
+</ul>
+
+<br><hr><br>
+
+<button (click)='jsonpData()'>jsonp获取数据</button>
+<p>jsonp获取到的数据：</p>
+<ul>
+    <li *ngFor="let item of jsonp_data">{{item.title}}</li>
+</ul>
+
+<br><hr><br>
+```
+> 效果
+
+![](https://i.imgur.com/9SdOabb.png)
 
 
 
@@ -707,12 +827,8 @@ export class StorageService {
 
 
 
-
-
-
-
-
-
+<br><br><br><br><br><br>
+-------------------------------
 -------------------------------
 > 下面是 Angular 1.x写的笔记
 
