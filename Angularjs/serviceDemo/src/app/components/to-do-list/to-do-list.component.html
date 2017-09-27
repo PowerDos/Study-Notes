@@ -1,0 +1,15 @@
+输入代办事项：<input type="text" [(ngModel)]='toDoThing' (keyup)="keyUpFunc($event)">
+<hr><br>
+<h3>待办列表</h3>
+<ul>
+    <li *ngFor="let item of list; let key = index;" [hidden] = "item.status!=1">
+        <input type="checkbox" (click)="changeStatus(key)">{{item.toDoThing}} ----- <button (click)="deleteThing(key)">删除</button>
+    </li>
+</ul>
+<br><hr><br>
+<h3>完成列表</h3>
+<ul>
+    <li *ngFor="let item of list; let key = index;" [hidden] = "item.status!=0">
+        <input type="checkbox" checked="checked" ><s>{{item.toDoThing}}</s>
+    </li>
+</ul>

@@ -16,6 +16,7 @@
 	- [表单](#表单)
 	- [双向绑定](#双向绑定)
 	- [小实例 TO-DO-LIST](#小实例-to-do-list)
+3. [服务](#服务)
 
 --------------
 ### Angularjs 1.x目录
@@ -137,11 +138,10 @@ ng serve --open
 |favicon.ico| 每个网站都希望自己在书签栏中能好看一点。 请把它换成你自己的图标。| 
 |index.html| 这是别人访问你的网站是看到的主页面的HTML文件。 大多数情况下你都不用编辑它。 在构建应用时，CLI会自动把所有js和css文件添加进去，所以你不必在这里手动添加任何 <script> 或 <link> 标签。|
 |main.ts| 这是应用的主要入口点。 使用JIT compiler编译器编译本应用，并启动应用的根模块AppModule，使其运行在浏览器中。 你还可以使用AOT compiler编译器，而不用修改任何代码 —— 只要给ng build 或 ng serve 传入 --aot 参数就可以了。|
-|polyfills.ts| 不同的浏览器对Web标准的支持程度也不同。 填充库（polyfill）能帮我们把这些不同点进行标准化。 你只要使用core-js 和 zone.js通常就够了，不过你
-也可以查看浏览器支持指南以了解更多信息。|
+|polyfills.ts| 不同的浏览器对Web标准的支持程度也不同。 填充库（polyfill）能帮我们把这些不同点进行标准化。 你只要使用core-js 和 zone.js通常就够了，不过你也可以查看浏览器支持指南以了解更多信息。|
 |styles.css| 这里是你的全局样式。 大多数情况下，你会希望在组件中使用局部样式，以利于维护，不过那些会影响你整个应用的样式你还是需要集中存放在这里。|
 |test.ts| 这是单元测试的主要入口点。 它有一些你不熟悉的自定义配置，不过你并不需要编辑这里的任何东西。|
-|tsconfig.{app|spec}.json| TypeScript编译器的配置文件。tsconfig.app.json是为Angular应用准备的，而tsconfig.spec.json是为单元测试准备的。|
+|tsconfig.{app \ spec}.json| TypeScript编译器的配置文件。tsconfig.app.json是为Angular应用准备的，而tsconfig.spec.json是为单元测试准备的。|
 
 ## app.module.ts及组件分析
 > app.module.ts 文件说明
@@ -481,7 +481,7 @@ export class DataBindingComponent implements OnInit {
 ![](https://i.imgur.com/siOpBtz.png)
 
 ## 小实例 TO-DO-LIST
-> 完成实例在 toDoListDemo 中
+> 完整实例在 Angularjs/toDoListDemo 中
 
 > ts
 
@@ -547,6 +547,118 @@ export class ToDoListComponent implements OnInit {
 
 ![](https://i.imgur.com/avl3GUF.png)
 
+# 服务
+> 下面是一个存储服务小实例，完整的程序在 Angularjs/serviceDemo 中
+
+> Angualr CLI创建服务
+
+```
+ng g service service-name
+```
+
+> 注册服务 app.module.ts
+
+```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+import { ToDoListComponent } from './components/to-do-list/to-do-list.component';
+
+import { StorageService } from './services/storage.service'; // 注册服务
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ToDoListComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  providers: [StorageService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+> 使用页面也需要引入服务并注册服务 to-do-list.component.ts
+
+``` typescript
+import { Component, OnInit } from '@angular/core';
+import { StorageService } from '../../services/storage.service';
+
+@Component({
+    selector: 'app-to-do-list',
+    templateUrl: './to-do-list.component.html',
+    styleUrls: ['./to-do-list.component.css']
+})
+export class ToDoListComponent implements OnInit {
+    protected list: any[];
+    protected toDoThing: any;
+    constructor(private storage: StorageService) {
+        this.list = [];
+        this.toDoThing = '';
+    }
+    // 键盘松开的事件
+    keyUpFunc(e) {
+        if (e.keyCode === 13) {
+            const obj = {
+                toDoThing: this.toDoThing,
+                status: 1
+            }
+            this.list.push(obj);
+            this.storage.setItem('todolist', this.list);
+            this.toDoThing = '';
+        }
+    }
+
+    changeStatus(index) {
+        this.list[index].status = 0;
+        this.storage.setItem('todolist', this.list);
+    }
+
+    deleteThing(index) {
+        this.list.splice(index, 1);
+        this.storage.setItem('todolist', this.list);
+    }
+    ngOnInit() {
+        const todolist = this.storage.getItem('todolist');
+        if (todolist) {
+            this.list = todolist;
+        }
+    }
+
+}
+```
+> 编写的服务 storage.service.ts
+
+```typescript
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class StorageService {
+
+    constructor() { }
+
+    setItem(key, value){
+        localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    getItem(key){
+        return JSON.parse(localStorage.getItem(key));
+    }
+
+    removeItem(key){
+        localStorage.removeItem(key);
+    }
+}
+```
+
+> 实际效果
+
+![](https://i.imgur.com/5ZWRUQK.png)
 
 
 
