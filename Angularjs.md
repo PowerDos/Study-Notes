@@ -1004,13 +1004,12 @@ export class FatherComponent implements OnInit {
 
 -------------------------------
 
--------------------------------
+# 下面是 Angular 1.x写的笔记
 
 -------------------------------
 
 <br><br><br><br><br><br>
 
-> *下面是 Angular 1.x写的笔记*
 
 
 # 小实例
