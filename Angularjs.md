@@ -959,6 +959,7 @@ export class FatherComponent implements OnInit {
 </div>
 ```
 > 效果图
+
 ![](https://i.imgur.com/YUdHLZe.png)
 ![](https://i.imgur.com/3bB8rBD.png)
 
@@ -1000,8 +1001,13 @@ export class FatherComponent implements OnInit {
 
 
 <br><br><br><br><br><br>
+
 -------------------------------
+
 -------------------------------
+
+-------------------------------
+
 > 下面是 Angular 1.x写的笔记
 
 
