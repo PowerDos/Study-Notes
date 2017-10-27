@@ -8,6 +8,8 @@
 	- [利用 Angular CLI 创建项目](#利用-angular-cli-创建项目)
 	- [目录说明](#目录说明)
 	- [app.module.ts及组件分析](#appmodulets及组件分析)
+	- [官方提供的一些指令](#官方提供的一些指令)
+	- [编译](#编译)
 2. [基础操作](#基础操作)
 	- [绑定数据](#绑定数据)
 	- [for循环](#for循环)
@@ -212,6 +214,26 @@ export class HeaderComponent implements OnInit {
 
 }
 ```
+
+## 官方提供的一些指令
+
+|Scaffolf | Usage | 备注 | 
+|:-----|:--------------|:------|
+| [Component](https://github.com/angular/angular-cli/wiki/generate-component) | `ng g component my-new-component` | 新建组件 |
+| [Directive](https://github.com/angular/angular-cli/wiki/generate-directive) | `ng g directive my-new-directive` | 新建指令 |
+| [Pipe](https://github.com/angular/angular-cli/wiki/generate-pipe)           | `ng g pipe my-new-pipe` | 新建管道 |
+| [Service](https://github.com/angular/angular-cli/wiki/generate-service)     | `ng g service my-new-service` | 新建服务 |
+| [Class](https://github.com/angular/angular-cli/wiki/generate-class)         | `ng g class my-new-class` | 新建类 |
+| [Guard](https://github.com/angular/angular-cli/wiki/generate-guard)         | `ng g guard my-new-guard` | 
+| [Interface](https://github.com/angular/angular-cli/wiki/generate-interface) | `ng g interface my-new-interface` | 新建接口 | 
+| [Enum](https://github.com/angular/angular-cli/wiki/generate-enum)           | `ng g enum my-new-enum` | 枚举 |
+| [Module](https://github.com/angular/angular-cli/wiki/generate-module)       | `ng g module my-module` | 新建模块 |
+
+## 编译
+> 开发环境： `ng build`
+
+> 生成环境： `ng build --prod`
+
 # 基础操作
 > angularDemo1中有完整可运行程序
 ## 绑定数据
