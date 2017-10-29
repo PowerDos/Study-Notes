@@ -1,0 +1,8 @@
+<p>这是父组件</p>
+<button (click)='childObj.childFunc()'>父组件使用子组件的方法</button>
+<br><button (click)='fatherChangeChildData()'>父组件获取子组件数据并改变子组件数据</button>
+<br><br>
+<hr>
+<br><br>
+<p>{{ childObj.msg }}</p>
+<app-child #childObj></app-child>

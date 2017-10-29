@@ -24,6 +24,7 @@
 	- [通过RxJs的http请求](#通过rxjs的http请求)
 5. [组件通讯](#组件通讯)
 	- [父子组件通讯](#父子组件通讯)
+	- [父子组件通讯之父组件获取子组件方法及属性](#父子组件通讯之父组件获取子组件方法及属性)
 
 --------------
 
@@ -985,13 +986,85 @@ export class FatherComponent implements OnInit {
 ![](https://i.imgur.com/YUdHLZe.png)
 ![](https://i.imgur.com/3bB8rBD.png)
 
+## 父子组件通讯之父组件获取子组件方法及属性
 
+> 父组件通过局部变量获取子组件的引用,通过ViewChild主动获取子组件的数据和方法 
 
+### child
+> ts
 
+```typescript
+import { Component, OnInit } from '@angular/core';
 
+@Component({
+    selector: 'app-child',
+    templateUrl: './child.component.html',
+    styleUrls: ['./child.component.css']
+})
+export class ChildComponent implements OnInit {
 
+    public msg:String;
+    constructor() { 
+        this.msg = "这是子组件的数据"
+    }
 
+    ngOnInit() {
+    }
 
+    childFunc(){
+        alert('这是子组件的方法');
+    }
+}
+```
+
+> html
+
+```HTML
+<p>
+    这是父组件引入的子组件
+</p>
+```
+
+### father
+> ts
+
+```typescript
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+@Component({
+    selector: 'app-father',
+    templateUrl: './father.component.html',
+    styleUrls: ['./father.component.css']
+})
+export class FatherComponent implements OnInit {
+
+    @ViewChild('childObj') childObj;
+    constructor() { }
+
+    ngOnInit() {
+    }
+
+    fatherChangeChildData(){
+        this.childObj.msg = "父组件改变后的数据";
+        alert('改变完子组件的数据');
+    }
+}
+```
+> html
+
+```html
+<p>这是父组件</p>
+<button (click)='childObj.childFunc()'>父组件使用子组件的方法</button>
+<br><button (click)='fatherChangeChildData()'>父组件获取子组件数据并改变子组件数据</button>
+<br><br>
+<hr>
+<br><br>
+<p>{{ childObj.msg }}</p>
+<app-child #childObj></app-child>
+```
+### 效果
+![](https://i.imgur.com/jorI7bv.png)
+![](https://i.imgur.com/q7rJaJl.png)
 
 
 
