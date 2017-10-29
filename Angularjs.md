@@ -987,6 +987,7 @@ export class FatherComponent implements OnInit {
 ![](https://i.imgur.com/3bB8rBD.png)
 
 ## 父子组件通讯之父组件获取子组件方法及属性
+> 完整demo在Angular/componentTdataDemo2中
 
 > 父组件通过局部变量获取子组件的引用,通过ViewChild主动获取子组件的数据和方法 
 
@@ -1067,6 +1068,108 @@ export class FatherComponent implements OnInit {
 ![](https://i.imgur.com/q7rJaJl.png)
 
 
+# 路由
+## 小实例
+> 创建一个带路由的项目
+
+> `ng new routingDemo --routing`
+
+> 可以看到目录多了个src/app/app-routing.module.ts
+
+![](https://i.imgur.com/jTTXcw9.png)
+
+> 完整demo在Angular/routingDemo中
+### 路由配置及展示
+> app-routing.module.ts
+
+```typescript
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+// 引入组件
+import { HomeComponent } from './components/home/home.component';
+import { NewsComponent } from './components/news/news.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+
+// 配置路由
+const routes: Routes = [
+    {
+        path: 'home',
+        component: HomeComponent
+    },
+    {
+        path: 'news',
+        component: NewsComponent
+    },
+    {
+        path: 'about_us',
+        component: AboutUsComponent
+    },
+    {
+        path: '', // 无路径时，默认显示home组件
+        component: HomeComponent,
+        pathMatch: 'full'
+    },
+    {
+        path: '**',  // 全部没有匹配到时，自动跳转到home
+        redirectTo: 'home'
+    }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+```
+> app.module.ts
+
+``` typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module'; // 引入路由模块
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { NewsComponent } from './components/news/news.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NewsComponent,
+    AboutUsComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule // 导入路由模块
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+> app.component.html
+
+```html
+<ul>
+    <li><a routerLink="home">首页</a></li>
+    <li><a routerLink="news">新闻</a></li>
+    <li><a routerLink="about_us">关于我们</a></li>
+</ul>
+<hr>
+<!-- 动态加载组件的位置 -->
+<router-outlet></router-outlet>
+```
+> 创建3个组件
+
+![](https://i.imgur.com/JV0N5Bp.png)
+
+> 实际效果
+![](https://i.imgur.com/FuR79ae.png)
+![](https://i.imgur.com/8F2DIgG.png)
 
 
 
@@ -1089,13 +1192,7 @@ export class FatherComponent implements OnInit {
 
 
 
-
-
-
-
-
-
-<br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
 
 -------------------------------
 
