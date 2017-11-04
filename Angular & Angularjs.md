@@ -1,5 +1,5 @@
-# Angularjs
-### Angularjs 4.x目录
+# Angularjs & Angular
+### Angular 目录
 1. [Angularjs](#angularjs)
 	- [简介](#简介)
 	- [Angular、Vue、React对比](##angularvuereact对比)
@@ -10,6 +10,7 @@
 	- [app.module.ts及组件分析](#appmodulets及组件分析)
 	- [官方提供的一些指令](#官方提供的一些指令)
 	- [编译](#编译)
+	- [更新脚手架Angular-cli](#更新脚手架angular-cli)
 2. [基础操作](#基础操作)
 	- [绑定数据](#绑定数据)
 	- [for循环](#for循环)
@@ -236,6 +237,17 @@ export class HeaderComponent implements OnInit {
 > 开发环境： `ng build`
 
 > 生成环境： `ng build --prod`
+
+## 更新脚手架Angular-cli
+> Angular新版本已发布，更新脚手架为最新版，构建的Angular也将是最新版本。
+
+1. 先卸载`angular-cli`
+	> `npm uninstall -g angular-cli`
+2. 安装最新的`angular-cli`
+	> `npm cache clean`
+	> `npm install -g @angular/cli@latest`
+3. 查看`angular-cli`版本
+	> ng v
 
 # 基础操作
 > angularDemo1中有完整可运行程序
