@@ -1387,7 +1387,7 @@ export class NewsContentComponent implements OnInit {
 ```
 
 ### 效果
-![](https://i.imgur.com/ALhjqEm.png)
+![](https://i.imgur.com/MCUMCOM.png)
 ![](https://i.imgur.com/elvFhXt.png)
 ![](https://i.imgur.com/aExL8jd.png)
 
