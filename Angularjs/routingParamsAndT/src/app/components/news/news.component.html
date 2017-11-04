@@ -1,0 +1,16 @@
+<h3>NEWS</h3>
+<br><hr>
+<h4>动态传值</h4>
+<a routerLink="/newsdetail/1">新闻一</a> 
+<a routerLink="/newsdetail/2">新闻二</a> 
+<a routerLink="/newsdetail/3">新闻三</a> 
+<br>
+<h4>通过JS跳转</h4>
+<button (click)="goto(1)">新闻一</button>
+<button (click)="goto(2)">新闻二</button>
+<button (click)="goto(3)">新闻三</button>
+<br>
+<h4>通过JS跳转GET传值</h4>
+<button (click)="getTo(1, '新闻一')">新闻一</button>
+<button (click)="getTo(2, '新闻二')">新闻二</button>
+<button (click)="getTo(3, '新闻三')">新闻三</button>

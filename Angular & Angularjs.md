@@ -28,6 +28,7 @@
 	- [父子组件通讯之父组件获取子组件方法及属性](#父子组件通讯之父组件获取子组件方法及属性)
 6. [路由](#路由)
 	- [小实例](#小实例)
+	- [路由跳转传值](#路由跳转传值)
 
 --------------
 
@@ -245,9 +246,10 @@ export class HeaderComponent implements OnInit {
 	> `npm uninstall -g angular-cli`
 2. 安装最新的`angular-cli`
 	> `npm cache clean`
+	
 	> `npm install -g @angular/cli@latest`
 3. 查看`angular-cli`版本
-	> ng v
+	> `ng v`
 
 # 基础操作
 > angularDemo1中有完整可运行程序
@@ -1185,6 +1187,209 @@ export class AppModule { }
 
 ![](https://i.imgur.com/FuR79ae.png)
 ![](https://i.imgur.com/8F2DIgG.png)
+
+
+## 路由跳转传值
+> 完整实例在 `Angularjs/routingParamsAndT` 中
+
+> 案例中包括：
+> - 动态传值
+> - 通过JS传值
+> - JS跳转GET传值
+
+### 关键文件
+> app-routing.module.ts 
+
+```typescript
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { HomeComponent } from './components/home/home.component';
+import { NewsComponent } from './components/news/news.component';
+import { NewsDetailComponent } from './components/news-detail/news-detail.component';
+import { NewsContentComponent } from './components/news-content/news-content.component';
+
+const routes: Routes = [
+    {
+        path: "home",
+        component: HomeComponent
+    },
+    {
+        path: "news",
+        component: NewsComponent
+    },
+    {
+        path: "newsdetail/:id",
+        component: NewsDetailComponent
+    },
+    {
+        path: "newscontent",
+        component: NewsContentComponent
+    },
+    {
+        path: "**",
+        component: HomeComponent
+    }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+```
+
+> news.component.ts 新闻组件
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
+
+@Component({
+    selector: 'app-news',
+    templateUrl: './news.component.html',
+    styleUrls: ['./news.component.css']
+})
+export class NewsComponent implements OnInit {
+
+    constructor(private router: Router) { }
+
+    ngOnInit() {
+    }
+
+    goto(id){
+        // JS跳转，主要用于业务逻辑的处理后的跳转
+        // routerLink 主要用于前台直接点击跳转
+        this.router.navigate(['/newsdetail', id]);
+    }
+    getTo(id, name){
+        // get传值
+        // 配置参数
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                "id": id,
+                "name": name
+            }
+        }
+        this.router.navigate(['/newscontent'], navigationExtras);
+    }
+}
+
+```
+
+> news.component.html 
+
+```html
+<h3>NEWS</h3>
+<br><hr>
+<h4>动态传值</h4>
+<a routerLink="/newsdetail/1">新闻一</a> 
+<a routerLink="/newsdetail/2">新闻二</a> 
+<a routerLink="/newsdetail/3">新闻三</a> 
+<br>
+<h4>通过JS跳转</h4>
+<button (click)="goto(1)">新闻一</button>
+<button (click)="goto(2)">新闻二</button>
+<button (click)="goto(3)">新闻三</button>
+<br>
+<h4>通过JS跳转GET传值</h4>
+<button (click)="getTo(1, '新闻一')">新闻一</button>
+<button (click)="getTo(2, '新闻二')">新闻二</button>
+<button (click)="getTo(3, '新闻三')">新闻三</button>
+```
+
+> new-detail.component.ts 新闻详情组件
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { Routes, ActivatedRoute, Params } from '@angular/router';
+
+@Component({
+    selector: 'app-news-detail',
+    templateUrl: './news-detail.component.html',
+    styleUrls: ['./news-detail.component.css']
+})
+export class NewsDetailComponent implements OnInit {
+    private id: Number;
+    protected newsTitle: String;
+
+    constructor(private router: ActivatedRoute) { }
+
+    ngOnInit() {
+        // 获取传过来的参数
+        this.router.params.subscribe(data => this.id = parseInt(data.id));
+        switch(this.id){
+            case 1:
+                this.newsTitle = "一";
+                break;
+            case 2:
+                this.newsTitle = "二";
+                break;
+            case 3:
+                this.newsTitle = "三";
+                break;
+            default:
+                this.newsTitle = "五";
+                break;
+        }
+    }
+
+}
+```
+
+> new-detail.component.html
+
+```html
+<h3>新闻{{ newsTitle }}</h3>
+<p>Angular World! Angular World! Angular World! Angular World!</p>
+<p>Angular World! Angular World! Angular World! Angular World!</p>
+<p>Angular World! Angular World! Angular World! Angular World!</p>
+<p>Angular World! Angular World! Angular World! Angular World!</p>
+<p>Angular World! Angular World! Angular World! Angular World!</p>
+```
+
+> news-content.component.ts 新闻内容组件
+
+```
+import { Component, OnInit } from '@angular/core';
+// 接收动态传值， 接收get传值
+import { ActivatedRoute } from '@angular/router';
+
+@Component({
+    selector: 'app-news-content',
+    templateUrl: './news-content.component.html',
+    styleUrls: ['./news-content.component.css']
+})
+export class NewsContentComponent implements OnInit {
+    protected newsName: String;
+
+    constructor(private router: ActivatedRoute) { }
+
+    ngOnInit() {
+        let fatherThis = this;
+        // 获取get传过来值
+        this.router.queryParams.subscribe( data => {
+            fatherThis.newsName = data.name;
+        })
+    }
+
+}
+```
+
+> news-content.component.html
+
+```html
+<h3>{{ newsName }}详情</h3>
+<p>news details! news details! news details!</p>
+<p>news details! news details! news details!</p>
+<p>news details! news details! news details!</p>
+```
+
+### 效果
+![](https://i.imgur.com/ALhjqEm.png)
+![](https://i.imgur.com/elvFhXt.png)
+![](https://i.imgur.com/aExL8jd.png)
 
 
 
