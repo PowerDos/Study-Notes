@@ -29,6 +29,7 @@
 6. [路由](#路由)
 	- [小实例](#小实例)
 	- [路由跳转传值](#路由跳转传值)
+	- [路由嵌套](#路由嵌套)
 
 --------------
 
@@ -1392,8 +1393,117 @@ export class NewsContentComponent implements OnInit {
 ![](https://i.imgur.com/aExL8jd.png)
 
 
+## 路由嵌套
+> 完整实例在 Angularjs/FatherAndChildRouter 中
 
+> app-routing.module.ts 路由模块
 
+```typescript
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { HomeComponent } from './components/home/home.component';
+import { NewsComponent } from './components/news/news.component';
+import { NewsTopComponent } from './components/news-top/news-top.component';
+import { NewsHotComponent } from './components/news-hot/news-hot.component';
+import { NewsListComponent } from './components/news-list/news-list.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+
+const routes: Routes = [
+    {
+        path: "home",
+        component: HomeComponent,
+        children: [ // 子路由写在这里
+            {
+                path: "welcome",
+                component: WelcomeComponent
+            },
+            {
+                path: "**",
+                component: WelcomeComponent
+            }
+        ]
+    },
+    {
+        path: "news",
+        component: NewsComponent,
+        children: [
+            {
+                path: "newstop",
+                component: NewsTopComponent
+            },
+            {
+                path: "newshot",
+                component: NewsHotComponent
+            },
+            {
+                path: "newslist",
+                component: NewsListComponent
+            },
+            {
+                path: "**",
+                component: NewsHotComponent
+            }
+        ]
+    },
+    {
+        path: "**",
+        component: HomeComponent
+    }
+];
+
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
+})
+export class AppRoutingModule { }
+```
+> app.component.html 
+```html
+<header>
+    <ul>
+        <li><a routerLink="home" routerLinkActive="active">首页</a></li>
+        <li><a routerLink="news" routerLinkActive="active">新闻</a></li>
+    </ul>
+</header>
+
+<router-outlet></router-outlet>
+```
+
+> home.component.html 
+```html
+<div class="contanier">
+    <div class="left">
+        <ul>
+            <li><a routerLink="welcome" routerLinkActive="active">欢迎页面</a></li>
+        </ul>
+    </div>
+    <div class="right">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+```
+
+> news.component.html 
+```html
+<div class="contanier">
+    <div class="left">
+        <ul>
+            <li><a routerLink="newstop" routerLinkActive="active">新闻头条</a></li>
+            <li><a routerLink="newshot" routerLinkActive="active">热搜新闻</a></li>
+            <li><a routerLink="newslist" routerLinkActive="active">全部新闻</a></li>
+        </ul>
+    </div>
+    <div class="right">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+```
+
+> 实际效果
+
+![](https://i.imgur.com/y5BylGE.png)
+![](https://i.imgur.com/1SFhVAX.png)
 
 
 
