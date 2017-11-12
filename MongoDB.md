@@ -4,34 +4,34 @@
 
 ### 目录
 1. [MongoDB](#mongodb)
-	- [关系型数据库](#关系型数据库)
-	- [NoSQL](#nosql)
-	- [SQL和NOSQL的比较](#sql和nosql的比较)
-	- [MongoDB 适应场景](#mongodb-适应场景)
-	- [下载MongoDB](#下载mongodb)
-	- [安装环境](#安装环境)
-	- [安装MongoDB](#安装mongodb)
-	- [加载环境变量](#加载环境变量)
-	- [开启数据库](#开启数据库)
-	- [MongoDB 可视化工具](#mongodb-可视化工具)
-	- [官方手册](#官方手册)
-	- [Linux 下安装 MongoDB](#linux-下安装-mongodb)
+  - [关系型数据库](#关系型数据库)
+  - [NoSQL](#nosql)
+  - [SQL和NOSQL的比较](#sql和nosql的比较)
+  - [MongoDB 适应场景](#mongodb-适应场景)
+  - [下载MongoDB](#下载mongodb)
+  - [安装环境](#安装环境)
+  - [安装MongoDB](#安装mongodb)
+  - [加载环境变量](#加载环境变量)
+  - [开启数据库](#开启数据库)
+  - [MongoDB 可视化工具](#mongodb-可视化工具)
+  - [官方手册](#官方手册)
+  - [Linux 下安装 MongoDB](#linux-下安装-mongodb)
 2. [数据库操作](#数据库操作)
-	- [使用数据库或者创建数据库](#使用数据库或者创建数据库)
-	- [删除数据库](#删除数据库)
-	- [添加数据](#添加数据)
-	- [查询数据](#查询数据)
-	- [更新数据](#更新数据)
-	- [删除数据](#删除数据)
+  - [使用数据库或者创建数据库](#使用数据库或者创建数据库)
+  - [删除数据库](#删除数据库)
+  - [添加数据](#添加数据)
+  - [查询数据](#查询数据)
+  - [更新数据](#更新数据)
+  - [删除数据](#删除数据)
 3. [Mongoose](#mongoose)
-	- [demo](#demo)
-	- [连接数据库](#连接数据库)
-	- [Mongoose实例](#mongoose实例)
-	- [schema 字段属性](#schema-字段属性)
-	- [添加数据](#添加数据)
-	- [删除数据](#删除数据)
-	- [修改数据](#修改数据)
-	- [查找数据](#查找数据)
+  - [demo](#demo)
+  - [连接数据库](#连接数据库)
+  - [Mongoose实例](#mongoose实例)
+  - [schema 字段属性](#schema-字段属性)
+  - [添加数据](#添加数据)
+  - [删除数据](#删除数据)
+  - [修改数据](#修改数据)
+  - [查找数据](#查找数据)
 
 ## 关系型数据库
 > 1. 数据库有行、列的概念，数据有关系，数据不是散的。
@@ -175,12 +175,17 @@ vim /etc/rc.d/rc.local
 ```
 /usr/local/mongodb/bin/mongod --bind_ip 127.0.0.1 -f /usr/local/mongodb/bin/mongodb.conf
 ```
+> 注意在Centos 7 需要给rc.loacl权限
+
+```
+chmod +x /etc/rc.d/rc.local
+```
 
 # 数据库操作
 ## 使用数据库或者创建数据库
 ```SQL
 use School
-``` 
+```
 > 如果真的想把这个数据库创建成功，那么必须插入一个数据。
 
 ## 删除数据库
@@ -244,14 +249,14 @@ db.student.find({"name": "Gavin", "score.math":90})
 ### 查询条件
 > 比较语句
 
-操作|格式|范例
---|--|---
-等于|	{<key>:<value>}	| db.student.find({"name":"Gavin"})
-小于|	{<key>:{$lt:<value>}}|	db.student.find({"age":{$lt:20}})
-小于或等于|	{<key>:{$lte:<value>}}|	db.student.find({"age":{$lte:20}})
-大于|	{<key>:{$gt:<value>}}|	db.student.find({"age":{$gt:20}})
-大于或等于|	{<key>:{$gte:<value>}}|	db.student.find({"age":{$gte:20}})
-不等于|	{<key>:{$ne:<value>}}|	db.student.find({"age":{$ne:20}})
+| 操作    | 格式                     | 范例                                 |
+| ----- | ---------------------- | ---------------------------------- |
+| 等于    | {<key>:<value>}        | db.student.find({"name":"Gavin"})  |
+| 小于    | {<key>:{$lt:<value>}}  | db.student.find({"age":{$lt:20}})  |
+| 小于或等于 | {<key>:{$lte:<value>}} | db.student.find({"age":{$lte:20}}) |
+| 大于    | {<key>:{$gt:<value>}}  | db.student.find({"age":{$gt:20}})  |
+| 大于或等于 | {<key>:{$gte:<value>}} | db.student.find({"age":{$gte:20}}) |
+| 不等于   | {<key>:{$ne:<value>}}  | db.student.find({"age":{$ne:20}})  |
 
 > 逻辑语句
 
@@ -558,7 +563,7 @@ mongoose.connect(uri, options);
 
 - db             - passed to the [underlying driver's db instance](http://mongodb.github.io/node-mongodb-native/2.1/api/Db.html)
 - server         - passed to the [underlying driver's server instance(s)](http://mongodb.github.io/node-mongodb-native/2.1/api/Server.html)
--  replset        - passed to the [underlying driver's ReplSet instance](http://mongodb.github.io/node-mongodb-native/2.1/api/ReplSet.html)
+- replset        - passed to the [underlying driver's ReplSet instance](http://mongodb.github.io/node-mongodb-native/2.1/api/ReplSet.html)
 - user           - username for authentication (if not specified in uri)
 - pass           - password for authentication (if not specified in uri)
 - auth           - options for authentication
