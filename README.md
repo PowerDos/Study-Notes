@@ -10,6 +10,7 @@
 - [Redis](https://github.com/PowerDos/Study-Notes/blob/master/Redis.md) # Redis
 - [MongoDB](https://github.com/PowerDos/Study-Notes/blob/master/MongoDB.md) # Mongo数据库
 - [Docker](https://github.com/PowerDos/Study-Notes/blob/master/Docker.md) # Docker 容器技术
+- [用TypeScript 封装 Node 企业框架](https://github.com/PowerDos/Study-Notes/tree/master/TypeScriptInNode) # 用TypeScript 封装 Node 企业框架
 
 ## 个人原创
 - [serialport_electron](https://github.com/PowerDos/Study-Notes/blob/master/serialport_electron.md) # 一个基于electron的一个桌面串口工具应用demo
