@@ -1,0 +1,23 @@
+{
+  "name": "typescriptinnode",
+  "version": "1.0.0",
+  "description": "TypeScript In Node Demo",
+  "main": "./dist/app.js",
+  "scripts": {
+    "start": "tsc && node ./dist/app.js",
+    "dev": "node ./node_modules/nodemon/bin/nodemon.js"
+  },
+  "keywords": [
+    "TypeScript",
+    "Node"
+  ],
+  "author": "Gavin Lin",
+  "license": "ISC",
+  "dependencies": {
+    "@types/koa": "^2.0.44",
+    "@types/koa-router": "^7.0.27",
+    "koa": "^2.5.0",
+    "koa-router": "^7.4.0",
+    "nodemon": "^1.17.1"
+  }
+}
