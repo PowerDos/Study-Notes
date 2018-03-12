@@ -110,3 +110,97 @@ app.listen(8080, '0.0.0.0', () => {
 > 目录结构
 
 ![](https://i.imgur.com/EfViPPR.png)
+
+### 拆分路由
+#### 目前的应用代码
+``` typescript
+import * as Koa from 'koa';
+import * as Router from 'koa-router';
+
+const app = new Koa();
+
+const route = new Router();
+
+route.get('/', async (ctx: Koa.Context, next: Function) => {
+    ctx.body = 'Welcome';
+});
+
+route.get('/mypage', async (ctx: Koa.Context, next: Function) => {
+    ctx.body = 'My Home Page';
+})
+
+app.use(route.routes());
+
+app.listen(8080, '0.0.0.0', () => {
+    console.log('Working');
+});
+```
+#### 为什么拆分路由
+> 你会发现，如果我们有很多路由的话，我们就会不断在这个文件添加代码，这样一来，如果代码量多了，会非常杂乱，后期维护起来很麻烦，所以我们把路由这一块拆分出来
+
+#### 开始拆分路由
+> 我们把路由单独写在一个文件中
+
+```typescript
+import { Context } from "koa";
+
+"use strict";
+
+const index = async (ctx: Context, next: any) => {
+    ctx.body = 'Welcome';
+}
+
+const myPage = async (ctx: Context, next: any) => {
+    ctx.body = 'My Home Page';
+}
+
+export default {
+    'get /': index,
+    'get /mypage': myPage
+}
+```
+> 为了解放生产力，让所有的路由文件中的路由自动加载进入，我们做一个loader专门来做加载
+
+```typescript
+import * as fs from 'fs';
+import * as Router from 'koa-router';
+
+const router = new Router;
+
+export function loader() {
+    const dirs = fs.readdirSync(__dirname + '/router');
+    // 遍历所有的router文件
+    dirs.forEach( filename => {
+        const mod = require(__dirname + '/router/' + filename).default;
+        // 将路由文件中的路由及方法挂在到router上
+        Object.keys(mod).map(key => {
+            const [ method, path ] = key.split(' '); // 分出方式和路由路径
+            const handler = mod[key];                // 路由对应的执行方法
+            (<any>router)[method](path, handler);    // 挂载到router
+        });
+    });
+
+    return router.routes();
+}
+```
+
+> 现在我们再改下app.ts这个文件
+
+```typescript
+"use strict";
+import * as Koa from 'koa';
+import { loader } from './loader';
+
+const app = new Koa();
+
+app.use(loader());
+
+app.listen(8080, '0.0.0.0', () => {
+    console.log('Working');
+});
+```
+#### 现在的目录
+![](https://i.imgur.com/Q7mDILs.png)
+
+#### 小结
+> 现在我们已经把路由提出去了，接下来我们需要新建页面路由，就是在router目录下，新建路由文件或者添加路由到我们现有文件router.ts中，是不是又自动化了一点。
