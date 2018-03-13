@@ -1,10 +1,10 @@
-"use strict";
 import * as Koa from 'koa';
-import { loader } from './loader';
+import { Loader } from './loader';
 
 const app = new Koa();
+const loader = new Loader();
 
-app.use(loader());
+app.use(loader.loadRouter());
 
 app.listen(8080, '0.0.0.0', () => {
     console.log('Working');
