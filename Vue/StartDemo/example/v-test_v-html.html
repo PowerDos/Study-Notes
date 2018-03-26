@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../assets/js/vue.js"></script>
+    <title>v-test v-html</title>
+</head>
+<body>
+    <div id="app">
+        <span v-text='message'></span>
+        <span v-html="str"></span>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello World',
+            str: '<h2>v-html</h2>',
+        }
+    })
+</script>
+</html>

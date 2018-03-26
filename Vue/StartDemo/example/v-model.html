@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>文本框</h2>
+        <p>输出:
+            <span v-text="msg"></span>
+        </p>
+        <p>v-model:
+            <input type="text" v-model='msg'>
+        </p>
+        <p>v-model.lazy:
+            <input type="text" v-model.lazy="msg">
+        </p>
+        <p>v-model.number:
+            <input type="text" v-model.number="msg">
+        </p>
+        <p>v-model.trim:
+            <input type="text" v-model.trim="msg">
+        </p>
+
+
+        <hr>
+        <h2>文本域</h2>
+        <textarea name="" id="" cols="30" rows="10" v-model="msg"></textarea>
+        <hr>
+        <h2>多选框绑一个值</h2>
+        <input type="checkbox" name="" value="check" id="one" v-model="checkOne">
+        <label for="one">
+            <span v-text="checkOne"></span>
+        </label>
+
+
+        <hr>
+        <h2>多选框绑定数组</h2>
+        <input type="checkbox" name="" value="小明" id="xiaoming" v-model="nameArr">
+        <label for="xiaoming">小明</label>
+        <input type="checkbox" name="" value="小红" id="xiaohong" v-model="nameArr">
+        <label for="xiaohong">小红</label>
+        <input type="checkbox" name="" value="小张" id="xiaozhang" v-model="nameArr">
+        <label for="xiaozhang">小张</label>
+        <p>数组输出:
+            <span v-text="nameArr"></span>
+        </p>
+
+        <hr>
+        <h2>单选框绑定</h2>
+        <input type="radio" id="male" value="男" v-model="sex">
+        <label for="male">男</label>
+        <input type="radio"  id="female" value="女" v-model="sex">
+        <label for="female">女</label>
+        <p>你选择的性别是： <span v-text="sex"></span></p>
+    </div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            msg: '请输入内容',
+            checkOne: true,
+            nameArr: [],
+            sex: '',
+        }
+    })
+</script>
+
+</html>
