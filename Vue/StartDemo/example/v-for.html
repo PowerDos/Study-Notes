@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../assets/js/vue.js"></script>
+    <title>v-for</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2>排序</h2>
+        <ul>
+            <li v-for="item in itemSort">
+                {{item}}
+            </li>
+        </ul>
+        <h2>排序前</h2>
+        <ul>
+            <li v-for="(student,index) in students">
+                {{index+1}} : {{student.name}}-{{student.age}}
+            </li>
+        </ul>
+        <h2>根据年龄排序后</h2>
+        <ul>
+            <li v-for="(student,index) in studentSort">
+                {{index+1}} : {{student.name}}-{{student.age}}
+            </li>
+        </ul>
+    </div>
+
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            items: [23, 54, 56, 88, 55, 23],
+            students: [{
+                    name: '李明',
+                    age: 21
+                },
+                {
+                    name: '李磊',
+                    age: 22
+                },
+                {
+                    name: '小红',
+                    age: 20
+                },
+                {
+                    name: '小明',
+                    age: 18
+                },
+            ]
+        },
+        computed: {
+            itemSort: function () {
+                return this.items.sort(numberSort);
+            },
+            studentSort: function () {
+                return sortByKey(this.students, 'age');
+            }
+        }
+    });
+    // 数字排序规则
+    function numberSort(a, b) {
+        return a - b;
+    }
+
+    //数组对象方法排序:
+    function sortByKey(array, key) {
+        return array.sort(function (a, b) {
+            var x = a[key];
+            var y = b[key];
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        });
+    }
+</script>
+
+</html>
