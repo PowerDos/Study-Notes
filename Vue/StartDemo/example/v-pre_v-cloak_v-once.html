@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-pre v-cloak v-once</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h5>v-pre 跳过这个元素和它的子元素的编译过程。可以用来显示原始 Mustache 标签。跳过大量没有指令的节点会加快编译。</h5>
+        <div v-pre>
+            {{message}}
+        </div>
+
+        <hr>
+        <h5>v-cloak 全部渲染完再显示,这个指令保持在元素上直到关联实例结束编译。和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。</h5>
+        <div v-cloak> 渲染完成</div>
+
+        <hr>
+        <h5>v-once 数据只渲染一次 只渲染元素和组件一次。随后的重新渲染，元素/组件及其所有的子节点将被视为静态内容并跳过。这可以用于优化更新性能。</h5>
+        <p v-once>使用v-once: {{message}}</p>
+        <input type="text" v-model="message">
+        <p>不使用v-once: {{message}}</p>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello World',
+            str: '<h2>v-html</h2>',
+        }
+    });
+</script>
+</html>
