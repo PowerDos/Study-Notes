@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-bind</title>
+    <script src="../assets/js/vue.js"></script>
+    <style>
+        img{
+            width: 200px;
+        }
+        .classA{
+            font-size: 25px;
+        }
+        .classB{
+            color:#e0c;
+        }
+        .active{
+            color: chartreuse;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>v-bind</h2>
+    <p>操作元素的 class 列表和内联样式是数据绑定的一个常见需求。因为它们都是属性，所以我们可以用 v-bind 处理它们：只需要通过表达式计算出字符串结果即可。不过，字符串拼接麻烦且易错。因此，在将 v-bind 用于 class 和
+        style 时，Vue.js 做了专门的增强。表达式结果的类型除了字符串之外，还可以是对象或数组。</p>
+    <hr>
+    <div id="app">
+        <h5>绑定标签属性</h5>
+        <p>绑定src属性<img v-bind:src="bgUrl" alt=""></p>
+        <p>绑定href属性<a :href="github">我的Github</a></p>
+        
+        <hr>
+        <h5>绑定HTML Class</h5>
+        <p><span :class="className">1.绑定Class</span></p>
+        <p><span :class="{active:isActive }">2.绑定Class中的判断</span></p>
+        <p><span :class="[classA,classB]">3.绑定Class中的数组</span></p>
+        <p><span :class="isActive? classA:classB">4.绑定Class中的三元运算符</span></p>
+        
+        <hr>
+        <h5>加上开关控制active</h5>
+        <div>
+            <input type="checkbox" id="switch" v-model="isActive">
+            <label for="switch">isActive状态: {{isActive}}</label>
+        </div>
+
+        <hr>
+        <h5>绑定内联样式</h5>
+        <p :style="{color:red, fontSize: font}">1.绑定Style</p>
+        <p :style="styleObject">2.对象绑定style</p>
+    </div>
+
+
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            bgUrl: '/assets/img/bg.jpg',
+            github: 'https://www.github.com/PowerDos',
+            className: 'classA',
+            classA: 'classA',
+            classB: 'classB',
+            isActive: true,
+            red: 'red',
+            font: '20px',
+            styleObject: {
+                color: 'blue',
+                fontSize: '25px'
+            }
+        }
+    })
+</script>
+
+</html>
