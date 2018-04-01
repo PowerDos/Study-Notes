@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>component prop 传递数据</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <gavin-component :rev-message='message'></gavin-component>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Gavin',
+        },
+        components: {
+            'gavin-component': {
+                template: `<h3>传入的数据为: {{revMessage}}</h3>`,
+                props: [ 'revMessage' ],
+            }
+        }
+    })
+</script>
+</html>

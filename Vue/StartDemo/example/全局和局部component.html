@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>全局和局部component</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <gavin-out></gavin-out>
+        <gavin-inner></gavin-inner>
+    </div>
+    
+    <hr>
+
+    <div id="app2">
+        <gavin-out></gavin-out>
+        <gavin-inner></gavin-inner>
+    </div>
+
+</body>
+<script>
+    Vue.component('gavin-out', {
+        template: `<div><h3>我是全局组件</h3></div>`,
+    })
+    var app = new Vue({
+        el: '#app',
+        components: {
+            'gavin-inner': {
+                template: `<div><h3>我是局部组件</h3></div>`
+            }
+        }
+    })
+    var app2 = new Vue({
+        el: '#app2'
+    });
+</script>
+
+</html>
