@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue extend</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h3>vue extend 扩展实例</h3>
+    <p>方式一</p>
+    <github></github>
+    <hr>
+    <p>方式二</p>
+    <div id="github"></div>
+</body>
+<script>
+    var githubExtend = Vue.extend({
+        template: "<p><a :href='githubUrl'>{{ githubName }}</a></p>",
+        data: function() {
+            return {
+                githubName: 'Gavin Github',
+                githubUrl: 'http://www.github.com/PowerDos',
+            };
+        },
+    });
+
+    new githubExtend().$mount('github');
+    new githubExtend().$mount('#github');
+</script>
+</html>

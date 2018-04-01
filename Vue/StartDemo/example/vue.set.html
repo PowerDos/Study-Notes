@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue extend</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h3>vue set</h3>
+        <p>{{ count }}</p>
+        <ul>
+            <li v-for="item in arr">{{ item }}</li>
+        </ul>
+    </div>
+    <button onclick="change()">change</button>
+</body>
+<script type="text/javascript">
+    function change(){
+        Vue.set(outData, 'count', 2);
+        Vue.set(app.arr, 1, 'coco');
+    }
+    var outData = {
+        count: 1,
+        arr: [ 'gavin', 'mary', 'mark' ],
+    }
+    var app = new Vue({
+        el: '#app',
+        data: outData,
+    });
+</script>
+</html>
