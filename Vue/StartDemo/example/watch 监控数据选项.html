@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>watch 监控数据选项</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>实时温度：<strong>{{temperature}}</strong>℃</p>
+        <p>建议穿着：{{suggest}}</p>
+        <p><button @click='add'>增加温度</button> <button @click='reduce'>减少温度</button></p>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            temperature: 30,
+            suggest: '短袖',
+        },
+        methods: {
+            add: function() {
+                this.temperature += 5;
+            },
+            reduce: function() {
+                this.temperature -= 5;
+            }
+        },
+        watch: {
+            temperature: function(newValue, oldValue) {
+                if(newValue >= 30) {
+                    this.suggest = '短袖';
+                } else if(newValue < 30 && newValue >= 16) {
+                    this.suggest = '长袖';
+                } else if(newValue < 15) {
+                    this.suggest = '大衣';
+                }
+            }
+        }
+    });
+    // other way
+    // app.$watch('temperature', function(newValue, oldValue) {
+    //     if(newValue >= 30) {
+    //         this.suggest = '短袖';
+    //     } else if(newValue < 30 && newValue >= 16) {
+    //         this.suggest = '长袖';
+    //     } else if(newValue < 15) {
+    //         this.suggest = '大衣';
+    //     }
+    // });
+</script>
+</html>
