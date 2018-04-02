@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>methods 方法选项</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>计算后: {{num}}</p>
+        <p><button @click="add1"> add 不带参</button></p>
+        <p><button @click="add2(2)"> add 带参数 </button></p>
+        <p><button @click="add3(3, $event)">add 带参数带事件</button></p>
+        <hr>
+        <p><gavin-btn @click.native="add1"></gavin-btn></p>
+    </div>
+    <hr>
+    <button onclick="app.add1()">add 外部原始事件</button>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            num: 1,
+        },
+        methods: {
+            add1: function() {
+                this.num++;
+            },
+            add2: function(number) {
+                this.num += number;
+            },
+            add3: function(number, event) {
+                this.num += number;
+                console.log(event);
+            }
+        },
+        components: {
+            gavinBtn: {
+                template: `<p><button> add 不带参 组件</button></p>`
+            }
+        }
+    });
+</script>
+</html>

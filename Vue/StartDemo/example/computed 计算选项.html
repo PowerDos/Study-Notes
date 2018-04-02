@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>computed 计算选项</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h3>computed 的作用主要是对原数据进行改造输出。改造输出：包括格式的编辑，大小写转换，顺序重排，添加符号</h3>
+    <div id="app">{{newPrice}}</div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            price: 100,
+        },
+        computed: {
+            newPrice: function() {
+                return '￥' + this.price;
+            }
+        }
+    })
+</script>
+</html>
