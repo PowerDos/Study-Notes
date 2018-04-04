@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue 中使用其他框架(jQuery)</title>
+    <script src="../assets/js/vue.js"></script>
+    <script src="../assets/js/jquery.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{num}}</p>
+        <button @click="add">add</button>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            num: 1,
+        },
+        mounted: function() {
+            $('#app').html('我是JQuery');
+        },
+        methods: {
+            add: function() {
+                this.num++;
+            }
+        }
+    });
+    app.add();
+</script>
+</html>

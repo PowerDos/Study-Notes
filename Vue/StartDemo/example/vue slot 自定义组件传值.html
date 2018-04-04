@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue slot 自定义组件传值</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <gavin>
+            <span slot="github">{{github}}</span>
+            <span slot="name">{{name}}</span>
+        </gavin>
+    </div>
+    <template id="temp"> 
+        <div>
+            <p>Github地址: <slot name="github"></slot></p>
+            <p>名字: <slot name="name"></slot></p>
+        </div>
+    </template>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            github: 'http://www.github.com/PowerDos',
+            name: 'Gavin',
+        },
+        components: {
+            gavin: {
+                template: '#temp'
+            }
+        }
+    })
+</script>
+</html>
