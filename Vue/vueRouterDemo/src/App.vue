@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <div>
       <router-link to="/">HelloWorld</router-link> |
-      <router-link to="/home">Home</router-link>
+      <router-link to="/home">Home</router-link> |
+      <router-link to="/father">子路由实例</router-link>
     </div>
     <router-view/>
   </div>
