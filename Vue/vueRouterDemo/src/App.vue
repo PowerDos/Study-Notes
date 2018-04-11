@@ -3,7 +3,9 @@
     <div>
       <router-link to="/">HelloWorld</router-link> |
       <router-link to="/home">Home</router-link> |
-      <router-link to="/father">子路由实例</router-link>
+      <router-link to="/father">子路由实例</router-link> |
+      <router-link to="/transFather">父子组件传值</router-link> |
+      <router-link to="/showMoreRouterView">多个RouterView</router-link>
     </div>
     <router-view/>
   </div>
