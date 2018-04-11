@@ -10,6 +10,8 @@ import RouterTransParamsChild from '@/components/RouterTransParamsChild'
 import ShowMoreRouters from '@/components/ShowMoreRouters'
 import ShowMoreRouterLeft from '@/components/ShowMoreRouterLeft'
 import ShowMoreRouterRight from '@/components/ShowMoreRouterRight'
+import UrlParams from '@/components/UrlParams'
+import RedirectTarget from '@/components/RedirectTarget'
 
 Vue.use(Router)
 
@@ -71,6 +73,21 @@ export default new Router({
           }
         }
       ]
+    },
+    {
+      path: '/urlParams/:id/:username',
+      name: 'UrlParams',
+      component: UrlParams
+    },
+    {
+      path: '/redirect',
+      name: 'RedirectDemo',
+      redirect: '/RedirectTarget'
+    },
+    {
+      path: '/RedirectTarget',
+      name: 'RedirectTarget',
+      component: RedirectTarget
     }
   ]
 })

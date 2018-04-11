@@ -6,7 +6,12 @@
       <router-link to="/father">子路由实例</router-link> |
       <router-link to="/transFather">父子组件传值</router-link> |
       <router-link to="/showMoreRouterView">多个RouterView</router-link>
+      <br>
+      <router-link to="/urlParams/60/Gavin">vue-router 利用url传递参数</router-link>
+      <router-link to="/RedirectTarget">redirect基本重定向</router-link>
     </div>
+    <br>
+    <hr>
     <router-view/>
   </div>
 </template>
