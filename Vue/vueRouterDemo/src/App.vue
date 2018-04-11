@@ -9,6 +9,7 @@
       <br>
       <router-link to="/urlParams/60/Gavin">vue-router 利用url传递参数</router-link>
       <router-link to="/RedirectTarget">redirect基本重定向</router-link>
+      <router-link to="/Gavin">alias别名的使用</router-link>
     </div>
     <br>
     <hr>

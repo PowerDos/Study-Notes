@@ -12,6 +12,7 @@ import ShowMoreRouterLeft from '@/components/ShowMoreRouterLeft'
 import ShowMoreRouterRight from '@/components/ShowMoreRouterRight'
 import UrlParams from '@/components/UrlParams'
 import RedirectTarget from '@/components/RedirectTarget'
+import alias from '@/components/alias'
 
 Vue.use(Router)
 
@@ -88,6 +89,12 @@ export default new Router({
       path: '/RedirectTarget',
       name: 'RedirectTarget',
       component: RedirectTarget
+    },
+    {
+      path: '/alias',
+      name: 'alias',
+      component: alias,
+      alias: '/Gavin'
     }
   ]
 })
