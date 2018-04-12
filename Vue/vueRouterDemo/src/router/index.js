@@ -13,6 +13,7 @@ import ShowMoreRouterRight from '@/components/ShowMoreRouterRight'
 import UrlParams from '@/components/UrlParams'
 import RedirectTarget from '@/components/RedirectTarget'
 import alias from '@/components/alias'
+import Transition from '@/components/Transition'
 
 Vue.use(Router)
 
@@ -95,6 +96,22 @@ export default new Router({
       name: 'alias',
       component: alias,
       alias: '/Gavin'
+    },
+    {
+      path: '/transition',
+      component: Transition,
+      children: [
+        {
+          path: 'tpage1',
+          name: 'tpage1',
+          component: Page1
+        },
+        {
+          path: 'tpage2',
+          name: 'tpage2',
+          component: Page2
+        }
+      ]
     }
   ]
 })
