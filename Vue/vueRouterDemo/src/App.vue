@@ -1,6 +1,12 @@
 <template>
   <div id="app">
     <div>
+      <button @click="goBack">后退</button>
+      <button @click="forward">前进</button>
+      <button @click="goHome">返回首页</button>
+    </div>
+    <br>
+    <div>
       <router-link to="/">HelloWorld</router-link> |
       <router-link to="/home">Home</router-link> |
       <router-link to="/father">子路由实例</router-link> |
@@ -24,7 +30,18 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  methods: {
+    goBack () {
+      this.$router.go(-1)
+    },
+    forward () {
+      this.$router.go(1)
+    },
+    goHome () {
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 
