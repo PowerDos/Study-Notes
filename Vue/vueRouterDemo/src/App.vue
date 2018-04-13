@@ -11,7 +11,8 @@
       <router-link to="/RedirectTarget">redirect基本重定向</router-link> |
       <router-link to="/Gavin">alias别名的使用</router-link> |
       <router-link to="/transition">路由的过渡动画</router-link> |
-      <router-link to="/unkownpath">404页面</router-link>
+      <router-link to="/unkownpath">404页面</router-link> |
+      <router-link to="/routerHook">路由钩子</router-link>
     </div>
     <br>
     <hr>

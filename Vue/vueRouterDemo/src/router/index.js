@@ -15,6 +15,7 @@ import RedirectTarget from '@/components/RedirectTarget'
 import alias from '@/components/alias'
 import Transition from '@/components/Transition'
 import NotFound from '@/components/NotFound'
+import RouterHook from '@/components/RouterHook'
 
 Vue.use(Router)
 
@@ -113,6 +114,23 @@ export default new Router({
           component: Page2
         }
       ]
+    },
+    {
+      path: '/routerHook',
+      name: 'RouterHook',
+      component: RouterHook,
+      beforeEnter: (to, from, next) => {
+        console.log('在路由配置中，进入路由之前')
+        console.log(to)
+        console.log(from)
+        next()
+      },
+      beforeLeave: (to, from, next) => {
+        console.log('在路由配置中，离开路由之前')
+        console.log(to)
+        console.log(from)
+        next()
+      }
     },
     {
       path: '*',
