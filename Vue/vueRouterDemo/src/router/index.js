@@ -14,6 +14,7 @@ import UrlParams from '@/components/UrlParams'
 import RedirectTarget from '@/components/RedirectTarget'
 import alias from '@/components/alias'
 import Transition from '@/components/Transition'
+import NotFound from '@/components/NotFound'
 
 Vue.use(Router)
 
@@ -112,6 +113,11 @@ export default new Router({
           component: Page2
         }
       ]
+    },
+    {
+      path: '*',
+      name: 'NotFound',
+      component: NotFound
     }
   ]
 })
