@@ -3,20 +3,29 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const state = {
-  count: 1
-}
-
-const mutations = {
-  add (state) {
-    state.count++
-  },
-  reduce (state) {
-    state.count--
-  }
-}
-
 export default new Vuex.Store({
-  state,
-  mutations
+  state: {
+    count: 1
+  },
+  getters: {
+    getCount (state) {
+      return state.count + 1
+    }
+  },
+  mutations: {
+    add (state, num) {
+      const n = num || 1
+      state.count += n
+    },
+    reduce (state) {
+      state.count--
+    }
+  },
+  actions: {
+    addAction (context) {
+      context.commit('add', 8)
+      setTimeout(() => { context.commit('reduce') }, 3000)
+      console.log('异步执行')
+    }
+  }
 })
