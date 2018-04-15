@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-link to="/count">计数</router-link>
+    <router-link to="/count">计数</router-link> |
+    <router-link to="/getStore1">获取Store数据方式一 </router-link> |
+    <router-link to="/getStore2">获取Store数据方式二 </router-link> |
+    <router-link to="/getStore3">获取Store数据方式三 </router-link> |
     <router-view/>
   </div>
 </template>
