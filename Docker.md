@@ -7,6 +7,41 @@
 	- [基本概念](#基本概念)
 	- [安装Docker](#安装docker)
 	- [卸载Docker](#卸载docker)
+2. [镜像仓库命令](#镜像仓库命令)
+	- [login/logout 登陆登出](#loginlogout-登陆登出)
+	- [pull 拉取镜像](#pull-拉取镜像)
+	- [push 上传镜像](#push-上传镜像)
+	- [search 查找镜像](#search-查找镜像)
+3. [本地镜像管理命令](#本地镜像管理命令)
+	- [images 列出本地镜像](#images-列出本地镜像)
+	- [rmi 删除镜像](#rmi-删除镜像)
+	- [tag 标记本地镜像](#tag-标记本地镜像)
+	- [build 创建镜像](#build-创建镜像)
+	- [history 镜像创建历史](#history-镜像创建历史)
+	- [save 镜像保存](#save-镜像保存)
+	- [import 导入镜像](#import-导入镜像)
+4. [容器生命周期管理命令](#容器生命周期管理命令)
+	- [run 创建一个新的容器并运行](#run)
+	- [start/stop/restart 启动/暂停/重启容器](##startstoprestart)
+	- [kill 杀掉运行中的容器](#kill)
+	- [rm 删除容器](#rm)
+	- [pause/unpause](#pauseunpause)
+	- [create 创建一个容器](#create)
+	- [exec 在运行的容器中执行命令](#exec)
+5. [容器操作命令](#容器操作命令)
+	- [ps 列出容器](#ps-列出容器)
+	- [inspect 获取容器/镜像的元数据](#inspect-获取容器镜像的元数据)
+	- [top 查看容器中运行的进程信息](#top-查看容器中运行的进程信息)
+	- [attach 连接到正在运行中的容器](#attach-连接到正在运行中的容器)
+	- [events 从服务器获取实时事件](#events-从服务器获取实时事件)
+	- [logs 日志](#logs-日志)
+	- [wait 阻塞运行直到容器停止](#wait-阻塞运行直到容器停止)
+	- [export](#export)
+	- [port 查看容器的端口映射](#port-查看容器的端口映射)
+6. [容器rootfs命令](#容器rootfs命令)
+	- [commit](#commit)
+	- [cp 拷贝数据](#cp-拷贝数据)
+	- [diff 检查容器里文件结构的更改](#diff-检查容器里文件结构的更改)
 
 ## 简介
 > Docker 最初是 dotCloud 公司创始人 Solomon Hykes 在法国期间发起的一个公司内部项目，它是基于 dotCloud 公司多年云服务技术的一次革新，并于 2013 年 3 月以 Apache 2.0 授权协议开源，主要项目代码在 GitHub 上进行维护。Docker 项目后来还加入了 Linux 基金会，并成立推动 开放容器联盟（OCI）。
@@ -688,7 +723,7 @@ root@VM_0_5_centos:~$ ls mysql-`date +%Y%m%d`.tar
 mysql-20160711.tar
 ```
 
-### port 查看容器的端口映射、
+### port 查看容器的端口映射
 > docker port :列出指定的容器的端口映射，或者查找将PRIVATE_PORT NAT到面向公众的端口。
 
 > 语法
