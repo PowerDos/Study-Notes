@@ -805,3 +805,246 @@ A /run/mysqld/mysqld.pid
 A /run/mysqld/mysqld.sock
 C /tmp
 ```
+
+## Dockerflie
+### FROM 指定基础镜像
+> 所谓定制镜像，那一定是以一个镜像为基础，在其上进行定制。就像我们之前运行了一个 nginx 镜像的容器，再进行修改一样，基础镜像是必须指定的。而 FROM 就是指定基础镜像，因此一个 Dockerfile 中 FROM 是必备的指令，并且必须是第一条指令。
+
+> 在 Docker Store 上有非常多的高质量的官方镜像，有可以直接拿来使用的服务类的镜像，如 nginx、redis、mongo、mysql、httpd、php、tomcat 等；也有一些方便开发、构建、运行各种语言应用的镜像，如 node、openjdk、python、ruby、golang 等。可以在其中寻找一个最符合我们最终目标的镜像为基础镜像进行定制。
+
+> 如果没有找到对应服务的镜像，官方镜像中还提供了一些更为基础的操作系统镜像，如 ubuntu、debian、centos、fedora、alpine 等，这些操作系统的软件库为我们提供了更广阔的扩展空间。
+
+> 除了选择现有镜像为基础镜像外，Docker 还存在一个特殊的镜像，名为 scratch。这个镜像是虚拟的概念，并不实际存在，它表示一个空白的镜像。
+
+### LABEL 指定标签
+> 功能是为镜像
+
+> 语法：
+
+`LABEL <key>=<value> <key>=<value> <key>=<value> ...`
+
+> 一个Dockerfile种可以有多个LABEL，如下：
+```
+LABEL "com.example.vendor"="ACME Incorporated"
+LABEL com.example.label-with-value="foo"
+LABEL version="1.0"
+LABEL description="This text illustrates \
+that label-values can span multiple lines."
+```
+> 但是并不建议这样写，最好就写成一行，如太长需要换行的话则使用\符号, 如下：
+
+```
+LABEL multi.label1="value1" \
+multi.label2="value2" \
+other="value3"
+```
+> 说明：LABEL会继承基础镜像种的LABEL，如遇到key相同，则值覆盖
+
+### MAINTAINER 指定作者
+
+> 语法：
+
+`MAINTAINER <name>`
+
+
+### RUN 执行命令
+> RUN 指令是用来执行命令行命令的。由于命令行的强大能力，RUN 指令在定制镜像时是最常用的指令之一。其格式有两种：
+
+- shell 格式：RUN <命令>，就像直接在命令行中输入的命令一样。刚才写的 Dockerfile 中的 RUN 指令就是这种格式。
+`RUN echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html`
+
+- exec 格式：`RUN ["可执行文件", "参数1", "参数2"]`，这更像是函数调用中的格式。
+
+> DEMO
+
+```
+FROM debian:jessie
+
+RUN buildDeps='gcc libc6-dev make' \
+    && apt-get update \
+    && apt-get install -y $buildDeps \
+    && wget -O redis.tar.gz "http://download.redis.io/releases/redis-3.2.5.tar.gz" \
+    && mkdir -p /usr/src/redis \
+    && tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \
+    && make -C /usr/src/redis \
+    && make -C /usr/src/redis install \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm redis.tar.gz \
+    && rm -r /usr/src/redis \
+    && apt-get purge -y --auto-remove $buildDeps
+```
+
+### COPY 复制文件
+> 格式：
+
+- `COPY <源路径>... <目标路径>`
+- `COPY ["<源路径1>",... "<目标路径>"]`
+
+> 和 RUN 指令一样，也有两种格式，一种类似于命令行，一种类似于函数调用。
+
+> COPY 指令将从构建上下文目录中 <源路径> 的文件/目录复制到新的一层的镜像内的 <目标路径> 位置。比如：`COPY package.json /usr/src/app/`
+
+> <源路径> 可以是多个，甚至可以是通配符，其通配符规则要满足 Go 的 filepath.Match 规则，如：
+
+- `COPY hom* /mydir/`
+- `COPY hom?.txt /mydir/`
+
+> <目标路径> 可以是容器内的绝对路径，也可以是相对于工作目录的相对路径（工作目录可以用 WORKDIR 指令来指定）。目标路径不需要事先创建，如果目录不存在会在复制文件前先行创建缺失目录。
+
+> 此外，还需要注意一点，使用 COPY 指令，源文件的各种元数据都会保留。比如读、写、执行权限、文件变更时间等。这个特性对于镜像定制很有用。特别是构建相关文件都在使用 Git 进行管理的时候。
+
+### ADD 更高级的复制文件
+> ADD 指令和 COPY 的格式和性质基本一致。但是在 COPY 基础上增加了一些功能。
+
+> 比如 <源路径> 可以是一个 URL，这种情况下，Docker 引擎会试图去下载这个链接的文件放到 <目标路径> 去。下载后的文件权限自动设置为 600，如果这并不是想要的权限，那么还需要增加额外的一层 RUN 进行权限调整，另外，如果下载的是个压缩包，需要解压缩，也一样还需要额外的一层 RUN 指令进行解压缩。所以不如直接使用 RUN 指令，然后使用 wget 或者 curl 工具下载，处理权限、解压缩、然后清理无用文件更合理。因此，这个功能其实并不实用，而且不推荐使用。
+
+> 如果 <源路径> 为一个 tar 压缩文件的话，压缩格式为 gzip, bzip2 以及 xz 的情况下，ADD 指令将会自动解压缩这个压缩文件到 <目标路径> 去。
+
+### CMD 容器启动命令
+> CMD 指令的格式和 RUN 相似，也是两种格式：
+
+- shell 格式：`CMD <命令>`
+- exec 格式：`CMD ["可执行文件", "参数1", "参数2"...]`
+- 参数列表格式：CMD ["参数1", "参数2"...]。在指定了 ENTRYPOINT 指令后，用 CMD 指定具体的参数。
+
+> Docker 不是虚拟机，容器中的应用都应该以前台执行，而不是像虚拟机、物理机里面那样，用 upstart/systemd 去启动后台服务，容器内没有后台服务的概念。
+
+> 一些初学者将 CMD 写为：`CMD service nginx start`
+
+> 然后发现容器执行后就立即退出了。甚至在容器内去使用 systemctl 命令结果却发现根本执行不了。这就是因为没有搞明白前台、后台的概念，没有区分容器和虚拟机的差异，依旧在以传统虚拟机的角度去理解容器。
+
+> 对于容器而言，其启动程序就是容器应用进程，容器就是为了主进程而存在的，主进程退出，容器就失去了存在的意义，从而退出，其它辅助进程不是它需要关心的东西。
+
+> 而使用 `service nginx start` 命令，则是希望 upstart 来以后台守护进程形式启动 nginx 服务。而刚才说了 `CMD service nginx start` 会被理解为 `CMD [ "sh", "-c", "service nginx start"]`，因此主进程实际上是 sh。那么当 `service nginx start`命令结束后，sh 也就结束了，sh 作为主进程退出了，自然就会令容器退出。
+
+> 正确的做法是直接执行 nginx 可执行文件，并且要求以前台形式运行。比如：`CMD ["nginx", "-g", "daemon off;"]`
+
+### EXPOSE暴漏容器端口
+> 格式为 `EXPOSE <端口1> [<端口2>...]`
+
+> EXPOSE 指令是声明运行时容器提供服务端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务。在 Dockerfile 中写入这样的声明有两个好处，一个是帮助镜像使用者理解这个镜像服务的守护端口，以方便配置映射；另一个用处则是在运行时使用随机端口映射时，也就是 docker run -P 时，会自动随机映射 EXPOSE 的端口。
+
+### ENV 设置环境变量
+> 功能为设置环境变量
+
+> 语法有两种
+
+- `ENV <key> <value>`
+- `ENV <key>=<value>`
+
+> 两者的区别就是第一种是一次设置一个，第二种是一次设置多个
+
+### ARG 构建参数
+> 格式：`ARG <参数名>[=<默认值>]`
+
+> 构建参数和 ENV 的效果一样，都是设置环境变量。所不同的是，ARG 所设置的构建环境的环境变量，在将来容器运行时是不会存在这些环境变量的。但是不要因此就使用 ARG 保存密码之类的信息，因为 docker history 还是可以看到所有值的。
+
+### VOLUME 定义匿名卷
+> 格式为：
+
+- `VOLUME ["<路径1>", "<路径2>"...]`
+- `VOLUME <路径>`
+
+> 一般的使用场景为需要持久化存储数据时,容器使用的是AUFS，这种文件系统不能持久化数据，当容器关闭后，所有的更改都会丢失。所以当数据需要持久化时用这个命令。
+
+### WORKDIR 指定工作目录
+> 格式为 `WORKDIR <工作目录路径>`
+
+> 使用 WORKDIR 指令可以来指定工作目录（或者称为当前目录），以后各层的当前目录就被改为指定的目录，如该目录不存在，WORKDIR 会帮你建立目录。
+
+### USER 指定当前用户
+> 格式：`USER <用户名>`
+
+> USER 指令和 WORKDIR 相似，都是改变环境状态并影响以后的层。WORKDIR 是改变工作目录，USER 则是改变之后层的执行 RUN, CMD 以及 ENTRYPOINT 这类命令的身份。
+
+> 当然，和 WORKDIR 一样，USER 只是帮助你切换到指定用户而已，这个用户必须是事先建立好的，否则无法切换。
+
+> DEMO
+
+```
+RUN groupadd -r redis && useradd -r -g redis redis
+USER redis
+RUN [ "redis-server" ]
+```
+
+# HEALTHCHECK 健康检查
+> 格式：
+
+- HEALTHCHECK [选项] CMD <命令>：设置检查容器健康状况的命令
+- HEALTHCHECK NONE：如果基础镜像有健康检查指令，使用这行可以屏蔽掉其健康检查指令
+
+> HEALTHCHECK 支持下列选项：
+
+- `--interval=<间隔>`：两次健康检查的间隔，默认为 30 秒；
+- `--timeout=<时长>`：健康检查命令运行超时时间，如果超过这个时间，本次健康检查就被视为失败，默认 30 秒；
+- `--retries=<次数>`：当连续失败指定次数后，则将容器状态视为 unhealthy，默认 3 次。
+
+> 注意：**HEALTHCHECK命令只能出现一次，如果出现了多次，只有最后一个生效。**
+
+> CMD后边的命令的返回值决定了本次健康检查是否成功，具体的返回值如下：
+
+- 0: success - 表示容器是健康的
+- 1: unhealthy - 表示容器已经不能工作了
+- 2: reserved - 保留值
+
+### ONBUILD 为他人做嫁衣裳
+> 格式：`ONBUILD <其它指令>`
+
+> ONBUILD 是一个特殊的指令，它后面跟的是其它指令，比如 RUN, COPY 等，而这些指令，在当前镜像构建时并不会被执行。只有当以当前镜像为基础镜像，去构建下一级镜像的时候才会被执行。
+
+> Dockerfile 中的其它指令都是为了定制当前镜像而准备的，唯有 ONBUILD 是为了帮助别人定制自己而准备的。
+
+> 假设我们要制作 Node.js 所写的应用的镜像。我们都知道 Node.js 使用 npm 进行包管理，所有依赖、配置、启动信息等会放到 package.json 文件里。在拿到程序代码后，需要先进行 npm install 才可以获得所有需要的依赖。然后就可以通过 npm start 来启动应用。因此，一般来说会这样写 Dockerfile：
+
+```
+FROM node:slim
+RUN mkdir /app
+WORKDIR /app
+COPY ./package.json /app
+RUN [ "npm", "install" ]
+COPY . /app/
+CMD [ "npm", "start" ]
+```
+
+> 把这个 Dockerfile 放到 Node.js 项目的根目录，构建好镜像后，就可以直接拿来启动容器运行。但是如果我们还有第二个 Node.js 项目也差不多呢？好吧，那就再把这个 Dockerfile 复制到第二个项目里。那如果有第三个项目呢？再复制么？文件的副本越多，版本控制就越困难，让我们继续看这样的场景维护的问题。
+
+> 如果第一个 Node.js 项目在开发过程中，发现这个 Dockerfile 里存在问题，比如敲错字了、或者需要安装额外的包，然后开发人员修复了这个 Dockerfile，再次构建，问题解决。第一个项目没问题了，但是第二个项目呢？虽然最初 Dockerfile 是复制、粘贴自第一个项目的，但是并不会因为第一个项目修复了他们的 Dockerfile，而第二个项目的 Dockerfile 就会被自动修复。
+
+> 那么我们可不可以做一个基础镜像，然后各个项目使用这个基础镜像呢？这样基础镜像更新，各个项目不用同步 Dockerfile 的变化，重新构建后就继承了基础镜像的更新？好吧，可以，让我们看看这样的结果。那么上面的这个 Dockerfile 就会变为：
+
+```
+FROM node:slim
+RUN mkdir /app
+WORKDIR /app
+CMD [ "npm", "start" ]
+```
+> 这里我们把项目相关的构建指令拿出来，放到子项目里去。假设这个基础镜像的名字为 my-node 的话，各个项目内的自己的 Dockerfile 就变为：
+
+```
+FROM my-node
+COPY ./package.json /app
+RUN [ "npm", "install" ]
+COPY . /app/
+```
+> 基础镜像变化后，各个项目都用这个 Dockerfile 重新构建镜像，会继承基础镜像的更新。
+
+> 那么，问题解决了么？没有。准确说，只解决了一半。如果这个 Dockerfile 里面有些东西需要调整呢？比如 npm install 都需要加一些参数，那怎么办？这一行 RUN 是不可能放入基础镜像的，因为涉及到了当前项目的 ./package.json，难道又要一个个修改么？所以说，这样制作基础镜像，只解决了原来的 Dockerfile 的前4条指令的变化问题，而后面三条指令的变化则完全没办法处理。
+
+> ONBUILD 可以解决这个问题。让我们用 ONBUILD 重新写一下基础镜像的 Dockerfile:
+
+```
+FROM node:slim
+RUN mkdir /app
+WORKDIR /app
+ONBUILD COPY ./package.json /app
+ONBUILD RUN [ "npm", "install" ]
+ONBUILD COPY . /app/
+CMD [ "npm", "start" ]
+```
+> 这次我们回到原始的 Dockerfile，但是这次将项目相关的指令加上 ONBUILD，这样在构建基础镜像的时候，这三行并不会被执行。然后各个项目的 Dockerfile 就变成了简单地：
+
+```
+FROM my-node
+```
+
+> 是的，只有这么一行。当在各个项目目录中，用这个只有一行的 Dockerfile 构建镜像时，之前基础镜像的那三行 ONBUILD 就会开始执行，成功的将当前项目的代码复制进镜像、并且针对本项目执行 npm install，生成应用镜像。
