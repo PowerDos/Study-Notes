@@ -43,6 +43,23 @@
 	- [cp 拷贝数据](#cp-拷贝数据)
 	- [diff 检查容器里文件结构的更改](#diff-检查容器里文件结构的更改)
 
+7. [Dockerflie](#dockerflie)
+	- [FROM 指定基础镜像](#from-指定基础镜像)
+	- [LABEL 指定标签](#label-指定标签)
+	- [MAINTAINER 指定作者](#maintainer-指定作者)
+	- [RUN 执行命令](#run-执行命令)
+	- [COPY 复制文件](#copy-复制文件)
+	- [ADD 更高级的复制文件](#add-更高级的复制文件)
+	- [CMD 容器启动命令](#cmd-容器启动命令)
+	- [EXPOSE暴漏容器端口](#expose暴漏容器端口)
+	- [ENV 设置环境变量](#env-设置环境变量)
+	- [ARG 构建参数](#arg-构建参数)
+	- [VOLUME 定义匿名卷](#volume-定义匿名卷)
+	- [WORKDIR 指定工作目录](#workdir-指定工作目录)
+	- [USER 指定当前用户](#user-指定当前用户)
+	- [HEALTHCHECK 健康检查](#healthcheck-健康检查)
+	- [ONBUILD 为他人做嫁衣裳](#onbuild-为他人做嫁衣裳)
+
 ## 简介
 > Docker 最初是 dotCloud 公司创始人 Solomon Hykes 在法国期间发起的一个公司内部项目，它是基于 dotCloud 公司多年云服务技术的一次革新，并于 2013 年 3 月以 Apache 2.0 授权协议开源，主要项目代码在 GitHub 上进行维护。Docker 项目后来还加入了 Linux 基金会，并成立推动 开放容器联盟（OCI）。
 
@@ -967,7 +984,7 @@ USER redis
 RUN [ "redis-server" ]
 ```
 
-# HEALTHCHECK 健康检查
+### HEALTHCHECK 健康检查
 > 格式：
 
 - HEALTHCHECK [选项] CMD <命令>：设置检查容器健康状况的命令
